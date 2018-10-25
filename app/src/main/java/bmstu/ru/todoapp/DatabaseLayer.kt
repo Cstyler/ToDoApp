@@ -4,15 +4,13 @@ import android.util.Log
 import bmstu.ru.todoapp.entities.InListNote
 import bmstu.ru.todoapp.entities.NoteName
 import java.util.*
-import java.text.SimpleDateFormat
-
 
 object DatabaseLayer {
     private const val TAG = "DatabaseLayer"
 
     fun getInNoteNames(): Array<NoteName> {
-        val noteNames = Array(20) { i ->
-            NoteName(i, "In$i")
+        val noteNames = Array(20) {
+            NoteName(it, "In$it")
         }
         return noteNames
     }
@@ -54,11 +52,13 @@ object DatabaseLayer {
     }
 
     fun getInListNoteById(id: Int): InListNote {
-        val c = Calendar.getInstance()
-        val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-        val formattedDate = df.format(c.time)
-        Log.i(TAG, "Date: $formattedDate")
-        Log.i(TAG, "Date as int: ${c.time}")
-        return InListNote("name$id", "content$id", c.time)
+        val cal = Calendar.getInstance()
+        Log.i(TAG, "Time: ${cal.time}")
+        val time = cal.time
+        return InListNote("name$id", "content$id", time, time)
+    }
+
+    fun putInListNote(id: Int, note: InListNote) {
+        Log.i(TAG, "Note: id: $id, $note")
     }
 }

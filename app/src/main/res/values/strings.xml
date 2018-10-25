@@ -2,4 +2,7 @@
     <string name="app_name">ToDoApp</string>
     <string name="item_name">Название заметки</string>
     <string name="item_content">Описание заметки</string>
+    <string name="in_list_edit_button">OK</string>
+    <string name="edit_form_creation_date">Дата создания: %s</string>
+    <string name="edit_form_update_date">Дата обновления: %s</string>
 </resources>

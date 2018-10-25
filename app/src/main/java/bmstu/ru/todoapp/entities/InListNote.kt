@@ -5,5 +5,6 @@ import java.util.*
 data class InListNote(
     var name: String,
     var content: String? = null,
-    var creationDate: Date
+    var creationDate: Date,
+    var updateDate: Date
 )
