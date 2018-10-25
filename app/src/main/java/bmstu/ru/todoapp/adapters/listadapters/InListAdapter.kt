@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import bmstu.ru.todoapp.DatabaseLayer
-import bmstu.ru.todoapp.activities.InListEditActivity
 import bmstu.ru.todoapp.RecyclerViewHolder
+import bmstu.ru.todoapp.activities.InListEditActivity
 
 class InListAdapter(context: Context) : BaseListAdapter(context) {
 

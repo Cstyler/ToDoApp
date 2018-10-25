@@ -10,7 +10,6 @@ import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.adapters.listadapters.InListAdapter
 import bmstu.ru.todoapp.entities.InListNote
-import bmstu.ru.todoapp.entities.NoteName
 import kotlinx.android.synthetic.main.in_list_edit_form.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,12 +26,16 @@ class InListEditActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.in_list_edit_form)
+        syncLayoutWithDatabase()
+    }
+
+    private fun syncLayoutWithDatabase() {
         noteId = intent.getIntExtra(InListAdapter.NOTE_ID_KEY, noteId)
         Log.i(TAG, "Note id: $noteId")
         note = DatabaseLayer.getInListNoteById(noteId)
         in_list_edit_note_name_edit_text.setText(note.name)
         in_list_edit_note_content_edit_text.setText(note.content)
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy. hh:mm:ss")
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
         in_list_edit_creation_date_text_view.text = getString(R.string.edit_form_creation_date)
             .format(dateFormat.format(note.creationDate))
         in_list_edit_update_date_text_view.text = getString(R.string.edit_form_update_date)
@@ -41,7 +44,6 @@ class InListEditActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.in_edit_menu, menu)
-        Log.i("Menu", "menu loaded")
         return super.onCreateOptionsMenu(menu)
     }
 
