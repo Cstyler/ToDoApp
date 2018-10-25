@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="tab_titles">
+        <item>Входящие</item>
+        <item>Следующие</item>
+        <item>Ожидание</item>
+        <item>Когда-нибудь</item>
+        <item>Календарь</item>
+    </array>
+</resources>

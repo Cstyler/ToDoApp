@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ToDoApp</string>
+    <string name="item_name">Название заметки</string>
+    <string name="item_content">Описание заметки</string>
+</resources>
