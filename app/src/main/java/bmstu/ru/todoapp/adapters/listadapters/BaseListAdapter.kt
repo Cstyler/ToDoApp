@@ -18,12 +18,10 @@ abstract class BaseListAdapter(protected val context: Context) :
     abstract val noteNames: Array<NoteName>
     abstract val totalItemCount: Int
 
-
     companion object {
-        private const val TAG = "InListAdapter"
+        private const val TAG = "BaseListAdapter"
         const val NOTE_ID_KEY = "note_id"
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -54,10 +52,10 @@ abstract class BaseListAdapter(protected val context: Context) :
         val activities = arrayOf(
             InListEditActivity::class.java,
             NextActionsListEditActivity::class.java,
-            SomedayListEditActivity::class.java,
             WaitingForListEditActivity::class.java,
-            CalendarListEditActivity::class.java
-        )
+            SomedayListEditActivity::class.java,
+            CalendarListEditActivity::class.java)
+        Log.i(TAG,  "${activities[position]}. pos: $position")
         val intent = Intent(context, activities[position]).apply {
             putExtra(NOTE_ID_KEY, noteNames[position].id)
         }

@@ -37,8 +37,8 @@ class MainActivity : AppCompatActivity() {
                 val activities = arrayOf(
                     InListCreateActivity::class.java,
                     NextActionsListCreateActivity::class.java,
-                    SomedayListCreateActivity::class.java,
                     WaitingForListCreateActivity::class.java,
+                    SomedayListCreateActivity::class.java,
                     CalendarListCreateActivity::class.java
                 )
                 val intent = Intent(this, activities[tab_layout.selectedTabPosition])
