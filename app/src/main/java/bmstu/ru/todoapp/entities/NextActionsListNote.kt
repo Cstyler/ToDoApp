@@ -8,8 +8,17 @@ data class NextActionsListNote(
     var creationDate: Date,
     var updateDate: Date,
     var priority: Int,
-    var deadline: Date?,
-    var remindeTime: Date?,
+    var deadline: MyDate?,
+    var remindeTime: MyDate?,
     var context: Context?,
     var project: Project?
+)
+
+
+data class MyDate (
+    var year: Int,
+    var month: Int,
+    var day: Int,
+    var hour: Int,
+    var minute: Int
 )

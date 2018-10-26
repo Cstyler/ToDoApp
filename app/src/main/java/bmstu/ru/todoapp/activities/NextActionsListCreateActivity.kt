@@ -18,6 +18,12 @@ class NextActionsListCreateActivity : AppCompatActivity() {
         private const val TAG = "NextActListCreateAct"
     }
 
+    private var remindYear = 0
+    private var remindMonth = 0
+    private var remindDay = 0
+    private var remindHour = 0
+    private var remindMinute = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.next_actions_list_edit_form)
@@ -45,8 +51,8 @@ class NextActionsListCreateActivity : AppCompatActivity() {
                 }
                 val noteContent = next_actions_list_edit_note_content_edit_text.text.toString()
                 val time = Calendar.getInstance().time
-                val priority = NextActionsListEditActivity.
-                    PRIORITIES[next_actions_list_edit_priority_spinner.selectedIndex]
+                val priority =
+                    NextActionsListEditActivity.PRIORITIES[next_actions_list_edit_priority_spinner.selectedIndex]
                 val note = NextActionsListNote(
                     noteName,
                     noteContent,

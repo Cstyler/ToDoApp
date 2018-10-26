@@ -2,6 +2,7 @@ package bmstu.ru.todoapp
 
 import android.util.Log
 import bmstu.ru.todoapp.entities.InListNote
+import bmstu.ru.todoapp.entities.MyDate
 import bmstu.ru.todoapp.entities.NextActionsListNote
 import bmstu.ru.todoapp.entities.NoteName
 import java.util.*
@@ -69,6 +70,9 @@ object DatabaseLayer {
     fun getNextActionsListNoteById(id: Int): NextActionsListNote {
         val cal = Calendar.getInstance()
         val time = cal.time
+//        val remindeTime = MyDate(2018, 10, 25, 12, 10)
+        val remindeTime = null
+
         return NextActionsListNote(
             "NAname$id",
             "NAcontent$id",
@@ -76,7 +80,7 @@ object DatabaseLayer {
             time,
             2,
             null,
-            null,
+            remindeTime,
             null,
             null
         )

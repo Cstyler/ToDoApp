@@ -16,6 +16,7 @@ import android.widget.Toast
 import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.adapters.listadapters.BaseListAdapter
+import bmstu.ru.todoapp.entities.MyDate
 import bmstu.ru.todoapp.entities.NextActionsListNote
 import kotlinx.android.synthetic.main.next_actions_list_edit_form.*
 import java.text.SimpleDateFormat
@@ -36,11 +37,11 @@ class NextActionsListEditActivity : AppCompatActivity(),
 
     private lateinit var note: NextActionsListNote
     private var noteId: Int = 0
-    private var remindYear = 0
-    private var remindMonth = 0
-    private var remindDay = 0
-    private var remindHour = 0
-    private var remindMinute = 0
+    private var remindYear: Int? = null
+    private var remindMonth: Int? = null
+    private var remindDay: Int? = null
+    private var remindHour: Int? = null
+    private var remindMinute: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,6 +87,22 @@ class NextActionsListEditActivity : AppCompatActivity(),
                 DateFormat.is24HourFormat(this)
             ).show()
         }
+
+        note.remindeTime?.let {
+            remindYear = it.year
+            remindMonth = it.month
+            remindDay = it.day
+            remindHour = it.hour
+            remindMinute = it.minute
+            val cal = Calendar.getInstance()
+            cal.set(remindYear!!, remindMonth!!, remindDay!!, remindHour!!, remindMinute!!)
+            val date = cal.time
+            updateTextViewDate(
+                next_actions_list_edit_reminde_time_text,
+                date,
+                fullDateFormat
+            )
+        }
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
@@ -93,12 +110,22 @@ class NextActionsListEditActivity : AppCompatActivity(),
         remindMonth = month
         remindDay = dayOfMonth
         val calendar = Calendar.getInstance()
-        calendar.set(year, month, dayOfMonth)
-        updateTextViewDate(
-            next_actions_list_edit_reminde_time_text,
-            calendar.time,
-            dateFormat
-        )
+        if (validateTime()) {
+            calendar.set(year, month, dayOfMonth, remindHour!!, remindMinute!!)
+            updateTextViewDate(
+                next_actions_list_edit_reminde_time_text,
+                calendar.time,
+                fullDateFormat
+            )
+        } else {
+            calendar.set(year, month, dayOfMonth)
+            updateTextViewDate(
+                next_actions_list_edit_reminde_time_text,
+                calendar.time,
+                dateFormat
+            )
+        }
+
     }
 
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
@@ -106,7 +133,7 @@ class NextActionsListEditActivity : AppCompatActivity(),
         remindHour = hourOfDay
         remindMinute = minute
         val calendar = Calendar.getInstance()
-        calendar.set(remindYear, remindMonth, remindDay, hourOfDay, minute)
+        calendar.set(remindYear!!, remindMonth!!, remindDay!!, hourOfDay, minute)
         updateTextViewDate(
             next_actions_list_edit_reminde_time_text,
             calendar.time,
@@ -121,7 +148,14 @@ class NextActionsListEditActivity : AppCompatActivity(),
     }
 
     private fun validateDate(): Boolean {
-        if (remindYear == 0 || remindMonth == 0 || remindDay == 0) {
+        if (remindYear == null || remindMonth == null || remindDay == null) {
+            return true
+        }
+        return false
+    }
+
+    private fun validateTime(): Boolean {
+        if (remindHour != null && remindMinute != null) {
             return true
         }
         return false
@@ -157,6 +191,22 @@ class NextActionsListEditActivity : AppCompatActivity(),
                 val priority = PRIORITIES[next_actions_list_edit_priority_spinner.selectedIndex]
                 if (priority != note.priority) {
                     note.priority = priority
+                    updateFlag = true
+                }
+                if (validateDate() && validateTime() &&
+                    ((remindYear != (note.remindeTime)?.year) ||
+                            (remindMonth != (note.remindeTime)?.month) ||
+                            (remindDay != (note.remindeTime)?.day) ||
+                            (remindHour != (note.remindeTime)?.hour) ||
+                            (remindMinute != (note.remindeTime)?.minute))
+                ) {
+                    note.remindeTime = MyDate(
+                        remindYear!!,
+                        remindMonth!!,
+                        remindDay!!,
+                        remindHour!!,
+                        remindMinute!!
+                    )
                     updateFlag = true
                 }
                 if (updateFlag) {
