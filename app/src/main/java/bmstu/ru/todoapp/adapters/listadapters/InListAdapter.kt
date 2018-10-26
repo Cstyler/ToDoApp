@@ -16,4 +16,3 @@ class InListAdapter(context: Context) : BaseListAdapter(context) {
         super.startIntent(intent)
     }
 }
-

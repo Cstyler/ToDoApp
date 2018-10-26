@@ -6,7 +6,8 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
+import android.view.View
+import android.widget.AdapterView
 import android.widget.Toast
 import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
@@ -16,10 +17,13 @@ import kotlinx.android.synthetic.main.next_actions_list_edit_form.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class NextActionsListEditActivity : AppCompatActivity() {
+
     companion object {
         private const val TAG = "NextActListEditActivity"
         const val MAX_PRIORITY = 3
+        val PRIORITIES = (1..MAX_PRIORITY).toList()
     }
 
     private lateinit var note: NextActionsListNote
@@ -37,24 +41,18 @@ class NextActionsListEditActivity : AppCompatActivity() {
         noteId = intent.getIntExtra(BaseListAdapter.NOTE_ID_KEY, noteId)
         Log.i(TAG, "Note id: $noteId")
         note = DatabaseLayer.getNextActionsListNoteById(noteId)
-        next_actions_list_edit__note_name_edit_text.setText(note.name)
+        next_actions_list_edit_note_name_edit_text.setText(note.name)
         next_actions_list_edit_note_content_edit_text.setText(note.content)
+
         val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
         next_actions_list_edit_creation_date_text_view.text = getString(R.string.edit_form_creation_date)
             .format(dateFormat.format(note.creationDate))
+
         next_actions_list_edit_update_date_text_view.text = getString(R.string.edit_form_update_date)
             .format(dateFormat.format(note.updateDate))
-        Log.i(TAG, "Priority ${note.priority}")
-        note.priority?.let {
-            val spinner = next_actions_list_edit_priority_spinner
-            val adapter = ArrayAdapter(
-                this,
-                android.R.layout.simple_spinner_item,
-                (1..MAX_PRIORITY).toList()
-            )
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinner.adapter
-        }
+
+        next_actions_list_edit_priority_spinner.setItems(PRIORITIES)
+        next_actions_list_edit_priority_spinner.selectedIndex = PRIORITIES.indexOf(note.priority)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -65,7 +63,7 @@ class NextActionsListEditActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.form_edit_ok_button -> {
-                val noteName = next_actions_list_edit__note_name_edit_text.text.toString()
+                val noteName = next_actions_list_edit_note_name_edit_text.text.toString()
                 if (noteName == "") {
                     Toast.makeText(
                         this,
@@ -76,12 +74,17 @@ class NextActionsListEditActivity : AppCompatActivity() {
                 }
                 val noteContent = next_actions_list_edit_note_content_edit_text.text.toString()
                 var updateFlag = false
+                if (noteName != note.name) {
+                    note.content = noteContent
+                    updateFlag = true
+                }
                 if (noteContent != note.content) {
                     note.content = noteContent
                     updateFlag = true
                 }
-                if (noteName != note.name) {
-                    note.content = noteContent
+                val priority = PRIORITIES[next_actions_list_edit_priority_spinner.selectedIndex]
+                if (priority != note.priority) {
+                    note.priority = priority
                     updateFlag = true
                 }
                 if (updateFlag) {

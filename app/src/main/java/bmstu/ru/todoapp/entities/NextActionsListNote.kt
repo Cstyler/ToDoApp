@@ -11,5 +11,5 @@ data class NextActionsListNote(
     var remindeTime: Date?,
     var context: Context?,
     var project: Project?,
-    var priority: Int?
+    var priority: Int
 )

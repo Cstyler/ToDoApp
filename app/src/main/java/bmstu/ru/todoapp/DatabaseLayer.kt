@@ -54,7 +54,6 @@ object DatabaseLayer {
 
     fun getInListNoteById(id: Int): InListNote {
         val cal = Calendar.getInstance()
-        Log.i(TAG, "Time: ${cal.time}")
         val time = cal.time
         return InListNote("INname$id", "INcontent$id", time, time)
     }
@@ -69,7 +68,6 @@ object DatabaseLayer {
 
     fun getNextActionsListNoteById(id: Int): NextActionsListNote {
         val cal = Calendar.getInstance()
-        Log.i(TAG, "Time: ${cal.time}")
         val time = cal.time
         return NextActionsListNote(
             "NAname$id",
@@ -80,7 +78,7 @@ object DatabaseLayer {
             null,
             null,
             null,
-            1
+            2
         )
     }
 
