@@ -24,6 +24,79 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".activities.MainActivity"/>
         </activity>
+
+        <activity
+                android:name=".activities.InListCreateActivity"
+                android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.MainActivity"/>
+        </activity>
+
+        <activity
+                android:name=".activities.NextActionsListCreateActivity"
+                android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.MainActivity"/>
+        </activity>
+
+        <activity
+                android:name=".activities.NextActionsListEditActivity"
+                android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.MainActivity"/>
+        </activity>
+
+        <activity
+                android:name=".activities.WaitingForListEditActivity"
+                android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.MainActivity"/>
+        </activity>
+
+        <activity
+                android:name=".activities.WaitingForListCreateActivity"
+                android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.MainActivity"/>
+        </activity>
+
+        <activity
+                android:name=".activities.SomedayListEditActivity"
+                android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.MainActivity"/>
+        </activity>
+
+        <activity
+                android:name=".activities.SomedayListCreateActivity"
+                android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.MainActivity"/>
+        </activity>
+
+        <activity
+                android:name=".activities.CalendarListEditActivity"
+                android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.MainActivity"/>
+        </activity>
+
+        <activity
+                android:name=".activities.CalendarListCreateActivity"
+                android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.MainActivity"/>
+        </activity>
+
     </application>
 
 </manifest>

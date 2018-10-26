@@ -9,17 +9,17 @@ import android.view.MenuItem
 import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.adapters.listadapters.BaseListAdapter
-import bmstu.ru.todoapp.entities.InListNote
+import bmstu.ru.todoapp.entities.NextActionsListNote
 import kotlinx.android.synthetic.main.in_list_edit_form.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class InListEditActivity : AppCompatActivity() {
+class NextActionsListEditActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "InListEditActivity"
     }
 
-    private lateinit var note: InListNote
+    private lateinit var note: NextActionsListNote
     private var noteId: Int = 0
 
     @SuppressLint("SimpleDateFormat")
@@ -32,7 +32,7 @@ class InListEditActivity : AppCompatActivity() {
     private fun syncLayoutWithDatabase() {
         noteId = intent.getIntExtra(BaseListAdapter.NOTE_ID_KEY, noteId)
         Log.i(TAG, "Note id: $noteId")
-        note = DatabaseLayer.getInListNoteById(noteId)
+        note = DatabaseLayer.getNextActionsListNoteById(noteId)
         in_list_edit_note_name_edit_text.setText(note.name)
         in_list_edit_note_content_edit_text.setText(note.content)
         val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
@@ -65,7 +65,7 @@ class InListEditActivity : AppCompatActivity() {
                     val cal = Calendar.getInstance()
                     note.updateDate = cal.time
                 }
-                DatabaseLayer.updateInListEdit(noteId, note)
+                DatabaseLayer.updateNextActionsListEdit(noteId, note)
                 finish()
             }
         }

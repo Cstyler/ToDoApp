@@ -17,6 +17,7 @@ class ListFragment : Fragment() {
 
     companion object {
         const val ARG_PAGE = "ARG_PAGE"
+        const val TAG = "ListFragment"
 
         fun newInstance(page: Int): ListFragment {
             val args = Bundle()

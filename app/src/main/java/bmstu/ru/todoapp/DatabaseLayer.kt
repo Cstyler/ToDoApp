@@ -2,6 +2,7 @@ package bmstu.ru.todoapp
 
 import android.util.Log
 import bmstu.ru.todoapp.entities.InListNote
+import bmstu.ru.todoapp.entities.NextActionsListNote
 import bmstu.ru.todoapp.entities.NoteName
 import java.util.*
 
@@ -58,7 +59,36 @@ object DatabaseLayer {
         return InListNote("name$id", "content$id", time, time)
     }
 
-    fun putInListNote(id: Int, note: InListNote) {
-        Log.i(TAG, "Note: id: $id, $note")
+    fun updateInListEdit(id: Int, note: InListNote) {
+        Log.i(TAG, "Update note: id: $id, $note")
+    }
+
+    fun putInListEdit(note: InListNote) {
+        Log.i(TAG, "Create note: id: $note")
+    }
+
+    fun getNextActionsListNoteById(id: Int): NextActionsListNote {
+        val cal = Calendar.getInstance()
+        Log.i(TAG, "Time: ${cal.time}")
+        val time = cal.time
+        return NextActionsListNote(
+            "name$id",
+            "content$id",
+            time,
+            time,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
+    }
+
+    fun updateNextActionsListEdit(id: Int, note: NextActionsListNote) {
+        Log.i(TAG, "Update note: id: $id, $note")
+    }
+
+    fun putNextActionsListEdit(note: NextActionsListNote) {
+        Log.i(TAG, "Create note: id: $note")
     }
 }

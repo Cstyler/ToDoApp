@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.in_list_edit_form.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class InListEditActivity : AppCompatActivity() {
+class SomedayListEditActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "InListEditActivity"
     }
