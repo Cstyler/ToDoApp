@@ -60,6 +60,32 @@
                     android:layout_marginStart="8dp"
             />
             <TextView
+                    android:id="@+id/next_actions_list_edit_reminde_time_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/next_actions_list_edit_reminde_time_text"
+            />
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+            >
+                <ImageButton
+                        android:id="@+id/next_actions_list_edit_image_button_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_date"
+                        android:contentDescription="@string/calendar_button_description"/>
+                <ImageButton
+                        android:id="@+id/next_actions_list_edit_image_button_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_time"
+                        android:contentDescription="@string/calendar_button_description"/>
+            </LinearLayout>
+
+            <TextView
                     android:id="@+id/next_actions_list_edit_creation_date_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

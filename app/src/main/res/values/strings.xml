@@ -7,4 +7,8 @@
     <string name="edit_form_update_date">Дата обновления: %s</string>
     <string name="main_activity_add_menu_item">Создать заметку</string>
     <string name="next_actions_list_edit_priority_text">Приоритет:</string>
+    <string name="next_actions_list_edit_reminde_time_text">Напомнить о заметке:</string>
+    <string name="next_actions_list_edit_reminde_time_text_format">Напомнить о заметке: %s</string>
+
+    <string name="calendar_button_description">calendar button</string>
 </resources>
