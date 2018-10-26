@@ -35,7 +35,6 @@ abstract class BaseListAdapter(protected val context: Context) :
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         holder.setData(noteNames[position].name)
-        Log.i(TAG, "Position $position")
         holder.itemView.setOnClickListener {
             startChildActivity(position)
         }
