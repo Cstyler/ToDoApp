@@ -7,9 +7,9 @@ data class NextActionsListNote(
     var content: String? = null,
     var creationDate: Date,
     var updateDate: Date,
+    var priority: Int,
     var deadline: Date?,
     var remindeTime: Date?,
     var context: Context?,
-    var project: Project?,
-    var priority: Int
+    var project: Project?
 )

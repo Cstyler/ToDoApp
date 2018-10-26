@@ -52,11 +52,11 @@ class NextActionsListCreateActivity : AppCompatActivity() {
                     noteContent,
                     time,
                     time,
+                    priority,
                     null,
                     null,
                     null,
-                    null,
-                    priority
+                    null
                 )
                 DatabaseLayer.putNextActionsListEdit(note)
                 finish()

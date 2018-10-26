@@ -74,11 +74,11 @@ object DatabaseLayer {
             "NAcontent$id",
             time,
             time,
+            2,
             null,
             null,
             null,
-            null,
-            2
+            null
         )
     }
 
