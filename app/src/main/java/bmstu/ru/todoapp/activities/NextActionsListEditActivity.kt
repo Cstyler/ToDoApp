@@ -7,11 +7,11 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.adapters.listadapters.BaseListAdapter
 import bmstu.ru.todoapp.entities.NextActionsListNote
-import kotlinx.android.synthetic.main.in_list_edit_form.*
 import kotlinx.android.synthetic.main.next_actions_list_edit_form.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -37,12 +37,12 @@ class NextActionsListEditActivity : AppCompatActivity() {
         noteId = intent.getIntExtra(BaseListAdapter.NOTE_ID_KEY, noteId)
         Log.i(TAG, "Note id: $noteId")
         note = DatabaseLayer.getNextActionsListNoteById(noteId)
-        in_list_edit_note_name_edit_text.setText(note.name)
-        in_list_edit_note_content_edit_text.setText(note.content)
+        next_actions_list_edit__note_name_edit_text.setText(note.name)
+        next_actions_list_edit_note_content_edit_text.setText(note.content)
         val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
-        in_list_edit_creation_date_text_view.text = getString(R.string.edit_form_creation_date)
+        next_actions_list_edit_creation_date_text_view.text = getString(R.string.edit_form_creation_date)
             .format(dateFormat.format(note.creationDate))
-        in_list_edit_update_date_text_view.text = getString(R.string.edit_form_update_date)
+        next_actions_list_edit_update_date_text_view.text = getString(R.string.edit_form_update_date)
             .format(dateFormat.format(note.updateDate))
         Log.i(TAG, "Priority ${note.priority}")
         note.priority?.let {
@@ -66,7 +66,15 @@ class NextActionsListEditActivity : AppCompatActivity() {
         when (item?.itemId) {
             R.id.form_edit_ok_button -> {
                 val noteName = next_actions_list_edit__note_name_edit_text.text.toString()
-                val noteContent = next_actions_list_edit__note_content_edit_text.text.toString()
+                if (noteName == "") {
+                    Toast.makeText(
+                        this,
+                        "Нельзя сохранить заметку с пустым именем",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return super.onContextItemSelected(item)
+                }
+                val noteContent = next_actions_list_edit_note_content_edit_text.text.toString()
                 var updateFlag = false
                 if (noteContent != note.content) {
                     note.content = noteContent

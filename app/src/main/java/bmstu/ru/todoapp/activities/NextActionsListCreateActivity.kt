@@ -8,7 +8,6 @@ import android.widget.Toast
 import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.entities.NextActionsListNote
-import kotlinx.android.synthetic.main.in_list_edit_form.*
 import kotlinx.android.synthetic.main.next_actions_list_edit_form.*
 import java.util.*
 
@@ -31,7 +30,6 @@ class NextActionsListCreateActivity : AppCompatActivity() {
         when (item?.itemId) {
             R.id.form_edit_ok_button -> {
                 val noteName = next_actions_list_edit__note_name_edit_text.text.toString()
-                val noteContent = next_actions_list_edit__note_content_edit_text.text.toString()
                 if (noteName == "") {
                     Toast.makeText(
                         this,
@@ -40,6 +38,7 @@ class NextActionsListCreateActivity : AppCompatActivity() {
                     ).show()
                     return super.onContextItemSelected(item)
                 }
+                val noteContent = next_actions_list_edit_note_content_edit_text.text.toString()
                 val time = Calendar.getInstance().time
                 val priority = NextActionsListEditActivity.MAX_PRIORITY
                 val note = NextActionsListNote(

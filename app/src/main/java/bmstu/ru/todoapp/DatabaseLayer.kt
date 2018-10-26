@@ -56,7 +56,7 @@ object DatabaseLayer {
         val cal = Calendar.getInstance()
         Log.i(TAG, "Time: ${cal.time}")
         val time = cal.time
-        return InListNote("name$id", "content$id", time, time)
+        return InListNote("INname$id", "INcontent$id", time, time)
     }
 
     fun updateInListEdit(id: Int, note: InListNote) {
@@ -72,8 +72,8 @@ object DatabaseLayer {
         Log.i(TAG, "Time: ${cal.time}")
         val time = cal.time
         return NextActionsListNote(
-            "name$id",
-            "content$id",
+            "NAname$id",
+            "NAcontent$id",
             time,
             time,
             null,

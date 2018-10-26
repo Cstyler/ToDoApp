@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.RecyclerViewHolder
-import bmstu.ru.todoapp.activities.*
 import bmstu.ru.todoapp.entities.NoteName
 
 abstract class BaseListAdapter(protected val context: Context) :
@@ -36,30 +35,18 @@ abstract class BaseListAdapter(protected val context: Context) :
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         holder.setData(noteNames[position].name)
+        Log.i(TAG, "Position $position")
         holder.itemView.setOnClickListener {
             startChildActivity(position)
         }
     }
 
-    private fun startIntent(intent: Intent) {
+    protected fun startIntent(intent: Intent) {
         if (intent.resolveActivity(context.packageManager) != null) {
             startActivity(context, intent, null)
         }
     }
 
-    protected fun startChildActivity(position: Int) {
-        Log.i(TAG, "Item$position view clicked")
-        val activities = arrayOf(
-            InListEditActivity::class.java,
-            NextActionsListEditActivity::class.java,
-            WaitingForListEditActivity::class.java,
-            SomedayListEditActivity::class.java,
-            CalendarListEditActivity::class.java)
-        Log.i(TAG,  "${activities[position]}. pos: $position")
-        val intent = Intent(context, activities[position]).apply {
-            putExtra(NOTE_ID_KEY, noteNames[position].id)
-        }
-        startIntent(intent)
-    }
+    abstract fun startChildActivity(position: Int)
 }
 
