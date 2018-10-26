@@ -68,7 +68,7 @@ class InListEditActivity : AppCompatActivity() {
                     updateFlag = true
                 }
                 if (noteName != note.name) {
-                    note.content = noteContent
+                    note.name = noteName
                     updateFlag = true
                 }
                 if (updateFlag) {

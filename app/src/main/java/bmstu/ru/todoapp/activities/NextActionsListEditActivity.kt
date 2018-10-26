@@ -32,7 +32,6 @@ class NextActionsListEditActivity : AppCompatActivity(),
         const val MAX_PRIORITY = 3
         val PRIORITIES = (1..MAX_PRIORITY).toList()
         val fullDateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm")
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
     }
 
     private lateinit var note: NextActionsListNote
@@ -97,11 +96,7 @@ class NextActionsListEditActivity : AppCompatActivity(),
             val cal = Calendar.getInstance()
             cal.set(remindYear!!, remindMonth!!, remindDay!!, remindHour!!, remindMinute!!)
             val date = cal.time
-            updateTextViewDate(
-                next_actions_list_edit_reminde_time_text,
-                date,
-                fullDateFormat
-            )
+            updateTextViewDate(next_actions_list_edit_reminde_time_text, date)
         }
     }
 
@@ -109,56 +104,34 @@ class NextActionsListEditActivity : AppCompatActivity(),
         remindYear = year
         remindMonth = month
         remindDay = dayOfMonth
+        remindHour = remindHour ?: 0
+        remindMinute = remindMinute ?: 0
         val calendar = Calendar.getInstance()
-        if (validateTime()) {
-            calendar.set(year, month, dayOfMonth, remindHour!!, remindMinute!!)
-            updateTextViewDate(
-                next_actions_list_edit_reminde_time_text,
-                calendar.time,
-                fullDateFormat
-            )
-        } else {
-            calendar.set(year, month, dayOfMonth)
-            updateTextViewDate(
-                next_actions_list_edit_reminde_time_text,
-                calendar.time,
-                dateFormat
-            )
-        }
+        calendar.set(year, month, dayOfMonth, remindHour!!, remindMinute!!)
+        updateTextViewDate(next_actions_list_edit_reminde_time_text, calendar.time)
 
     }
 
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-        if (validateDate()) return
+        if (!validateDate()) return
         remindHour = hourOfDay
         remindMinute = minute
         val calendar = Calendar.getInstance()
         calendar.set(remindYear!!, remindMonth!!, remindDay!!, hourOfDay, minute)
-        updateTextViewDate(
-            next_actions_list_edit_reminde_time_text,
-            calendar.time,
-            fullDateFormat
-        )
+        updateTextViewDate(next_actions_list_edit_reminde_time_text, calendar.time)
     }
 
     @SuppressLint("SetTextI18n")
-    private fun updateTextViewDate(textView: TextView, date: Date, fmt: SimpleDateFormat) {
+    private fun updateTextViewDate(textView: TextView, date: Date) {
         textView.text = getString(R.string.next_actions_list_edit_reminde_time_text_format)
-            .format(fmt.format(date))
+            .format(fullDateFormat.format(date))
     }
 
     private fun validateDate(): Boolean {
         if (remindYear == null || remindMonth == null || remindDay == null) {
-            return true
+            return false
         }
-        return false
-    }
-
-    private fun validateTime(): Boolean {
-        if (remindHour != null && remindMinute != null) {
-            return true
-        }
-        return false
+        return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -178,12 +151,12 @@ class NextActionsListEditActivity : AppCompatActivity(),
                     ).show()
                     return super.onContextItemSelected(item)
                 }
-                val noteContent = next_actions_list_edit_note_content_edit_text.text.toString()
                 var updateFlag = false
                 if (noteName != note.name) {
-                    note.content = noteContent
+                    note.name = noteName
                     updateFlag = true
                 }
+                val noteContent = next_actions_list_edit_note_content_edit_text.text.toString()
                 if (noteContent != note.content) {
                     note.content = noteContent
                     updateFlag = true
@@ -193,12 +166,10 @@ class NextActionsListEditActivity : AppCompatActivity(),
                     note.priority = priority
                     updateFlag = true
                 }
-                if (validateDate() && validateTime() &&
-                    ((remindYear != (note.remindeTime)?.year) ||
-                            (remindMonth != (note.remindeTime)?.month) ||
-                            (remindDay != (note.remindeTime)?.day) ||
-                            (remindHour != (note.remindeTime)?.hour) ||
-                            (remindMinute != (note.remindeTime)?.minute))
+                Log.i(TAG, "valdate: ${validateDate()}, rt: ${note.remindeTime}")
+                if (validateDate() &&
+                    (((note.remindeTime != null) && remindeDateParamsChanged(note.remindeTime!!))
+                            || (note.remindeTime == null))
                 ) {
                     note.remindeTime = MyDate(
                         remindYear!!,
@@ -218,5 +189,13 @@ class NextActionsListEditActivity : AppCompatActivity(),
             }
         }
         return super.onContextItemSelected(item)
+    }
+
+    private fun remindeDateParamsChanged(date: MyDate): Boolean {
+        return (remindYear != date.year) ||
+                (remindMonth != date.month) ||
+                (remindDay != date.day) ||
+                (remindHour != date.hour) ||
+                (remindMinute != date.minute)
     }
 }

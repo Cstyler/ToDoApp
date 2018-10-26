@@ -15,7 +15,7 @@ data class NextActionsListNote(
 )
 
 
-data class MyDate (
+data class MyDate(
     var year: Int,
     var month: Int,
     var day: Int,
