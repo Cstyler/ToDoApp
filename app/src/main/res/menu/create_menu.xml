@@ -7,10 +7,4 @@
             android:title="@string/in_list_edit_button"
             app:showAsAction="ifRoom"
     />
-    <item
-            android:id="@+id/form_edit_delete_button"
-            android:orderInCategory="1"
-            android:title="@string/form_edit_delete_button"
-            app:showAsAction="never"
-    />
 </menu>

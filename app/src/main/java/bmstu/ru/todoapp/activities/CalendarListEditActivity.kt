@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.adapters.listadapters.BaseListAdapter
@@ -66,6 +67,11 @@ class CalendarListEditActivity : AppCompatActivity() {
                     note.updateDate = cal.time
                 }
                 DatabaseLayer.updateInListEdit(noteId, note)
+                finish()
+            }
+            R.id.form_edit_delete_button -> {
+                Toast.makeText(this, "Заметка удалена", Toast.LENGTH_SHORT).show()
+                DatabaseLayer.deleteCalendarNoteById(noteId)
                 finish()
             }
         }

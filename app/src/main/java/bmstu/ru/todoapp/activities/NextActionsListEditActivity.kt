@@ -335,6 +335,11 @@ class NextActionsListEditActivity : AppCompatActivity() {
                 DatabaseLayer.updateNextActionsListEdit(noteId, note)
                 finish()
             }
+            R.id.form_edit_delete_button -> {
+                Toast.makeText(this, "Заметка удалена", Toast.LENGTH_SHORT).show()
+                DatabaseLayer.deleteNextActionsNoteById(noteId)
+                finish()
+            }
         }
         return super.onContextItemSelected(item)
     }

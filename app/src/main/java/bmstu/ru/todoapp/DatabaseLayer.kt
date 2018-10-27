@@ -89,8 +89,9 @@ object DatabaseLayer {
         Log.i(TAG, "Update note: id: $id,\n $note")
     }
 
-    fun putNextActionNote(note: NextActionsListNote) {
+    fun putNextActionNote(note: NextActionsListNote): Int {
         Log.i(TAG, "Create note: \n$note")
+        return 0
     }
 
     fun getProjectNames(): List<ProjectName> {
@@ -113,5 +114,25 @@ object DatabaseLayer {
 
     fun getContextNameById(id: Int): String {
         return "Context $id"
+    }
+
+    fun deleteInNoteById(id: Int) {
+
+    }
+
+    fun deleteNextActionsNoteById(id: Int) {
+
+    }
+
+    fun deleteWaitingForNoteById(id: Int) {
+
+    }
+
+    fun deleteSomedayNoteById(id: Int) {
+
+    }
+
+    fun deleteCalendarNoteById(id: Int) {
+
     }
 }

@@ -3,6 +3,8 @@
     <string name="item_name">Название заметки</string>
     <string name="item_content">Описание заметки</string>
     <string name="in_list_edit_button">OK</string>
+    <string name="form_edit_delete_button">Удалить заметку</string>
+    <string name="form_edit_move_button">Переместить записку</string>
     <string name="edit_form_creation_date">Дата создания: %s</string>
     <string name="edit_form_update_date">Дата обновления: %s</string>
     <string name="main_activity_add_menu_item">Создать заметку</string>
@@ -14,4 +16,7 @@
     <string name="next_actions_list_edit_deadline_time_text">Крайний срок (deadline):</string>
     <string name="next_actions_list_edit_deadline_time_text_format">Крайний срок (deadline): %s</string>
     <string name="calendar_button_description">calendar button</string>
+    <string name="move_note_text">Выберите, куда перенести заметку</string>
+    <string name="cancel_dialog">Отменить</string>
+    <string name="delete_note_dialog">Заметка удалена</string>
 </resources>
