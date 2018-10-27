@@ -63,10 +63,10 @@ class NextActionsListEditActivity : AppCompatActivity() {
         next_actions_list_edit_note_name_edit_text.setText(note.name)
         next_actions_list_edit_note_content_edit_text.setText(note.content)
 
-        next_actions_list_edit_creation_date_text_view.text = getString(R.string.edit_form_creation_date)
+        next_actions_list_edit_creation_date_text_view.text = getString(R.string.creation_date)
             .format(fullDateFormat.format(note.creationDate))
 
-        next_actions_list_edit_update_date_text_view.text = getString(R.string.edit_form_update_date)
+        next_actions_list_edit_update_date_text_view.text = getString(R.string.update_date)
             .format(fullDateFormat.format(note.updateDate))
 
         next_actions_list_edit_priority_spinner.setItems(PRIORITIES)
@@ -115,7 +115,7 @@ class NextActionsListEditActivity : AppCompatActivity() {
             updateTextViewDate(
                 next_actions_list_edit_remind_time_text_view,
                 date,
-                R.string.next_actions_list_edit_remind_time_text_format
+                R.string.remind_time_format
             )
         }
         note.deadline?.let {
@@ -130,7 +130,7 @@ class NextActionsListEditActivity : AppCompatActivity() {
             updateTextViewDate(
                 next_actions_list_edit_deadline_time_text_view,
                 date,
-                R.string.next_actions_list_edit_deadline_time_text_format
+                R.string.deadline_time_text_format
             )
         }
     }
@@ -140,7 +140,7 @@ class NextActionsListEditActivity : AppCompatActivity() {
         next_actions_list_edit_project_spinner.setItems(listOf("Нет проекта") + projectNames.map { it.name })
         note.projectId?.let {
             val projectName = ProjectName(it, DatabaseLayer.getProjectNameById(it))
-            next_actions_list_edit_project_spinner.selectedIndex = projectNames.indexOf(projectName)
+            next_actions_list_edit_project_spinner.selectedIndex = projectNames.indexOf(projectName) + 1
         }
     }
 
@@ -149,7 +149,7 @@ class NextActionsListEditActivity : AppCompatActivity() {
         next_actions_list_edit_context_spinner.setItems(listOf("Нет контекста") + contextNames.map { it.name })
         note.contextId?.let {
             val contextName = ContextName(it, DatabaseLayer.getContextNameById(it))
-            next_actions_list_edit_project_spinner.selectedIndex = contextNames.indexOf(contextName)
+            next_actions_list_edit_context_spinner.selectedIndex = contextNames.indexOf(contextName) + 1
         }
     }
 
@@ -186,7 +186,7 @@ class NextActionsListEditActivity : AppCompatActivity() {
         updateTextViewDate(
             next_actions_list_edit_remind_time_text_view,
             calendar.time,
-            R.string.next_actions_list_edit_remind_time_text_format
+            R.string.remind_time_format
         )
     }
 
@@ -199,7 +199,7 @@ class NextActionsListEditActivity : AppCompatActivity() {
         updateTextViewDate(
             next_actions_list_edit_remind_time_text_view,
             calendar.time,
-            R.string.next_actions_list_edit_remind_time_text_format
+            R.string.remind_time_format
         )
     }
 
@@ -214,7 +214,7 @@ class NextActionsListEditActivity : AppCompatActivity() {
         updateTextViewDate(
             next_actions_list_edit_deadline_time_text_view,
             calendar.time,
-            R.string.next_actions_list_edit_deadline_time_text_format
+            R.string.deadline_time_text_format
         )
     }
 
@@ -227,7 +227,7 @@ class NextActionsListEditActivity : AppCompatActivity() {
         updateTextViewDate(
             next_actions_list_edit_deadline_time_text_view,
             calendar.time,
-            R.string.next_actions_list_edit_deadline_time_text_format
+            R.string.deadline_time_text_format
         )
     }
 
@@ -285,21 +285,17 @@ class NextActionsListEditActivity : AppCompatActivity() {
                 }
 
                 val projectSelectedIndex = next_actions_list_edit_project_spinner.selectedIndex
-                if (projectSelectedIndex != 0) {
-                    val projectName = projectNames[projectSelectedIndex - 1]
-                    if (projectName.id != note.projectId) {
-                        note.projectId = projectName.id
-                        updateFlag = true
-                    }
+                val projectName = if (projectSelectedIndex == 0) null else projectNames[projectSelectedIndex - 1]
+                if (projectName?.id != note.projectId) {
+                    note.projectId = projectName?.id
+                    updateFlag = true
                 }
 
                 val contextSelectedIndex = next_actions_list_edit_context_spinner.selectedIndex
-                if (contextSelectedIndex != 0) {
-                    val contextName = contextNames[contextSelectedIndex - 1]
-                    if (contextName.id != note.contextId) {
-                        note.contextId = contextName.id
-                        updateFlag = true
-                    }
+                val contextName = if (contextSelectedIndex == 0) null else contextNames[contextSelectedIndex - 1]
+                if (contextName?.id != note.contextId) {
+                    note.contextId = contextName?.id
+                    updateFlag = true
                 }
 
                 if (validateRemindDate() &&

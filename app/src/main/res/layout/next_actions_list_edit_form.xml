@@ -64,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="@string/edit_project"
+                    android:text="@string/project_text"
             />
             <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/next_actions_list_edit_project_spinner"
@@ -77,7 +77,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="@string/next_actions_list_edit_context_text"
+                    android:text="@string/context_text"
             />
             <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/next_actions_list_edit_context_spinner"
@@ -90,7 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="@string/edit_remind_time"
+                    android:text="@string/remind_time"
             />
             <LinearLayout
                     android:layout_width="match_parent"
@@ -115,7 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="@string/next_actions_list_edit_deadline_time_text"
+                    android:text="@string/deadline_time_text"
             />
             <LinearLayout
                     android:layout_width="match_parent"

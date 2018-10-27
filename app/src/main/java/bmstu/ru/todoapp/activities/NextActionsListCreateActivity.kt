@@ -131,7 +131,7 @@ class NextActionsListCreateActivity : AppCompatActivity() {
         updateTextViewDate(
             next_actions_list_edit_remind_time_text_view,
             calendar.time,
-            R.string.next_actions_list_edit_remind_time_text_format
+            R.string.remind_time_format
         )
     }
 
@@ -144,7 +144,7 @@ class NextActionsListCreateActivity : AppCompatActivity() {
         updateTextViewDate(
             next_actions_list_edit_remind_time_text_view,
             calendar.time,
-            R.string.next_actions_list_edit_remind_time_text_format
+            R.string.remind_time_format
         )
     }
 
@@ -159,7 +159,7 @@ class NextActionsListCreateActivity : AppCompatActivity() {
         updateTextViewDate(
             next_actions_list_edit_deadline_time_text_view,
             calendar.time,
-            R.string.next_actions_list_edit_deadline_time_text_format
+            R.string.deadline_time_text_format
         )
     }
 
@@ -172,7 +172,7 @@ class NextActionsListCreateActivity : AppCompatActivity() {
         updateTextViewDate(
             next_actions_list_edit_deadline_time_text_view,
             calendar.time,
-            R.string.next_actions_list_edit_deadline_time_text_format
+            R.string.deadline_time_text_format
         )
     }
 

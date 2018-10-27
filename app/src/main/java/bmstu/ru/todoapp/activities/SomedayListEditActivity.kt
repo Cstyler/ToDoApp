@@ -37,9 +37,9 @@ class SomedayListEditActivity : AppCompatActivity() {
         in_list_edit_note_name_edit_text.setText(note.name)
         in_list_edit_note_content_edit_text.setText(note.content)
         val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
-        in_list_edit_creation_date_text_view.text = getString(R.string.edit_form_creation_date)
+        in_list_edit_creation_date_text_view.text = getString(R.string.creation_date)
             .format(dateFormat.format(note.creationDate))
-        in_list_edit_update_date_text_view.text = getString(R.string.edit_form_update_date)
+        in_list_edit_update_date_text_view.text = getString(R.string.update_date)
             .format(dateFormat.format(note.updateDate))
     }
 

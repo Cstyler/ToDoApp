@@ -71,23 +71,46 @@ object DatabaseLayer {
 //        val remindTime = null
         val deadlineTime = MyDate(2018, 11, 14, 13, 0)
 //        val deadlineTime = null
-
+        val contextId = 1
+//        val contextId = null
+        val projectId = 1
+//        val projectId = null
         return NextActionsListNote(
-            "NAname$id",
-            "NAcontent$id",
-            time,
-            time,
+            "NAname$id", "NAcontent$id",
+            time, time,
             2,
-            deadlineTime,
-            remindeTime,
-            null,
-            null
+            deadlineTime, remindeTime,
+            contextId, projectId
+        )
+    }
+
+    fun getWaitingForListNoteById(id: Int): WaitingForListNote {
+        val cal = Calendar.getInstance()
+        val time = cal.time
+        val remindeTime = MyDate(2018, 9, 25, 12, 10)
+        val remindTime = null
+//        val waitingTime = MyDate(2018, 11, 14, 13, 0)
+        val waitingTime = null
+//        val contextId = 1
+        val contextId = null
+//        val projectId = 1
+        val projectId = null
+        return WaitingForListNote(
+            "NAname$id", "NAcontent$id",
+            time, time,
+            waitingTime, remindeTime,
+            contextId, projectId
         )
     }
 
     fun updateNextActionsListEdit(id: Int, note: NextActionsListNote) {
         Log.i(TAG, "Update note: id: $id,\n $note")
     }
+
+    fun updateWaitingForListEdit(id: Int, note: WaitingForListNote) {
+        Log.i(TAG, "Update note: id: $id,\n $note")
+    }
+
 
     fun putNextActionNote(note: NextActionsListNote): Int {
         Log.i(TAG, "Create note: \n$note")
@@ -106,10 +129,10 @@ object DatabaseLayer {
     }
 
     fun getContextNames(): List<ContextName> {
-        val projects = Array(5) {
+        val contexts = Array(5) {
             ContextName(it, "Context $it")
         }.toList()
-        return projects
+        return contexts
     }
 
     fun getContextNameById(id: Int): String {
