@@ -16,8 +16,10 @@ import android.widget.Toast
 import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.adapters.listadapters.BaseListAdapter
+import bmstu.ru.todoapp.entities.ContextName
 import bmstu.ru.todoapp.entities.MyDate
 import bmstu.ru.todoapp.entities.NextActionsListNote
+import bmstu.ru.todoapp.entities.ProjectName
 import kotlinx.android.synthetic.main.next_actions_list_edit_form.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -44,6 +46,8 @@ class NextActionsListEditActivity : AppCompatActivity() {
     private var deadlineDay: Int? = null
     private var deadlineHour: Int? = null
     private var deadlineMinute: Int? = null
+    private lateinit var projectNames: List<ProjectName>
+    private lateinit var contextNames: List<ContextName>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +71,9 @@ class NextActionsListEditActivity : AppCompatActivity() {
 
         next_actions_list_edit_priority_spinner.setItems(PRIORITIES)
         next_actions_list_edit_priority_spinner.selectedIndex = PRIORITIES.indexOf(note.priority)
+
+        setProjectSpinner()
+        setContextSpinner()
 
         next_actions_list_edit_image_button_remind_date.setOnClickListener {
             val listener = DatePickerDialog.OnDateSetListener { v, y, m, d ->
@@ -128,6 +135,24 @@ class NextActionsListEditActivity : AppCompatActivity() {
         }
     }
 
+    private fun setProjectSpinner() {
+        projectNames = DatabaseLayer.getProjectNames()
+        next_actions_list_edit_project_spinner.setItems(listOf("Нет проекта") + projectNames.map { it.name })
+        note.projectId?.let {
+            val projectName = ProjectName(it, DatabaseLayer.getProjectNameById(it))
+            next_actions_list_edit_project_spinner.selectedIndex = projectNames.indexOf(projectName)
+        }
+    }
+
+    private fun setContextSpinner() {
+        contextNames = DatabaseLayer.getContextNames()
+        next_actions_list_edit_context_spinner.setItems(listOf("Нет контекста") + contextNames.map { it.name })
+        note.contextId?.let {
+            val contextName = ContextName(it, DatabaseLayer.getContextNameById(it))
+            next_actions_list_edit_project_spinner.selectedIndex = contextNames.indexOf(contextName)
+        }
+    }
+
     private fun timeOnClick(listener: TimePickerDialog.OnTimeSetListener) {
         val c = Calendar.getInstance()
         val hour = c.get(Calendar.HOUR_OF_DAY)
@@ -150,7 +175,7 @@ class NextActionsListEditActivity : AppCompatActivity() {
         DatePickerDialog(this, listener, year, month, day).show()
     }
 
-    fun onRemindDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+    private fun onRemindDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         remindYear = year
         remindMonth = month
         remindDay = dayOfMonth
@@ -165,7 +190,7 @@ class NextActionsListEditActivity : AppCompatActivity() {
         )
     }
 
-    fun onRemindTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+    private fun onRemindTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         if (!validateRemindDate()) return
         remindHour = hourOfDay
         remindMinute = minute
@@ -178,7 +203,7 @@ class NextActionsListEditActivity : AppCompatActivity() {
         )
     }
 
-    fun onDeadlineDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+    private fun onDeadlineDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         deadlineYear = year
         deadlineMonth = month
         deadlineDay = dayOfMonth
@@ -193,7 +218,7 @@ class NextActionsListEditActivity : AppCompatActivity() {
         )
     }
 
-    fun onDeadlineTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+    private fun onDeadlineTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         if (!validateDeadlineDate()) return
         deadlineHour = hourOfDay
         deadlineMinute = minute
@@ -258,7 +283,25 @@ class NextActionsListEditActivity : AppCompatActivity() {
                     note.priority = priority
                     updateFlag = true
                 }
-                Log.i(TAG, "valdate: ${validateRemindDate()}, rt: ${note.remindTime}")
+
+                val projectSelectedIndex = next_actions_list_edit_project_spinner.selectedIndex
+                if (projectSelectedIndex != 0) {
+                    val projectName = projectNames[projectSelectedIndex - 1]
+                    if (projectName.id != note.projectId) {
+                        note.projectId = projectName.id
+                        updateFlag = true
+                    }
+                }
+
+                val contextSelectedIndex = next_actions_list_edit_context_spinner.selectedIndex
+                if (contextSelectedIndex != 0) {
+                    val contextName = contextNames[contextSelectedIndex - 1]
+                    if (contextName.id != note.contextId) {
+                        note.contextId = contextName.id
+                        updateFlag = true
+                    }
+                }
+
                 if (validateRemindDate() &&
                     (((note.remindTime != null) && remindDateParamsChanged(note.remindTime!!))
                             || (note.remindTime == null))

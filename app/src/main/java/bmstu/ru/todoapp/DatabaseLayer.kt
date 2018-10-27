@@ -1,10 +1,7 @@
 package bmstu.ru.todoapp
 
 import android.util.Log
-import bmstu.ru.todoapp.entities.InListNote
-import bmstu.ru.todoapp.entities.MyDate
-import bmstu.ru.todoapp.entities.NextActionsListNote
-import bmstu.ru.todoapp.entities.NoteName
+import bmstu.ru.todoapp.entities.*
 import java.util.*
 
 object DatabaseLayer {
@@ -92,7 +89,29 @@ object DatabaseLayer {
         Log.i(TAG, "Update note: id: $id,\n $note")
     }
 
-    fun putNextActionsListEdit(note: NextActionsListNote) {
+    fun putNextActionNote(note: NextActionsListNote) {
         Log.i(TAG, "Create note: \n$note")
+    }
+
+    fun getProjectNames(): List<ProjectName> {
+        val projects = Array(5) {
+            ProjectName(it, "Proj $it")
+        }.toList()
+        return projects
+    }
+
+    fun getProjectNameById(id: Int): String {
+        return "Proj $id"
+    }
+
+    fun getContextNames(): List<ContextName> {
+        val projects = Array(5) {
+            ContextName(it, "Context $it")
+        }.toList()
+        return projects
+    }
+
+    fun getContextNameById(id: Int): String {
+        return "Context $id"
     }
 }

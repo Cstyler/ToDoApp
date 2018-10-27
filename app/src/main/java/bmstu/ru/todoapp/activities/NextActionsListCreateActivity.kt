@@ -15,8 +15,10 @@ import android.widget.TimePicker
 import android.widget.Toast
 import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
+import bmstu.ru.todoapp.entities.ContextName
 import bmstu.ru.todoapp.entities.MyDate
 import bmstu.ru.todoapp.entities.NextActionsListNote
+import bmstu.ru.todoapp.entities.ProjectName
 import kotlinx.android.synthetic.main.next_actions_list_edit_form.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -40,12 +42,20 @@ class NextActionsListCreateActivity : AppCompatActivity() {
     private var deadlineDay: Int? = null
     private var deadlineHour: Int? = null
     private var deadlineMinute: Int? = null
+    private lateinit var projectNames: List<ProjectName>
+    private lateinit var contextNames: List<ContextName>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.next_actions_list_edit_form)
 
         next_actions_list_edit_priority_spinner.setItems(PRIORITIES)
+        projectNames = DatabaseLayer.getProjectNames()
+        next_actions_list_edit_project_spinner.setItems(listOf("Нет проекта") + projectNames.map { it.name })
+
+        setProjectSpinner()
+        setContextSpinner()
 
         next_actions_list_edit_image_button_remind_date.setOnClickListener {
             val listener = DatePickerDialog.OnDateSetListener { v, y, m, d ->
@@ -75,6 +85,16 @@ class NextActionsListCreateActivity : AppCompatActivity() {
             timeOnClick(listener)
         }
         Log.i(TAG, "OnCreate")
+    }
+
+    private fun setProjectSpinner() {
+        projectNames = DatabaseLayer.getProjectNames()
+        next_actions_list_edit_project_spinner.setItems(listOf("Нет проекта") + projectNames.map { it.name })
+    }
+
+    private fun setContextSpinner() {
+        contextNames = DatabaseLayer.getContextNames()
+        next_actions_list_edit_context_spinner.setItems(listOf("Нет контекста") + contextNames.map { it.name })
     }
 
 
@@ -196,9 +216,7 @@ class NextActionsListCreateActivity : AppCompatActivity() {
                 }
                 val noteContent = next_actions_list_edit_note_content_edit_text.text.toString()
                 val time = Calendar.getInstance().time
-                val priority =
-                    NextActionsListEditActivity.PRIORITIES[next_actions_list_edit_priority_spinner.selectedIndex]
-                val remindeTime = if (validateRemindDate()) MyDate(
+                val remindTime = if (validateRemindDate()) MyDate(
                     remindYear!!,
                     remindMonth!!,
                     remindDay!!,
@@ -212,6 +230,21 @@ class NextActionsListCreateActivity : AppCompatActivity() {
                     deadlineHour!!,
                     deadlineMinute!!
                 ) else null
+                val priority = PRIORITIES[next_actions_list_edit_priority_spinner.selectedIndex]
+                val projectSelectedIndex = next_actions_list_edit_project_spinner.selectedIndex
+                val projectId: Int? = if (projectSelectedIndex != 0) {
+                    val projectName = projectNames[projectSelectedIndex - 1]
+                    projectName.id
+                } else {
+                    null
+                }
+                val contextSelectedIndex = next_actions_list_edit_context_spinner.selectedIndex
+                val contextId: Int? = if (contextSelectedIndex != 0) {
+                    val contextName = contextNames[contextSelectedIndex - 1]
+                    contextName.id
+                } else {
+                    null
+                }
                 val note = NextActionsListNote(
                     noteName,
                     noteContent,
@@ -219,11 +252,11 @@ class NextActionsListCreateActivity : AppCompatActivity() {
                     time,
                     priority,
                     deadline,
-                    remindeTime,
-                    null,
-                    null
+                    remindTime,
+                    contextId,
+                    projectId
                 )
-                DatabaseLayer.putNextActionsListEdit(note)
+                DatabaseLayer.putNextActionNote(note)
                 finish()
             }
         }

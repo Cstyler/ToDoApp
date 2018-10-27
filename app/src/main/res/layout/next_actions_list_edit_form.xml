@@ -60,6 +60,32 @@
                     android:layout_marginStart="8dp"
             />
             <TextView
+                    android:id="@+id/next_actions_list_edit_project_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/next_actions_list_edit_project_text"
+            />
+            <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/next_actions_list_edit_project_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+            />
+            <TextView
+                    android:id="@+id/next_actions_list_edit_context_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/next_actions_list_edit_context_text"
+            />
+            <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/next_actions_list_edit_context_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+            />
+            <TextView
                     android:id="@+id/next_actions_list_edit_remind_time_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
