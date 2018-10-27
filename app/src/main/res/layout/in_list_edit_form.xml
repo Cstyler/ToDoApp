@@ -28,7 +28,7 @@
                         android:id="@+id/in_list_edit_note_name_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/item_name"
+                        android:hint="@string/note_name"
                         android:inputType="text"
                 />
             </android.support.design.widget.TextInputLayout>
@@ -43,7 +43,7 @@
                         android:id="@+id/in_list_edit_note_content_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/item_content"
+                        android:hint="@string/note_content"
                         android:inputType="textMultiLine"
                 />
             </android.support.design.widget.TextInputLayout>

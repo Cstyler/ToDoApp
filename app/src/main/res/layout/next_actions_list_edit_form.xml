@@ -27,7 +27,7 @@
                         android:id="@+id/next_actions_list_edit_note_name_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/item_name"
+                        android:hint="@string/note_name"
                         android:inputType="text"
                 />
             </android.support.design.widget.TextInputLayout>
@@ -42,12 +42,12 @@
                         android:id="@+id/next_actions_list_edit_note_content_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/item_content"
+                        android:hint="@string/note_content"
                         android:inputType="textMultiLine"
                 />
             </android.support.design.widget.TextInputLayout>
             <TextView
-                    android:id="@+id/next_actions_list_edit_priority_text"
+                    android:id="@+id/next_actions_list_edit_priority_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -60,11 +60,11 @@
                     android:layout_marginStart="8dp"
             />
             <TextView
-                    android:id="@+id/next_actions_list_edit_project_text"
+                    android:id="@+id/next_actions_list_edit_project_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="@string/next_actions_list_edit_project_text"
+                    android:text="@string/edit_project"
             />
             <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/next_actions_list_edit_project_spinner"
@@ -73,7 +73,7 @@
                     android:layout_marginStart="8dp"
             />
             <TextView
-                    android:id="@+id/next_actions_list_edit_context_text"
+                    android:id="@+id/next_actions_list_edit_context_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -86,11 +86,11 @@
                     android:layout_marginStart="8dp"
             />
             <TextView
-                    android:id="@+id/next_actions_list_edit_remind_time_text"
+                    android:id="@+id/next_actions_list_edit_remind_time_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="@string/next_actions_list_edit_remind_time_text"
+                    android:text="@string/edit_remind_time"
             />
             <LinearLayout
                     android:layout_width="match_parent"
@@ -111,7 +111,7 @@
                         android:contentDescription="@string/calendar_button_description"/>
             </LinearLayout>
             <TextView
-                    android:id="@+id/next_actions_list_edit_deadline_time_text"
+                    android:id="@+id/next_actions_list_edit_deadline_time_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"

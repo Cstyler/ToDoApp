@@ -129,7 +129,7 @@ class NextActionsListCreateActivity : AppCompatActivity() {
         val calendar = Calendar.getInstance()
         calendar.set(year, month, dayOfMonth, remindHour!!, remindMinute!!)
         updateTextViewDate(
-            next_actions_list_edit_remind_time_text,
+            next_actions_list_edit_remind_time_text_view,
             calendar.time,
             R.string.next_actions_list_edit_remind_time_text_format
         )
@@ -142,7 +142,7 @@ class NextActionsListCreateActivity : AppCompatActivity() {
         val calendar = Calendar.getInstance()
         calendar.set(remindYear!!, remindMonth!!, remindDay!!, hourOfDay, minute)
         updateTextViewDate(
-            next_actions_list_edit_remind_time_text,
+            next_actions_list_edit_remind_time_text_view,
             calendar.time,
             R.string.next_actions_list_edit_remind_time_text_format
         )
@@ -157,7 +157,7 @@ class NextActionsListCreateActivity : AppCompatActivity() {
         val calendar = Calendar.getInstance()
         calendar.set(year, month, dayOfMonth, deadlineHour!!, deadlineMinute!!)
         updateTextViewDate(
-            next_actions_list_edit_deadline_time_text,
+            next_actions_list_edit_deadline_time_text_view,
             calendar.time,
             R.string.next_actions_list_edit_deadline_time_text_format
         )
@@ -170,7 +170,7 @@ class NextActionsListCreateActivity : AppCompatActivity() {
         val calendar = Calendar.getInstance()
         calendar.set(deadlineYear!!, deadlineMonth!!, deadlineDay!!, hourOfDay, minute)
         updateTextViewDate(
-            next_actions_list_edit_deadline_time_text,
+            next_actions_list_edit_deadline_time_text_view,
             calendar.time,
             R.string.next_actions_list_edit_deadline_time_text_format
         )

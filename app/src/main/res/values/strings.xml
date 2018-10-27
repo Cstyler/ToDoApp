@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ToDo</string>
-    <string name="item_name">Название заметки</string>
-    <string name="item_content">Описание заметки</string>
+    <string name="note_name">Название заметки</string>
+    <string name="note_content">Описание заметки</string>
     <string name="in_list_edit_button">OK</string>
     <string name="form_edit_delete_button">Удалить заметку</string>
     <string name="form_edit_move_button">Переместить записку</string>
@@ -9,9 +9,9 @@
     <string name="edit_form_update_date">Дата обновления: %s</string>
     <string name="main_activity_add_menu_item">Создать заметку</string>
     <string name="next_actions_list_edit_priority_text">Приоритет:</string>
-    <string name="next_actions_list_edit_project_text">Проект:</string>
+    <string name="edit_project">Проект:</string>
     <string name="next_actions_list_edit_context_text">Контекст:</string>
-    <string name="next_actions_list_edit_remind_time_text">Напомнить о заметке:</string>
+    <string name="edit_remind_time">Напомнить о заметке:</string>
     <string name="next_actions_list_edit_remind_time_text_format">Напомнить о заметке: %s</string>
     <string name="next_actions_list_edit_deadline_time_text">Крайний срок (deadline):</string>
     <string name="next_actions_list_edit_deadline_time_text_format">Крайний срок (deadline): %s</string>
