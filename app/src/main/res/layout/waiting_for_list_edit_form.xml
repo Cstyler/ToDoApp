@@ -47,19 +47,6 @@
                 />
             </android.support.design.widget.TextInputLayout>
             <TextView
-                    android:id="@+id/next_actions_list_edit_priority_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/next_actions_list_edit_priority_text"
-            />
-            <com.jaredrummler.materialspinner.MaterialSpinner
-                    android:id="@+id/next_actions_list_edit_priority_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-            />
-            <TextView
                     android:id="@+id/next_actions_list_edit_project_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -68,19 +55,6 @@
             />
             <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/next_actions_list_edit_project_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-            />
-            <TextView
-                    android:id="@+id/next_actions_list_edit_context_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/next_actions_list_edit_context_text"
-            />
-            <com.jaredrummler.materialspinner.MaterialSpinner
-                    android:id="@+id/next_actions_list_edit_context_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -110,32 +84,6 @@
                         android:src="@drawable/ic_time"
                         android:contentDescription="@string/calendar_button_description"/>
             </LinearLayout>
-            <TextView
-                    android:id="@+id/next_actions_list_edit_deadline_time_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/next_actions_list_edit_deadline_time_text"
-            />
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-            >
-                <ImageButton
-                        android:id="@+id/next_actions_list_edit_image_button_deadline_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_date"
-                        android:contentDescription="@string/calendar_button_description"/>
-                <ImageButton
-                        android:id="@+id/next_actions_list_edit_image_button_deadline_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_time"
-                        android:contentDescription="@string/calendar_button_description"/>
-            </LinearLayout>
-
             <TextView
                     android:id="@+id/next_actions_list_edit_creation_date_text_view"
                     android:layout_width="wrap_content"
