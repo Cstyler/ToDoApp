@@ -70,8 +70,10 @@ object DatabaseLayer {
     fun getNextActionsListNoteById(id: Int): NextActionsListNote {
         val cal = Calendar.getInstance()
         val time = cal.time
-        val remindeTime = MyDate(2018, 10, 25, 12, 10)
-//        val remindeTime = null
+        val remindeTime = MyDate(2018, 9, 25, 12, 10)
+//        val remindTime = null
+        val deadlineTime = MyDate(2018, 11, 14, 13, 0)
+//        val deadlineTime = null
 
         return NextActionsListNote(
             "NAname$id",
@@ -79,7 +81,7 @@ object DatabaseLayer {
             time,
             time,
             2,
-            null,
+            deadlineTime,
             remindeTime,
             null,
             null

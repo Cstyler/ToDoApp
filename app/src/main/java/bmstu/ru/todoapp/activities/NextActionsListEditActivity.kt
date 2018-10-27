@@ -23,9 +23,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @SuppressLint("SimpleDateFormat")
-class NextActionsListEditActivity : AppCompatActivity(),
-    DatePickerDialog.OnDateSetListener,
-    TimePickerDialog.OnTimeSetListener {
+class NextActionsListEditActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "NextActListEditActivity"
@@ -41,6 +39,11 @@ class NextActionsListEditActivity : AppCompatActivity(),
     private var remindDay: Int? = null
     private var remindHour: Int? = null
     private var remindMinute: Int? = null
+    private var deadlineYear: Int? = null
+    private var deadlineMonth: Int? = null
+    private var deadlineDay: Int? = null
+    private var deadlineHour: Int? = null
+    private var deadlineMinute: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,29 +68,35 @@ class NextActionsListEditActivity : AppCompatActivity(),
         next_actions_list_edit_priority_spinner.setItems(PRIORITIES)
         next_actions_list_edit_priority_spinner.selectedIndex = PRIORITIES.indexOf(note.priority)
 
-        next_actions_list_edit_image_button_date.setOnClickListener {
-            val c = Calendar.getInstance()
-            val year = c.get(Calendar.YEAR)
-            val month = c.get(Calendar.MONTH)
-            val day = c.get(Calendar.DAY_OF_MONTH)
-
-            DatePickerDialog(this, this, year, month, day).show()
+        next_actions_list_edit_image_button_remind_date.setOnClickListener {
+            val listener = DatePickerDialog.OnDateSetListener { v, y, m, d ->
+                onRemindDateSet(v, y, m, d)
+            }
+            dateOnClick(listener)
         }
 
-        next_actions_list_edit_image_button_time.setOnClickListener {
-            val c = Calendar.getInstance()
-            val hour = c.get(Calendar.HOUR_OF_DAY)
-            val minute = c.get(Calendar.MINUTE)
-            TimePickerDialog(
-                this,
-                this,
-                hour,
-                minute,
-                DateFormat.is24HourFormat(this)
-            ).show()
+        next_actions_list_edit_image_button_remind_time.setOnClickListener {
+            val listener = TimePickerDialog.OnTimeSetListener { v, h, m ->
+                onRemindTimeSet(v, h, m)
+            }
+            timeOnClick(listener)
         }
 
-        note.remindeTime?.let {
+        next_actions_list_edit_image_button_deadline_date.setOnClickListener {
+            val listener = DatePickerDialog.OnDateSetListener() { v, y, m, d ->
+                onDeadlineDateSet(v, y, m, d)
+            }
+            dateOnClick(listener)
+        }
+
+        next_actions_list_edit_image_button_deadline_time.setOnClickListener {
+            val listener = TimePickerDialog.OnTimeSetListener { v, h, m ->
+                onDeadlineTimeSet(v, h, m)
+            }
+            timeOnClick(listener)
+        }
+
+        note.remindTime?.let {
             remindYear = it.year
             remindMonth = it.month
             remindDay = it.day
@@ -96,11 +105,52 @@ class NextActionsListEditActivity : AppCompatActivity(),
             val cal = Calendar.getInstance()
             cal.set(remindYear!!, remindMonth!!, remindDay!!, remindHour!!, remindMinute!!)
             val date = cal.time
-            updateTextViewDate(next_actions_list_edit_reminde_time_text, date)
+            updateTextViewDate(
+                next_actions_list_edit_remind_time_text,
+                date,
+                R.string.next_actions_list_edit_remind_time_text_format
+            )
+        }
+        note.deadline?.let {
+            deadlineYear = it.year
+            deadlineMonth = it.month
+            deadlineDay = it.day
+            deadlineHour = it.hour
+            deadlineMinute = it.minute
+            val cal = Calendar.getInstance()
+            cal.set(deadlineYear!!, deadlineMonth!!, deadlineDay!!, deadlineHour!!, deadlineMinute!!)
+            val date = cal.time
+            updateTextViewDate(
+                next_actions_list_edit_deadline_time_text,
+                date,
+                R.string.next_actions_list_edit_deadline_time_text_format
+            )
         }
     }
 
-    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+    private fun timeOnClick(listener: TimePickerDialog.OnTimeSetListener) {
+        val c = Calendar.getInstance()
+        val hour = c.get(Calendar.HOUR_OF_DAY)
+        val minute = c.get(Calendar.MINUTE)
+        TimePickerDialog(
+            this,
+            listener,
+            hour,
+            minute,
+            DateFormat.is24HourFormat(this)
+        ).show()
+    }
+
+    private fun dateOnClick(listener: DatePickerDialog.OnDateSetListener) {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        DatePickerDialog(this, listener, year, month, day).show()
+    }
+
+    fun onRemindDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         remindYear = year
         remindMonth = month
         remindDay = dayOfMonth
@@ -108,27 +158,69 @@ class NextActionsListEditActivity : AppCompatActivity(),
         remindMinute = remindMinute ?: 0
         val calendar = Calendar.getInstance()
         calendar.set(year, month, dayOfMonth, remindHour!!, remindMinute!!)
-        updateTextViewDate(next_actions_list_edit_reminde_time_text, calendar.time)
-
+        updateTextViewDate(
+            next_actions_list_edit_remind_time_text,
+            calendar.time,
+            R.string.next_actions_list_edit_remind_time_text_format
+        )
     }
 
-    override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-        if (!validateDate()) return
+    fun onRemindTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+        if (!validateRemindDate()) return
         remindHour = hourOfDay
         remindMinute = minute
         val calendar = Calendar.getInstance()
         calendar.set(remindYear!!, remindMonth!!, remindDay!!, hourOfDay, minute)
-        updateTextViewDate(next_actions_list_edit_reminde_time_text, calendar.time)
+        updateTextViewDate(
+            next_actions_list_edit_remind_time_text,
+            calendar.time,
+            R.string.next_actions_list_edit_remind_time_text_format
+        )
+    }
+
+    fun onDeadlineDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        deadlineYear = year
+        deadlineMonth = month
+        deadlineDay = dayOfMonth
+        deadlineHour = deadlineHour ?: 0
+        deadlineMinute = deadlineMinute ?: 0
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, dayOfMonth, deadlineHour!!, deadlineMinute!!)
+        updateTextViewDate(
+            next_actions_list_edit_deadline_time_text,
+            calendar.time,
+            R.string.next_actions_list_edit_deadline_time_text_format
+        )
+    }
+
+    fun onDeadlineTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+        if (!validateDeadlineDate()) return
+        deadlineHour = hourOfDay
+        deadlineMinute = minute
+        val calendar = Calendar.getInstance()
+        calendar.set(deadlineYear!!, deadlineMonth!!, deadlineDay!!, hourOfDay, minute)
+        updateTextViewDate(
+            next_actions_list_edit_deadline_time_text,
+            calendar.time,
+            R.string.next_actions_list_edit_deadline_time_text_format
+        )
     }
 
     @SuppressLint("SetTextI18n")
-    private fun updateTextViewDate(textView: TextView, date: Date) {
-        textView.text = getString(R.string.next_actions_list_edit_reminde_time_text_format)
+    private fun updateTextViewDate(textView: TextView, date: Date, id: Int) {
+        textView.text = getString(id)
             .format(fullDateFormat.format(date))
     }
 
-    private fun validateDate(): Boolean {
+    private fun validateRemindDate(): Boolean {
         if (remindYear == null || remindMonth == null || remindDay == null) {
+            return false
+        }
+        return true
+    }
+
+    private fun validateDeadlineDate(): Boolean {
+        if (deadlineYear == null || deadlineMonth == null || deadlineDay == null) {
             return false
         }
         return true
@@ -166,17 +258,30 @@ class NextActionsListEditActivity : AppCompatActivity(),
                     note.priority = priority
                     updateFlag = true
                 }
-                Log.i(TAG, "valdate: ${validateDate()}, rt: ${note.remindeTime}")
-                if (validateDate() &&
-                    (((note.remindeTime != null) && remindeDateParamsChanged(note.remindeTime!!))
-                            || (note.remindeTime == null))
+                Log.i(TAG, "valdate: ${validateRemindDate()}, rt: ${note.remindTime}")
+                if (validateRemindDate() &&
+                    (((note.remindTime != null) && remindDateParamsChanged(note.remindTime!!))
+                            || (note.remindTime == null))
                 ) {
-                    note.remindeTime = MyDate(
+                    note.remindTime = MyDate(
                         remindYear!!,
                         remindMonth!!,
                         remindDay!!,
                         remindHour!!,
                         remindMinute!!
+                    )
+                    updateFlag = true
+                }
+                if (validateDeadlineDate() &&
+                    (((note.deadline != null) && deadlineDateParamsChanged(note.deadline!!))
+                            || (note.deadline == null))
+                ) {
+                    note.deadline = MyDate(
+                        deadlineYear!!,
+                        deadlineMonth!!,
+                        deadlineDay!!,
+                        deadlineHour!!,
+                        deadlineMinute!!
                     )
                     updateFlag = true
                 }
@@ -191,11 +296,19 @@ class NextActionsListEditActivity : AppCompatActivity(),
         return super.onContextItemSelected(item)
     }
 
-    private fun remindeDateParamsChanged(date: MyDate): Boolean {
+    private fun remindDateParamsChanged(date: MyDate): Boolean {
         return (remindYear != date.year) ||
                 (remindMonth != date.month) ||
                 (remindDay != date.day) ||
                 (remindHour != date.hour) ||
                 (remindMinute != date.minute)
+    }
+
+    private fun deadlineDateParamsChanged(date: MyDate): Boolean {
+        return (deadlineYear != date.year) ||
+                (deadlineMonth != date.month) ||
+                (deadlineDay != date.day) ||
+                (deadlineHour != date.hour) ||
+                (deadlineMinute != date.minute)
     }
 }
