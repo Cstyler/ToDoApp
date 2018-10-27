@@ -27,7 +27,7 @@ import java.util.*
 class NextActionsListCreateActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "NextActListEditActivity"
-        const val MAX_PRIORITY = 3
+        private const val MAX_PRIORITY = 3
         val PRIORITIES = (1..MAX_PRIORITY).toList()
         val fullDateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm")
     }
@@ -72,7 +72,7 @@ class NextActionsListCreateActivity : AppCompatActivity() {
         }
 
         next_actions_list_edit_image_button_deadline_date.setOnClickListener {
-            val listener = DatePickerDialog.OnDateSetListener() { v, y, m, d ->
+            val listener = DatePickerDialog.OnDateSetListener { v, y, m, d ->
                 onDeadlineDateSet(v, y, m, d)
             }
             dateOnClick(listener)
@@ -120,7 +120,7 @@ class NextActionsListCreateActivity : AppCompatActivity() {
         DatePickerDialog(this, listener, year, month, day).show()
     }
 
-    fun onRemindDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+    private fun onRemindDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         remindYear = year
         remindMonth = month
         remindDay = dayOfMonth
@@ -135,7 +135,7 @@ class NextActionsListCreateActivity : AppCompatActivity() {
         )
     }
 
-    fun onRemindTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+    private fun onRemindTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         if (!validateRemindDate()) return
         remindHour = hourOfDay
         remindMinute = minute
@@ -148,7 +148,7 @@ class NextActionsListCreateActivity : AppCompatActivity() {
         )
     }
 
-    fun onDeadlineDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+    private fun onDeadlineDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         deadlineYear = year
         deadlineMonth = month
         deadlineDay = dayOfMonth
@@ -163,7 +163,7 @@ class NextActionsListCreateActivity : AppCompatActivity() {
         )
     }
 
-    fun onDeadlineTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+    private fun onDeadlineTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         if (!validateDeadlineDate()) return
         deadlineHour = hourOfDay
         deadlineMinute = minute

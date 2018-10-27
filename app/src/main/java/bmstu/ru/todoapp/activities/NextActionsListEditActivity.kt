@@ -29,7 +29,7 @@ class NextActionsListEditActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "NextActListEditActivity"
-        const val MAX_PRIORITY = 3
+        private const val MAX_PRIORITY = 3
         val PRIORITIES = (1..MAX_PRIORITY).toList()
         val fullDateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm")
     }
@@ -90,7 +90,7 @@ class NextActionsListEditActivity : AppCompatActivity() {
         }
 
         next_actions_list_edit_image_button_deadline_date.setOnClickListener {
-            val listener = DatePickerDialog.OnDateSetListener() { v, y, m, d ->
+            val listener = DatePickerDialog.OnDateSetListener { v, y, m, d ->
                 onDeadlineDateSet(v, y, m, d)
             }
             dateOnClick(listener)
