@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,11 +29,13 @@ class ListFragment : Fragment() {
         }
     }
 
-    private var mPage: Int = 0
+    private var pageNum: Int = 0
+    lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mPage = arguments!!.getInt(ARG_PAGE)
+        pageNum = arguments!!.getInt(ARG_PAGE)
+        Log.i(TAG, "OnCreate. Page: $pageNum")
     }
 
     @SuppressLint("SetTextI18n")
@@ -42,10 +45,10 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.list_fragment, container, false)
-        val recView = view.findViewById<RecyclerView>(R.id.in_list_rec_view).apply {
+        recyclerView = view.findViewById<RecyclerView>(R.id.in_list_rec_view).apply {
             layoutManager = LinearLayoutManager(activity)
             setHasFixedSize(true)
-            adapter = getListAdapter(activity!!)
+            adapter = getListAdapter(activity!!, pageNum)
 //            divider between list item
 //            val itemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
 //            itemDecoration.setDrawable(ContextCompat.getDrawable(context!!, R.drawable.divider)!!)
@@ -54,8 +57,8 @@ class ListFragment : Fragment() {
         return view
     }
 
-    private fun getListAdapter(activity: FragmentActivity): BaseListAdapter? {
-        return when (mPage) {
+    fun getListAdapter(activity: FragmentActivity, page: Int): BaseListAdapter? {
+        return when (page) {
             1 -> InListAdapter(activity)
             2 -> NextActionsListAdapter(activity)
             3 -> WaitingForListAdapter(activity)

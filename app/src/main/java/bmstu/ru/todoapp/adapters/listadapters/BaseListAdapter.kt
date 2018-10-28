@@ -13,8 +13,8 @@ import bmstu.ru.todoapp.entities.NoteName
 abstract class BaseListAdapter(protected val context: Context) :
     RecyclerView.Adapter<RecyclerViewHolder>() {
 
-    abstract val noteNames: Array<NoteName>
-    abstract val totalItemCount: Int
+    abstract var noteNames: Array<NoteName>
+    abstract var totalItemCount: Int
 
     companion object {
         private const val TAG = "BaseListAdapter"

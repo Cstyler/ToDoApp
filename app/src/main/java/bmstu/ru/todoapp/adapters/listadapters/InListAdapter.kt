@@ -6,8 +6,8 @@ import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.activities.InListEditActivity
 
 class InListAdapter(context: Context) : BaseListAdapter(context) {
-    override val noteNames = DatabaseLayer.getInNoteNames()
-    override val totalItemCount = noteNames.size
+    override var noteNames = DatabaseLayer.getInNoteNames()
+    override var totalItemCount = noteNames.size
 
     override fun startChildActivity(position: Int) {
         val intent = Intent(context, InListEditActivity::class.java).apply {

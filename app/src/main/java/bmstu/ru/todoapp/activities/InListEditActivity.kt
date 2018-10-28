@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
@@ -20,9 +21,6 @@ import bmstu.ru.todoapp.entities.NextActionsListNote
 import kotlinx.android.synthetic.main.in_list_edit_form.*
 import java.text.SimpleDateFormat
 import java.util.*
-import android.widget.TextView
-
-
 
 
 class InListEditActivity : AppCompatActivity() {

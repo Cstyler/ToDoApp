@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.adapters.TabsFragmentPagerAdapter
+import bmstu.ru.todoapp.adapters.listadapters.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -25,7 +27,8 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         setContentView(R.layout.activity_main)
 
         val tabTitles = resources.getStringArray(R.array.tab_titles)
-        view_pager.adapter = TabsFragmentPagerAdapter(supportFragmentManager, tabTitles)
+        val adapter = TabsFragmentPagerAdapter(supportFragmentManager, tabTitles)
+        view_pager.adapter = adapter
         tab_layout.setupWithViewPager(view_pager)
         tab_layout.getTabAt(selectedTabPosition)?.select()
     }
@@ -63,6 +66,39 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
                 val intent = Intent(this, activities[tab_layout.selectedTabPosition])
                 if (intent.resolveActivity(packageManager) != null) {
                     startActivity(intent)
+                }
+            }
+            R.id.settings -> {
+                val adapter = view_pager.adapter as TabsFragmentPagerAdapter
+                val position = tab_layout.selectedTabPosition
+                val page = adapter.fragments[position]
+                val recyclerView = page!!.recyclerView
+                when (position) {
+                    0 -> {
+                        val recViewAdapter = recyclerView.adapter as InListAdapter
+                        recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                        recViewAdapter.notifyDataSetChanged()
+                    }
+                    1 -> {
+                        val recViewAdapter = recyclerView.adapter as NextActionsListAdapter
+                        recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                        recViewAdapter.notifyDataSetChanged()
+                    }
+                    2 -> {
+                        val recViewAdapter = recyclerView.adapter as WaitingForListAdapter
+                        recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                        recViewAdapter.notifyDataSetChanged()
+                    }
+                    3 -> {
+                        val recViewAdapter = recyclerView.adapter as SomedayListAdapter
+                        recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                        recViewAdapter.notifyDataSetChanged()
+                    }
+                    4 -> {
+                        val recViewAdapter = recyclerView.adapter as CalendarListAdapter
+                        recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                        recViewAdapter.notifyDataSetChanged()
+                    }
                 }
             }
         }

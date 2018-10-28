@@ -12,8 +12,8 @@ class NextActionsListAdapter(context: Context) : BaseListAdapter(context) {
         private const val TAG = "NextActionsListAdapter"
     }
 
-    override val noteNames: Array<NoteName> = DatabaseLayer.getNextActionsNames()
-    override val totalItemCount = noteNames.size
+    override var noteNames: Array<NoteName> = DatabaseLayer.getNextActionsNames()
+    override var totalItemCount = noteNames.size
 
     override fun startChildActivity(position: Int) {
         val intent = Intent(context, NextActionsListEditActivity::class.java).apply {

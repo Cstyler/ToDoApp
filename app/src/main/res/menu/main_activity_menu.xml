@@ -5,7 +5,7 @@
             android:id="@+id/main_activity_add_menu_item"
             android:orderInCategory="1"
             android:title="@string/main_activity_add_menu_item"
-            app:showAsAction="ifRoom" />
+            app:showAsAction="ifRoom"/>
     <item
             android:id="@+id/settings"
             android:orderInCategory="1"
