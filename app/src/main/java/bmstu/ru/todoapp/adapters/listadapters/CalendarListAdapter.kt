@@ -12,7 +12,9 @@ class CalendarListAdapter(context: Context) : BaseListAdapter(context) {
         private const val TAG = "CalendarListAdapter"
     }
 
-    override var noteNames: Array<NoteName> = DatabaseLayer.getCalendarNoteNames()
+    override fun getData(): Array<NoteName> {
+        return DatabaseLayer.getCalendarNoteNames()
+    }
 
     override fun startChildActivity(position: Int) {
         val intent = Intent(context, CalendarListEditActivity::class.java).apply {

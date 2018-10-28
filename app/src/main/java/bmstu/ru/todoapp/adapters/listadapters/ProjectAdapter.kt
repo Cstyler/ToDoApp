@@ -9,21 +9,32 @@ import android.view.ViewGroup
 import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.RecyclerViewHolder
-import bmstu.ru.todoapp.activities.ContextEditActivity
 import bmstu.ru.todoapp.activities.ProjectEditActivity
+import bmstu.ru.todoapp.entities.ProjectName
 
-class ContextListAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerViewHolder>() {
+class ProjectAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerViewHolder>() {
 
     companion object {
-        private const val TAG = "ProjectListAdapter"
+        private const val TAG = "ProjectAdapter"
         const val NOTE_ID_KEY = "note_id"
     }
 
-    var contextNames = DatabaseLayer.getContextNames()
+    private lateinit var projectNames: List<ProjectName>
+
+    init {
+        updateData(false)
+    }
+
+    fun updateData(notify: Boolean = true) {
+        projectNames = DatabaseLayer.getProjectNames()
+        if (notify) {
+            notifyDataSetChanged()
+        }
+    }
 
     private fun startChildActivity(position: Int) {
-        val intent = Intent(context, ContextEditActivity::class.java).apply {
-            putExtra(NOTE_ID_KEY, contextNames[position].id)
+        val intent = Intent(context, ProjectEditActivity::class.java).apply {
+            putExtra(NOTE_ID_KEY, projectNames[position].id)
         }
         startIntent(intent)
     }
@@ -35,12 +46,12 @@ class ContextListAdapter(private val context: Context) : RecyclerView.Adapter<Re
     }
 
     override fun getItemCount(): Int {
-        return contextNames.size
+        return projectNames.size
     }
 
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-        holder.setData(contextNames[position].name)
+        holder.setData(projectNames[position].name)
         holder.itemView.setOnClickListener {
             startChildActivity(position)
         }

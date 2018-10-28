@@ -12,7 +12,9 @@ class WaitingForListAdapter(context: Context) : BaseListAdapter(context) {
         private const val TAG = "WaitingForListAdapter"
     }
 
-    override var noteNames: Array<NoteName> = DatabaseLayer.getWaitingForNoteNames()
+    override fun getData(): Array<NoteName> {
+        return DatabaseLayer.getWaitingForNoteNames()
+    }
 
     override fun startChildActivity(position: Int) {
         val intent = Intent(context, WaitingForListEditActivity::class.java).apply {

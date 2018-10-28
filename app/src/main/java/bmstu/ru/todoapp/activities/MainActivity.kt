@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -21,7 +22,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
 
     companion object {
-
         private const val TAG = "MainActivity"
         private var selectedTabPosition: Int = 0
         private const val DIALOG_TEXT_SIZE = 20f
@@ -29,6 +29,8 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        deleteDatabase("AppDatabase.db")
+        DatabaseLayer.initDatabase(this)
         setContentView(R.layout.activity_main)
 
         val tabTitles = resources.getStringArray(R.array.tab_titles)
@@ -36,7 +38,22 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         view_pager.adapter = adapter
         tab_layout.setupWithViewPager(view_pager)
         tab_layout.getTabAt(selectedTabPosition)?.select()
+
         Log.i(TAG, "OnCreate")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val page = getTabsFragmentPagerAdapter().fragments[getCurrentTabPos()]
+        val adapter = page?.recyclerView?.adapter as? BaseListAdapter
+        adapter?.updateData()
+    }
+
+    private fun getRecyclerView(): RecyclerView {
+        return getRecyclerView(
+            getTabsFragmentPagerAdapter(),
+            getCurrentTabPos()
+        )
     }
 
     override fun onTabReselected(tab: TabLayout.Tab?) {
@@ -59,7 +76,7 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
             R.id.main_activity_add_menu_item -> {
                 Log.i(
                     TAG, "add note pressed." +
-                            " selectedTabPosition ${tab_layout.selectedTabPosition}"
+                            " selectedTabPosition ${getCurrentTabPos()}"
                 )
                 val activities = arrayOf(
                     InListCreateActivity::class.java,
@@ -69,11 +86,11 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
                     CalendarListCreateActivity::class.java
                 )
 
-                val intent = Intent(this, activities[tab_layout.selectedTabPosition])
+                val intent = Intent(this, activities[getCurrentTabPos()])
                 startIntent(intent)
             }
             R.id.main_activity_filter_menu_item -> {
-                val position = tab_layout.selectedTabPosition
+                val position = getCurrentTabPos()
                 if (position == 0) {
                     Toast.makeText(
                         this,
@@ -82,9 +99,8 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
                     ).show()
                     return super.onOptionsItemSelected(item)
                 }
-                val adapter = view_pager.adapter as TabsFragmentPagerAdapter
-                val page = adapter.fragments[position]
-                val recyclerView = page!!.recyclerView
+                val adapter = getTabsFragmentPagerAdapter()
+                val recyclerView = getRecyclerView(adapter, position)
                 val dialogBuilder = AlertDialog.Builder(this)
                 dialogBuilder.setTitle(getString(R.string.filter_dialog_title))
                 setDialogBuilderCancel(dialogBuilder)
@@ -319,6 +335,20 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         return super.onContextItemSelected(item)
     }
 
+    private fun getCurrentTabPos() = tab_layout.selectedTabPosition
+
+    private fun getTabsFragmentPagerAdapter(): TabsFragmentPagerAdapter {
+        return view_pager.adapter as TabsFragmentPagerAdapter
+    }
+
+    private fun getRecyclerView(
+        adapter: TabsFragmentPagerAdapter,
+        position: Int
+    ): RecyclerView {
+        val page = adapter.fragments[position]
+        return page!!.recyclerView
+    }
+
     private fun startIntent(intent: Intent) {
         if (intent.resolveActivity(packageManager) != null) {
             startActivity(intent)
@@ -341,11 +371,10 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         val filterTypes = resources
             .getStringArray(resId)
 
-        val arrayAdapter = ArrayAdapter<String>(
+        return ArrayAdapter(
             this,
             android.R.layout.select_dialog_singlechoice,
             filterTypes
         )
-        return arrayAdapter
     }
 }

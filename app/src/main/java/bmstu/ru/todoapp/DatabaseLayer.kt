@@ -1,11 +1,27 @@
 package bmstu.ru.todoapp
 
+import android.arch.persistence.room.Room
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import bmstu.ru.todoapp.dbentities.ContextDb
+import bmstu.ru.todoapp.dbentities.InListNoteDb
 import bmstu.ru.todoapp.entities.*
 import java.util.*
 
 object DatabaseLayer {
     private const val TAG = "DatabaseLayer"
+    private lateinit var db: AppDatabase
+
+    fun initDatabase(context: AppCompatActivity) {
+        db = Room
+            .databaseBuilder(context, AppDatabase::class.java, "AppDatabase")
+            .allowMainThreadQueries()
+            .fallbackToDestructiveMigration()
+            .build()
+        val dao = db.inListDao()
+        val listOfInListNotes = dao.getAllFromDb()
+        Log.i(TAG, "Len: ${listOfInListNotes.size}")
+    }
 
     fun getInNoteNames(): Array<NoteName> {
         val noteNames = Array(20) {
@@ -202,7 +218,6 @@ object DatabaseLayer {
         )
     }
 
-
     fun updateInListNote(id: Int, note: InListNote) {
         Log.i(TAG, "Update note: id: $id, $note")
     }
@@ -290,32 +305,43 @@ object DatabaseLayer {
         Log.i(TAG, "Create project: $project")
     }
 
-    fun getContextNames(): List<ContextName> {
-        val contexts = Array(5) {
-            ContextName(it, "Context $it")
-        }.toList()
-        return contexts
-    }
-
-    fun getContextNameById(id: Int): String {
-        return "Context $id"
-    }
-
     fun deleteProjectById(id: Int) {
     }
 
+    fun getContextNames(): List<ContextName> {
+        val dao = db.contextDao()
+        val contextList = dao.getAllFromDb()
+        Log.i(TAG, "Len: ${contextList.size}")
+        return contextList.map {
+            ContextName(it.id, it.name)
+        }
+    }
+
+    fun getContextNameById(id: Int): String {
+        val dao = db.contextDao()
+        val contextDb = dao.getById(id)
+        return contextDb.name
+    }
+
     fun getContextById(id: Int): Context {
-        return Context("Context$id", "Context$id")
+        val dao = db.contextDao()
+        val contextDb = dao.getById(id)
+        return Context(contextDb.name, contextDb.content)
     }
 
     fun deleteContextById(id: Int) {
+        val dao = db.contextDao()
+        dao.deleteById(id)
     }
 
     fun updateContext(id: Int, context: Context) {
-        Log.i(TAG, "Update context. id: $id, \n $context")
+        val dao = db.contextDao()
+        dao.update(id, context.name, context.content)
     }
 
     fun putContext(context: Context) {
-        Log.i(TAG, "Create context: $context")
+        val contextDb = ContextDb(name=context.name, content = context.content)
+        val dao = db.contextDao()
+        dao.insert(contextDb)
     }
 }

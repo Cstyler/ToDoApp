@@ -10,7 +10,9 @@ import android.widget.Toast
 import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.adapters.listadapters.BaseListAdapter
+import bmstu.ru.todoapp.adapters.listadapters.ProjectAdapter
 import bmstu.ru.todoapp.entities.*
+import kotlinx.android.synthetic.main.list_fragment.*
 import kotlinx.android.synthetic.main.project_edit_form.*
 
 @SuppressLint("SimpleDateFormat")
@@ -27,6 +29,12 @@ class ProjectEditActivity : AppCompatActivity() {
         setContentView(R.layout.project_edit_form)
         syncLayoutWithDatabase()
         Log.i(TAG, "OnCreate")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val adapter = rec_view?.adapter as? ProjectAdapter
+        adapter?.updateData()
     }
 
     private fun syncLayoutWithDatabase() {

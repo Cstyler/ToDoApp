@@ -12,7 +12,9 @@ class NextActionsListAdapter(context: Context) : BaseListAdapter(context) {
         private const val TAG = "NextActionsListAdapter"
     }
 
-    override var noteNames: Array<NoteName> = DatabaseLayer.getNextActionsNames()
+    override fun getData(): Array<NoteName> {
+        return DatabaseLayer.getNextActionsNames()
+    }
 
     override fun startChildActivity(position: Int) {
         val intent = Intent(context, NextActionsListEditActivity::class.java).apply {

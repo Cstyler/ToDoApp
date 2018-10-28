@@ -12,7 +12,9 @@ class SomedayListAdapter(context: Context) : BaseListAdapter(context) {
         private const val TAG = "SomedayListAdapter"
     }
 
-    override var noteNames: Array<NoteName> = DatabaseLayer.getSomedayNoteNames()
+    override fun getData(): Array<NoteName> {
+        return DatabaseLayer.getSomedayNoteNames()
+    }
 
     override fun startChildActivity(position: Int) {
         val intent = Intent(context, SomedayListEditActivity::class.java).apply {

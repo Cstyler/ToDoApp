@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import bmstu.ru.todoapp.R
-import bmstu.ru.todoapp.adapters.listadapters.ProjectListAdapter
+import bmstu.ru.todoapp.adapters.listadapters.ProjectAdapter
 import kotlinx.android.synthetic.main.list_fragment.*
 
 class ProjectsActivity : AppCompatActivity() {
@@ -21,7 +21,7 @@ class ProjectsActivity : AppCompatActivity() {
         setContentView(R.layout.list_fragment)
         rec_view.layoutManager = LinearLayoutManager(this)
         rec_view.setHasFixedSize(true)
-        rec_view.adapter = ProjectListAdapter(this)
+        rec_view.adapter = ProjectAdapter(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

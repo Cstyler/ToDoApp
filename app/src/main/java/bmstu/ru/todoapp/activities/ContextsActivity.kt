@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import bmstu.ru.todoapp.R
-import bmstu.ru.todoapp.adapters.listadapters.ContextListAdapter
+import bmstu.ru.todoapp.adapters.listadapters.ContextAdapter
 import kotlinx.android.synthetic.main.list_fragment.*
 
 class ContextsActivity : AppCompatActivity() {
@@ -21,7 +21,13 @@ class ContextsActivity : AppCompatActivity() {
         setContentView(R.layout.list_fragment)
         rec_view.layoutManager = LinearLayoutManager(this)
         rec_view.setHasFixedSize(true)
-        rec_view.adapter = ContextListAdapter(this)
+        rec_view.adapter = ContextAdapter(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val adapter = rec_view?.adapter as? ContextAdapter
+        adapter?.updateData()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
