@@ -31,12 +31,6 @@ class ProjectEditActivity : AppCompatActivity() {
         Log.i(TAG, "OnCreate")
     }
 
-    override fun onResume() {
-        super.onResume()
-        val adapter = rec_view?.adapter as? ProjectAdapter
-        adapter?.updateData()
-    }
-
     private fun syncLayoutWithDatabase() {
         projectId = intent.getIntExtra(BaseListAdapter.NOTE_ID_KEY, projectId)
         Log.i(TAG, "Note id: $projectId")

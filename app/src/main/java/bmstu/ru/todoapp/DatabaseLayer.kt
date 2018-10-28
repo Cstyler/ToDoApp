@@ -4,7 +4,7 @@ import android.arch.persistence.room.Room
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import bmstu.ru.todoapp.dbentities.ContextDb
-import bmstu.ru.todoapp.dbentities.InListNoteDb
+import bmstu.ru.todoapp.dbentities.ProjectDb
 import bmstu.ru.todoapp.entities.*
 import java.util.*
 
@@ -283,35 +283,44 @@ object DatabaseLayer {
     }
 
     fun getProjectNames(): List<ProjectName> {
-        val projects = Array(5) {
-            ProjectName(it, "Proj $it")
-        }.toList()
-        return projects
+        val dao = db.projectDao()
+        val projectList = dao.getAllFromDb()
+        return projectList.map {
+            ProjectName(it.id, it.name)
+        }
     }
 
     fun getProjectNameById(id: Int): String {
-        return "Proj $id"
+        val dao = db.projectDao()
+        val projectDb = dao.getById(id)
+        return projectDb.name
     }
 
     fun getProjectById(id: Int): Project {
-        return Project("Proj$id", "Proj$id")
-    }
-
-    fun updateProject(id: Int, project: Project) {
-        Log.i(TAG, "Update project. id: $id, \n $project")
-    }
-
-    fun putProject(project: Project) {
-        Log.i(TAG, "Create project: $project")
+        val dao = db.projectDao()
+        val projectDb = dao.getById(id)
+        return Project(projectDb.name, projectDb.content)
     }
 
     fun deleteProjectById(id: Int) {
+        val dao = db.projectDao()
+        dao.deleteById(id)
+    }
+
+    fun updateProject(id: Int, project: Project) {
+        val dao = db.projectDao()
+        dao.update(id, project.name, project.content)
+    }
+
+    fun putProject(project: Project) {
+        val projectDb = ProjectDb(name=project.name, content = project.content)
+        val dao = db.projectDao()
+        dao.insert(projectDb)
     }
 
     fun getContextNames(): List<ContextName> {
         val dao = db.contextDao()
         val contextList = dao.getAllFromDb()
-        Log.i(TAG, "Len: ${contextList.size}")
         return contextList.map {
             ContextName(it.id, it.name)
         }

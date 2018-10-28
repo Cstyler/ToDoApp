@@ -1,11 +1,9 @@
 package bmstu.ru.todoapp.daos
 
 import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Delete
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import bmstu.ru.todoapp.dbentities.ContextDb
-import bmstu.ru.todoapp.dbentities.InListNoteDb
 
 
 @Dao

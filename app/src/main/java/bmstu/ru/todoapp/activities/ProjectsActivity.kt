@@ -24,6 +24,12 @@ class ProjectsActivity : AppCompatActivity() {
         rec_view.adapter = ProjectAdapter(this)
     }
 
+    override fun onResume() {
+        super.onResume()
+        val adapter = rec_view?.adapter as? ProjectAdapter
+        adapter?.updateData()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.projects_menu, menu)
         return super.onCreateOptionsMenu(menu)
