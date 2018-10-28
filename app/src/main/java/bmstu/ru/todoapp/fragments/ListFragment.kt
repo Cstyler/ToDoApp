@@ -35,7 +35,6 @@ class ListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         pageNum = arguments!!.getInt(ARG_PAGE)
-        Log.i(TAG, "OnCreate. Page: $pageNum")
     }
 
     @SuppressLint("SetTextI18n")
@@ -49,10 +48,6 @@ class ListFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
             setHasFixedSize(true)
             adapter = getListAdapter(activity!!, pageNum)
-//            divider between list item
-//            val itemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-//            itemDecoration.setDrawable(ContextCompat.getDrawable(context!!, R.drawable.divider)!!)
-//            addItemDecoration(itemDecoration)
         }
         return view
     }

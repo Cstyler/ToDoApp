@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         view_pager.adapter = adapter
         tab_layout.setupWithViewPager(view_pager)
         tab_layout.getTabAt(selectedTabPosition)?.select()
+        Log.i(TAG, "OnCreate")
     }
 
     override fun onTabReselected(tab: TabLayout.Tab?) {
@@ -97,19 +98,53 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
                                 recyclerView.adapter as NextActionsListAdapter
                             when (which) {
                                 0 -> {
-                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                    recViewAdapter.noteNames = DatabaseLayer.getNextActionsNamesWithNoDeadline()
                                 }
                                 1 -> {
-                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                    recViewAdapter.noteNames = DatabaseLayer.getNextActionsNamesWithDeadline()
                                 }
                                 2 -> {
-                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                    val projectDialogBuilder = AlertDialog.Builder(this)
+                                    projectDialogBuilder.setTitle(getString(R.string.choose_project_dialog_title))
+                                    setDialogBuilderCancel(projectDialogBuilder)
+                                    val projectNames = DatabaseLayer.getProjectNames()
+                                    val projectNameArrayAdapter = ArrayAdapter<String>(
+                                        this,
+                                        android.R.layout.select_dialog_singlechoice,
+                                        projectNames.map { it.name }
+                                    )
+                                    projectDialogBuilder.setAdapter(projectNameArrayAdapter) { _, projIndex ->
+                                        val projectId = projectNames[projIndex].id
+                                        recViewAdapter.noteNames =
+                                                DatabaseLayer.getNextActionsNamesFilteredByProject(
+                                                    projectId
+                                                )
+                                        recViewAdapter.notifyDataSetChanged()
+                                    }
+                                    showDialog(projectDialogBuilder)
                                 }
                                 3 -> {
-                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                    recViewAdapter.noteNames = DatabaseLayer.getNextActionsNamesWithNoProject()
                                 }
                                 4 -> {
-                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                    val contextDialogBuilder = AlertDialog.Builder(this)
+                                    contextDialogBuilder.setTitle(getString(R.string.choose_context_dialog_title))
+                                    setDialogBuilderCancel(contextDialogBuilder)
+                                    val contextNames = DatabaseLayer.getContextNames()
+                                    val contextNameArrayAdapter = ArrayAdapter<String>(
+                                        this,
+                                        android.R.layout.select_dialog_singlechoice,
+                                        contextNames.map { it.name }
+                                    )
+                                    contextDialogBuilder.setAdapter(contextNameArrayAdapter) { _, projIndex ->
+                                        val contextId = contextNames[projIndex].id
+                                        recViewAdapter.noteNames =
+                                                DatabaseLayer.getNextActionsNamesFilteredByContext(
+                                                    contextId
+                                                )
+                                        recViewAdapter.notifyDataSetChanged()
+                                    }
+                                    showDialog(contextDialogBuilder)
                                 }
                                 5 -> {
                                     recViewAdapter.noteNames = DatabaseLayer.getNextActionsNames()
@@ -126,13 +161,47 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
                                 recyclerView.adapter as WaitingForListAdapter
                             when (which) {
                                 0 -> {
-                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                    val projectDialogBuilder = AlertDialog.Builder(this)
+                                    projectDialogBuilder.setTitle(getString(R.string.choose_project_dialog_title))
+                                    setDialogBuilderCancel(projectDialogBuilder)
+                                    val projectNames = DatabaseLayer.getProjectNames()
+                                    val projectNameArrayAdapter = ArrayAdapter<String>(
+                                        this,
+                                        android.R.layout.select_dialog_singlechoice,
+                                        projectNames.map { it.name }
+                                    )
+                                    projectDialogBuilder.setAdapter(projectNameArrayAdapter) { _, projIndex ->
+                                        val projectId = projectNames[projIndex].id
+                                        recViewAdapter.noteNames =
+                                                DatabaseLayer.getWaitingForNamesFilteredByProject(
+                                                    projectId
+                                                )
+                                        recViewAdapter.notifyDataSetChanged()
+                                    }
+                                    showDialog(projectDialogBuilder)
                                 }
                                 1 -> {
-                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                    recViewAdapter.noteNames = DatabaseLayer.getWaitingForNamesWithNoProject()
                                 }
                                 2 -> {
-                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                    val contextDialogBuilder = AlertDialog.Builder(this)
+                                    contextDialogBuilder.setTitle(getString(R.string.choose_context_dialog_title))
+                                    setDialogBuilderCancel(contextDialogBuilder)
+                                    val contextNames = DatabaseLayer.getContextNames()
+                                    val contextNameArrayAdapter = ArrayAdapter<String>(
+                                        this,
+                                        android.R.layout.select_dialog_singlechoice,
+                                        contextNames.map { it.name }
+                                    )
+                                    contextDialogBuilder.setAdapter(contextNameArrayAdapter) { _, projIndex ->
+                                        val contextId = contextNames[projIndex].id
+                                        recViewAdapter.noteNames =
+                                                DatabaseLayer.getWaitingForNamesFilteredByContext(
+                                                    contextId
+                                                )
+                                        recViewAdapter.notifyDataSetChanged()
+                                    }
+                                    showDialog(contextDialogBuilder)
                                 }
                                 3 -> {
                                     recViewAdapter.noteNames = DatabaseLayer.getWaitingForNoteNames()
@@ -148,7 +217,24 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
                                 recyclerView.adapter as SomedayListAdapter
                             when (which) {
                                 0 -> {
-                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                    val contextDialogBuilder = AlertDialog.Builder(this)
+                                    contextDialogBuilder.setTitle(getString(R.string.choose_context_dialog_title))
+                                    setDialogBuilderCancel(contextDialogBuilder)
+                                    val contextNames = DatabaseLayer.getContextNames()
+                                    val contextNameArrayAdapter = ArrayAdapter<String>(
+                                        this,
+                                        android.R.layout.select_dialog_singlechoice,
+                                        contextNames.map { it.name }
+                                    )
+                                    contextDialogBuilder.setAdapter(contextNameArrayAdapter) { _, projIndex ->
+                                        val contextId = contextNames[projIndex].id
+                                        recViewAdapter.noteNames =
+                                                DatabaseLayer.getSomedayNamesFilteredByContext(
+                                                    contextId
+                                                )
+                                        recViewAdapter.notifyDataSetChanged()
+                                    }
+                                    showDialog(contextDialogBuilder)
                                 }
                                 1 -> {
                                     recViewAdapter.noteNames = DatabaseLayer.getSomedayNoteNames()
@@ -164,13 +250,47 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
                                 recyclerView.adapter as CalendarListAdapter
                             when (which) {
                                 0 -> {
-                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                    val projectDialogBuilder = AlertDialog.Builder(this)
+                                    projectDialogBuilder.setTitle(getString(R.string.choose_project_dialog_title))
+                                    setDialogBuilderCancel(projectDialogBuilder)
+                                    val projectNames = DatabaseLayer.getProjectNames()
+                                    val projectNameArrayAdapter = ArrayAdapter<String>(
+                                        this,
+                                        android.R.layout.select_dialog_singlechoice,
+                                        projectNames.map { it.name }
+                                    )
+                                    projectDialogBuilder.setAdapter(projectNameArrayAdapter) { _, projIndex ->
+                                        val projectId = projectNames[projIndex].id
+                                        recViewAdapter.noteNames =
+                                                DatabaseLayer.getCalendarNamesFilteredByProject(
+                                                    projectId
+                                                )
+                                        recViewAdapter.notifyDataSetChanged()
+                                    }
+                                    showDialog(projectDialogBuilder)
                                 }
                                 1 -> {
-                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                    recViewAdapter.noteNames = DatabaseLayer.getCalendarNamesWithNoProject()
                                 }
                                 2 -> {
-                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                    val contextDialogBuilder = AlertDialog.Builder(this)
+                                    contextDialogBuilder.setTitle(getString(R.string.choose_context_dialog_title))
+                                    setDialogBuilderCancel(contextDialogBuilder)
+                                    val contextNames = DatabaseLayer.getContextNames()
+                                    val contextNameArrayAdapter = ArrayAdapter<String>(
+                                        this,
+                                        android.R.layout.select_dialog_singlechoice,
+                                        contextNames.map { it.name }
+                                    )
+                                    contextDialogBuilder.setAdapter(contextNameArrayAdapter) { _, projIndex ->
+                                        val contextId = contextNames[projIndex].id
+                                        recViewAdapter.noteNames =
+                                                DatabaseLayer.getCalendarNamesFilteredByContext(
+                                                    contextId
+                                                )
+                                        recViewAdapter.notifyDataSetChanged()
+                                    }
+                                    showDialog(contextDialogBuilder)
                                 }
                                 3 -> {
                                     recViewAdapter.noteNames = DatabaseLayer.getCalendarNoteNames()
@@ -180,9 +300,7 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
                         }
                     }
                 }
-                val dialog = dialogBuilder.show()
-                val textView = dialog.findViewById<TextView>(android.R.id.message)
-                textView?.textSize = DIALOG_TEXT_SIZE
+                showDialog(dialogBuilder)
             }
             R.id.button_sort -> {
                 Toast.makeText(
@@ -193,6 +311,12 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
             }
         }
         return super.onContextItemSelected(item)
+    }
+
+    private fun showDialog(dialogBuilder: AlertDialog.Builder) {
+        val dialog = dialogBuilder.show()
+        val textView = dialog.findViewById<TextView>(android.R.id.message)
+        textView?.textSize = DIALOG_TEXT_SIZE
     }
 
     private fun setDialogBuilderCancel(dialogBuilder: AlertDialog.Builder) {

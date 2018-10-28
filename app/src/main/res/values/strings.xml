@@ -28,4 +28,6 @@
     <string name="no_context_spinner_item">Нет контекста</string>
     <string name="filter_dialog_title">Фильтрация заметок</string>
     <string name="no_filter_in_note">Нет фильтраций для входящих заметок</string>
+    <string name="choose_project_dialog_title">Выберите проект</string>
+    <string name="choose_context_dialog_title">Выберите контекст</string>
 </resources>
