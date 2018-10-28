@@ -15,41 +15,117 @@ object DatabaseLayer {
     }
 
     fun getNextActionsNames(): Array<NoteName> {
-        val noteNames = arrayOf(
-            NoteName(1, "NextAction1"),
-            NoteName(2, "NextAction2"),
-            NoteName(3, "NextAction3")
-        )
+        val noteNames = Array(3) {
+            NoteName(it, "NextAction$it")
+        }
+        return noteNames
+    }
+
+    fun getNextActionsNamesFilteredByContext(contextId: Int): Array<NoteName> {
+        val noteNames = Array(3) {
+            NoteName(it, "NextAction$it. Context $contextId")
+        }
+        return noteNames
+    }
+
+    fun getNextActionsNamesFilteredByProject(projectId: Int): Array<NoteName> {
+        val noteNames = Array(3) {
+            NoteName(it, "NextAction$it. Proj $projectId")
+        }
+        return noteNames
+    }
+
+    fun getNextActionsNamesWithNoProject(): Array<NoteName> {
+        val noteNames = Array(3) {
+            NoteName(it, "NextAction$it. NoProj")
+        }
+        return noteNames
+    }
+
+    fun getNextActionsNamesWithNoDeadline(): Array<NoteName> {
+        val noteNames = Array(3) {
+            NoteName(it, "NextAction$it. NoDeadline")
+        }
+        return noteNames
+    }
+
+    fun getNextActionsNamesWithDeadline(): Array<NoteName> {
+        val noteNames = Array(3) {
+            NoteName(it, "NextAction$it. WithDeadline")
+        }
         return noteNames
     }
 
     fun getWaitingForNoteNames(): Array<NoteName> {
-        val noteNames = arrayOf(
-            NoteName(1, "WaitingFor1"),
-            NoteName(2, "WaitingFor2"),
-            NoteName(3, "WaitingFor3")
-        )
+        val noteNames = Array(3) {
+            NoteName(it, "WaitingFor$it")
+        }
+        return noteNames
+    }
+
+    fun getWaitingForNamesFilteredByContext(contextId: Int): Array<NoteName> {
+        val noteNames = Array(3) {
+            NoteName(it, "WaitingFor$it. Context $contextId")
+        }
+        return noteNames
+    }
+
+    fun getWaitingForNamesFilteredByProject(projectId: Int): Array<NoteName> {
+        val noteNames = Array(3) {
+            NoteName(it, "WaitingFor$it. Proj $projectId")
+        }
+        return noteNames
+    }
+
+    fun getWaitingForNamesWithNoProject(): Array<NoteName> {
+        val noteNames = Array(3) {
+            NoteName(it, "WaitingFor$it. NoProj")
+        }
         return noteNames
     }
 
     fun getSomedayNoteNames(): Array<NoteName> {
-        val noteNames = arrayOf(
-            NoteName(1, "Someday1"),
-            NoteName(2, "Someday2"),
-            NoteName(3, "Someday3")
-        )
+        val noteNames = Array(3) {
+            NoteName(it, "Someday$it")
+        }
         return noteNames
     }
+
+    fun getSomedayNamesFilteredByContext(contextId: Int): Array<NoteName> {
+        val noteNames = Array(3) {
+            NoteName(it, "Someday$it. Context $contextId")
+        }
+        return noteNames
+    }
+
 
     fun getCalendarNoteNames(): Array<NoteName> {
-        val noteNames = arrayOf(
-            NoteName(1, "Calendar1"),
-            NoteName(2, "Calendar2"),
-            NoteName(3, "Calendar3")
-        )
+        val noteNames = Array(3) {
+            NoteName(it, "Calendar$it")
+        }
         return noteNames
     }
 
+    fun getCalendarNamesFilteredByContext(contextId: Int): Array<NoteName> {
+        val noteNames = Array(3) {
+            NoteName(it, "Calendar$it. Context $contextId")
+        }
+        return noteNames
+    }
+
+    fun getCalendarNamesFilteredByProject(projectId: Int): Array<NoteName> {
+        val noteNames = Array(3) {
+            NoteName(it, "Calendar$it. Proj $projectId")
+        }
+        return noteNames
+    }
+
+    fun getCalendarNamesWithNoProject(): Array<NoteName> {
+        val noteNames = Array(3) {
+            NoteName(it, "Calendar$it. NoProj")
+        }
+        return noteNames
+    }
 
     fun getInListNoteById(id: Int): InListNote {
         val cal = Calendar.getInstance()
