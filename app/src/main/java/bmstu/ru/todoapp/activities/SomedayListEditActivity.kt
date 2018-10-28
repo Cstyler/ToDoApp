@@ -54,7 +54,7 @@ class SomedayListEditActivity : AppCompatActivity() {
         contextNames = DatabaseLayer.getContextNames()
         someday_list_edit_context_spinner.setItems(
             listOf(getString(R.string.no_context_spinner_item))
-                + contextNames.map { it.name })
+                    + contextNames.map { it.name })
         note.contextId?.let {
             val contextName = ContextName(it, DatabaseLayer.getContextNameById(it))
             someday_list_edit_context_spinner.selectedIndex = contextNames.indexOf(contextName) + 1

@@ -7,11 +7,8 @@ import android.view.MenuItem
 import android.widget.Toast
 import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
-import bmstu.ru.todoapp.entities.InListNote
 import bmstu.ru.todoapp.entities.Project
-import kotlinx.android.synthetic.main.in_list_edit_form.*
 import kotlinx.android.synthetic.main.project_edit_form.*
-import java.util.*
 
 class ProjectCreateActivity : AppCompatActivity() {
     companion object {

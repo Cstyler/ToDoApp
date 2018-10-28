@@ -314,7 +314,7 @@ object DatabaseLayer {
     }
 
     fun putProject(project: Project) {
-        val projectDb = ProjectDb(name=project.name, content = project.content)
+        val projectDb = ProjectDb(name = project.name, content = project.content)
         val dao = db.projectDao()
         dao.insert(projectDb)
     }
@@ -350,7 +350,7 @@ object DatabaseLayer {
     }
 
     fun putContext(context: Context) {
-        val contextDb = ContextDb(name=context.name, content = context.content)
+        val contextDb = ContextDb(name = context.name, content = context.content)
         val dao = db.contextDao()
         dao.insert(contextDb)
     }

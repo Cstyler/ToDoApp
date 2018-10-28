@@ -10,7 +10,7 @@ import android.widget.Toast
 import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.adapters.listadapters.BaseListAdapter
-import bmstu.ru.todoapp.entities.*
+import bmstu.ru.todoapp.entities.Context
 import kotlinx.android.synthetic.main.context_edit_form.*
 
 @SuppressLint("SimpleDateFormat")

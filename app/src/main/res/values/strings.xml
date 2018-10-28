@@ -3,7 +3,6 @@
     <string name="note_name">Название заметки</string>
     <string name="note_content">Описание заметки</string>
     <string name="button_ok">OK</string>
-    <string name="button_sort">Сортировка</string>
     <string name="button_filter">Фильтрация</string>
     <string name="delete_note_menu_item">Удалить заметку</string>
     <string name="form_edit_move_button">Переместить записку</string>

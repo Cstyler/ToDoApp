@@ -15,7 +15,10 @@ import android.widget.TimePicker
 import android.widget.Toast
 import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
-import bmstu.ru.todoapp.entities.*
+import bmstu.ru.todoapp.entities.CalendarListNote
+import bmstu.ru.todoapp.entities.ContextName
+import bmstu.ru.todoapp.entities.MyDate
+import bmstu.ru.todoapp.entities.ProjectName
 import kotlinx.android.synthetic.main.calendar_list_edit_form.*
 import java.text.SimpleDateFormat
 import java.util.*
