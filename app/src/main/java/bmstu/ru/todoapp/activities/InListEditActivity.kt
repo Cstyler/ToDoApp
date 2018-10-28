@@ -16,8 +16,7 @@ import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.adapters.listadapters.BaseListAdapter
 import bmstu.ru.todoapp.adapters.listadapters.BaseListAdapter.Companion.NOTE_ID_KEY
-import bmstu.ru.todoapp.entities.InListNote
-import bmstu.ru.todoapp.entities.NextActionsListNote
+import bmstu.ru.todoapp.entities.*
 import kotlinx.android.synthetic.main.in_list_edit_form.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -120,10 +119,7 @@ class InListEditActivity : AppCompatActivity() {
                                 note.creationDate,
                                 Calendar.getInstance().time,
                                 1,
-                                null,
-                                null,
-                                null,
-                                null
+                                null, null, null, null
                             )
                             val newNoteId = DatabaseLayer.putNextActionNote(nextActionNote)
                             val intent = Intent(
@@ -135,13 +131,61 @@ class InListEditActivity : AppCompatActivity() {
                             startChildActivity(intent)
                         }
                         1 -> {
-                            TODO()
+                            showMoveToast(tabTitlesList, which)
+                            DatabaseLayer.deleteInNoteById(noteId)
+                            val waitingForListNote = WaitingForListNote(
+                                note.name,
+                                note.content,
+                                note.creationDate,
+                                Calendar.getInstance().time,
+                                null, null, null, null
+                            )
+                            val newNoteId = DatabaseLayer.putWaitingForNote(waitingForListNote)
+                            val intent = Intent(
+                                this,
+                                WaitingForListEditActivity::class.java
+                            ).apply {
+                                putExtra(NOTE_ID_KEY, newNoteId)
+                            }
+                            startChildActivity(intent)
                         }
                         2 -> {
-                            TODO()
+                            showMoveToast(tabTitlesList, which)
+                            DatabaseLayer.deleteSomedayNoteById(noteId)
+                            val somedayListNote = SomedayListNote(
+                                note.name,
+                                note.content,
+                                note.creationDate,
+                                Calendar.getInstance().time,
+                                null
+                            )
+                            val newNoteId = DatabaseLayer.putSomedayNote(somedayListNote)
+                            val intent = Intent(
+                                this,
+                                SomedayListEditActivity::class.java
+                            ).apply {
+                                putExtra(NOTE_ID_KEY, newNoteId)
+                            }
+                            startChildActivity(intent)
                         }
                         3 -> {
-                            TODO()
+                            showMoveToast(tabTitlesList, which)
+                            DatabaseLayer.deleteCalendarNoteById(noteId)
+                            val calendarListNote = CalendarListNote(
+                                note.name,
+                                note.content,
+                                note.creationDate,
+                                Calendar.getInstance().time,
+                                null, null, null, null
+                            )
+                            val newNoteId = DatabaseLayer.putCalendarNote(calendarListNote)
+                            val intent = Intent(
+                                this,
+                                CalendarListEditActivity::class.java
+                            ).apply {
+                                putExtra(NOTE_ID_KEY, newNoteId)
+                            }
+                            startChildActivity(intent)
                         }
                     }
                 }

@@ -7,4 +7,16 @@
             android:title="@string/button_ok"
             app:showAsAction="ifRoom"
     />
+    <item
+            android:id="@+id/form_edit_sort_button"
+            android:orderInCategory="1"
+            android:title="@string/button_filter"
+            app:showAsAction="never"
+    />
+    <item
+            android:id="@+id/form_edit_filter_button"
+            android:orderInCategory="2"
+            android:title="@string/button_filter"
+            app:showAsAction="never"
+    />
 </menu>
