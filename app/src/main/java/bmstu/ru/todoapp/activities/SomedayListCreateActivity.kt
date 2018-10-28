@@ -32,7 +32,7 @@ class SomedayListCreateActivity : AppCompatActivity() {
                 val noteContent = in_list_edit_note_content_edit_text.text.toString()
                 val time = Calendar.getInstance().time
                 val note = InListNote(noteName, noteContent, time, time)
-                DatabaseLayer.putInListEdit(note)
+                DatabaseLayer.putInListNote(note)
                 finish()
             }
         }

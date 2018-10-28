@@ -51,8 +51,6 @@ class NextActionsListCreateActivity : AppCompatActivity() {
         setContentView(R.layout.next_actions_list_edit_form)
 
         next_actions_list_edit_priority_spinner.setItems(PRIORITIES)
-        projectNames = DatabaseLayer.getProjectNames()
-        next_actions_list_edit_project_spinner.setItems(listOf("Нет проекта") + projectNames.map { it.name })
 
         setProjectSpinner()
         setContextSpinner()

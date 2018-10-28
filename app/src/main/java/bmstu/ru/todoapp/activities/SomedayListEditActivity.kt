@@ -66,7 +66,7 @@ class SomedayListEditActivity : AppCompatActivity() {
                     val cal = Calendar.getInstance()
                     note.updateDate = cal.time
                 }
-                DatabaseLayer.updateInListEdit(noteId, note)
+                DatabaseLayer.updateInListNote(noteId, note)
                 finish()
             }
             R.id.form_edit_delete_button -> {

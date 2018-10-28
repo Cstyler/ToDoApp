@@ -56,14 +56,6 @@ object DatabaseLayer {
         return InListNote("INname$id", "INcontent$id", time, time)
     }
 
-    fun updateInListEdit(id: Int, note: InListNote) {
-        Log.i(TAG, "Update note: id: $id, $note")
-    }
-
-    fun putInListEdit(note: InListNote) {
-        Log.i(TAG, "Create note: id: $note")
-    }
-
     fun getNextActionsListNoteById(id: Int): NextActionsListNote {
         val cal = Calendar.getInstance()
         val time = cal.time
@@ -111,8 +103,20 @@ object DatabaseLayer {
         Log.i(TAG, "Update note: id: $id,\n $note")
     }
 
+    fun updateInListNote(id: Int, note: InListNote) {
+        Log.i(TAG, "Update note: id: $id, $note")
+    }
+
+    fun putInListNote(note: InListNote) {
+        Log.i(TAG, "Create note: id: $note")
+    }
 
     fun putNextActionNote(note: NextActionsListNote): Int {
+        Log.i(TAG, "Create note: \n$note")
+        return 0
+    }
+
+    fun putWaitingForNote(note: WaitingForListNote): Int {
         Log.i(TAG, "Create note: \n$note")
         return 0
     }
