@@ -2,22 +2,29 @@ package bmstu.ru.todoapp.adapters.listadapters
 
 import android.content.Context
 import android.content.Intent
-import android.support.v4.content.ContextCompat.startActivity
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.RecyclerViewHolder
-import bmstu.ru.todoapp.entities.NoteName
+import bmstu.ru.todoapp.activities.ProjectEditActivity
 
-abstract class BaseListAdapter(protected val context: Context) :
-    RecyclerView.Adapter<RecyclerViewHolder>() {
-
-    abstract var noteNames: Array<NoteName>
+class ProjectListAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerViewHolder>() {
 
     companion object {
-        private const val TAG = "BaseListAdapter"
+        private const val TAG = "ProjectListAdapter"
         const val NOTE_ID_KEY = "note_id"
+    }
+
+    var projectNames = DatabaseLayer.getProjectNames()
+
+    private fun startChildActivity(position: Int) {
+        val intent = Intent(context, ProjectEditActivity::class.java).apply {
+            putExtra(NOTE_ID_KEY, projectNames[position].id)
+        }
+        startIntent(intent)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
@@ -27,23 +34,20 @@ abstract class BaseListAdapter(protected val context: Context) :
     }
 
     override fun getItemCount(): Int {
-        return noteNames.size
+        return projectNames.size
     }
 
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-        holder.setData(noteNames[position].name)
+        holder.setData(projectNames[position].name)
         holder.itemView.setOnClickListener {
             startChildActivity(position)
         }
     }
 
-    protected fun startIntent(intent: Intent) {
+    private fun startIntent(intent: Intent) {
         if (intent.resolveActivity(context.packageManager) != null) {
-            startActivity(context, intent, null)
+            ContextCompat.startActivity(context, intent, null)
         }
     }
-
-    abstract fun startChildActivity(position: Int)
 }
-

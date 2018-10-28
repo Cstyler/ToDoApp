@@ -97,6 +97,52 @@
                     android:value=".activities.MainActivity"/>
         </activity>
 
-    </application>
+        <activity
+                android:name=".activities.ProjectEditActivity"
+                android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.MainActivity"/>
+        </activity>
 
+        <activity
+                android:name=".activities.ProjectCreateActivity"
+                android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.MainActivity"/>
+        </activity>
+
+        <activity
+                android:name=".activities.ContextEditActivity"
+                android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.MainActivity"/>
+        </activity>
+
+        <activity
+                android:name=".activities.ContextCreateActivity"
+                android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.MainActivity"/>
+        </activity>
+
+        <activity
+                android:name=".activities.ProjectsActivity"
+                android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.MainActivity"/>
+        </activity>
+
+        <activity
+                android:name=".activities.ContextsActivity"
+                android:parentActivityName=".activities.MainActivity">
+        <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity"/>
+        </activity>
+    </application>
 </manifest>

@@ -13,7 +13,6 @@ class SomedayListAdapter(context: Context) : BaseListAdapter(context) {
     }
 
     override var noteNames: Array<NoteName> = DatabaseLayer.getSomedayNoteNames()
-    override var totalItemCount = noteNames.size
 
     override fun startChildActivity(position: Int) {
         val intent = Intent(context, SomedayListEditActivity::class.java).apply {

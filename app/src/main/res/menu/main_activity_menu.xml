@@ -7,15 +7,27 @@
             android:title="@string/main_activity_add_menu_item"
             app:showAsAction="ifRoom"/>
     <item
-            android:id="@+id/button_sort"
+            android:id="@+id/main_activity_projects_menu_item"
             android:orderInCategory="1"
-            android:title="@string/button_sort"
+            android:title="@string/projects_menu_item"
             app:showAsAction="never"
     />
     <item
-            android:id="@+id/button_filter"
+            android:id="@+id/main_activity_contexts_menu_item"
             android:orderInCategory="2"
+            android:title="@string/contexts_menu_item"
+            app:showAsAction="never"
+    />
+    <item
+            android:id="@+id/main_activity_filter_menu_item"
+            android:orderInCategory="3"
             android:title="@string/button_filter"
             app:showAsAction="never"
     />
+    <!--<item-->
+            <!--android:id="@+id/button_sort"-->
+            <!--android:orderInCategory="4"-->
+            <!--android:title="@string/button_sort"-->
+            <!--app:showAsAction="never"-->
+    <!--/>-->
 </menu>

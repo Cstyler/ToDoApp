@@ -5,7 +5,7 @@
     <string name="button_ok">OK</string>
     <string name="button_sort">Сортировка</string>
     <string name="button_filter">Фильтрация</string>
-    <string name="form_edit_delete_button">Удалить заметку</string>
+    <string name="delete_note_menu_item">Удалить заметку</string>
     <string name="form_edit_move_button">Переместить записку</string>
     <string name="creation_date">Дата создания: %s</string>
     <string name="update_date">Дата обновления: %s</string>
@@ -30,4 +30,19 @@
     <string name="no_filter_in_note">Нет фильтраций для входящих заметок</string>
     <string name="choose_project_dialog_title">Выберите проект</string>
     <string name="choose_context_dialog_title">Выберите контекст</string>
+    <string name="projects_menu_item">Проекты</string>
+    <string name="contexts_menu_item">Контексты</string>
+    <string name="project_name">Название проекта</string>
+    <string name="project_content">Описание проекта</string>
+    <string name="context_name">Название контекста</string>
+    <string name="context_content">Описание контекста</string>
+    <string name="project_delete_toast">Проект удален</string>
+    <string name="no_empty_project_name_toast">Нельзя сохранить проект с пустым именем</string>
+    <string name="form_edit_context_delete">Удалить контекст</string>
+    <string name="create_project_menu_item">Создать проект</string>
+    <string name="delete_project_menu_item">Удалить проект</string>
+    <string name="empty_project_name_toast">Нельзя сохранить проект с пустым именем</string>
+    <string name="create_context_menu_item">Создать контекст</string>
+    <string name="delete_context_toast">Контекст удалён</string>
+    <string name="empty_context_name_toast">Нельзя сохранить контекст с пустым именем</string>
 </resources>

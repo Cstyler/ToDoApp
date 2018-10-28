@@ -13,7 +13,6 @@ class CalendarListAdapter(context: Context) : BaseListAdapter(context) {
     }
 
     override var noteNames: Array<NoteName> = DatabaseLayer.getCalendarNoteNames()
-    override var totalItemCount = noteNames.size
 
     override fun startChildActivity(position: Int) {
         val intent = Intent(context, CalendarListEditActivity::class.java).apply {

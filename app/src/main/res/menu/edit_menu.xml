@@ -10,7 +10,7 @@
     <item
             android:id="@+id/form_edit_delete_button"
             android:orderInCategory="1"
-            android:title="@string/form_edit_delete_button"
+            android:title="@string/delete_note_menu_item"
             app:showAsAction="never"
     />
 </menu>

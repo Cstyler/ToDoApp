@@ -278,6 +278,18 @@ object DatabaseLayer {
         return "Proj $id"
     }
 
+    fun getProjectById(id: Int): Project {
+        return Project("Proj$id", "Proj$id")
+    }
+
+    fun updateProject(id: Int, project: Project) {
+        Log.i(TAG, "Update project. id: $id, \n $project")
+    }
+
+    fun putProject(project: Project) {
+        Log.i(TAG, "Create project: $project")
+    }
+
     fun getContextNames(): List<ContextName> {
         val contexts = Array(5) {
             ContextName(it, "Context $it")
@@ -287,5 +299,23 @@ object DatabaseLayer {
 
     fun getContextNameById(id: Int): String {
         return "Context $id"
+    }
+
+    fun deleteProjectById(id: Int) {
+    }
+
+    fun getContextById(id: Int): Context {
+        return Context("Context$id", "Context$id")
+    }
+
+    fun deleteContextById(id: Int) {
+    }
+
+    fun updateContext(id: Int, context: Context) {
+        Log.i(TAG, "Update context. id: $id, \n $context")
+    }
+
+    fun putContext(context: Context) {
+        Log.i(TAG, "Create context: $context")
     }
 }

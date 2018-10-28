@@ -17,47 +17,35 @@
                 android:layout_height="wrap_content"
         >
             <android.support.design.widget.TextInputLayout
-                    android:id="@+id/in_list_edit_note_name_text_input_layout"
+                    android:id="@+id/project_edit_name_text_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
             >
 
                 <android.support.design.widget.TextInputEditText
-                        android:id="@+id/in_list_edit_note_name_edit_text"
+                        android:id="@+id/project_edit_name_text_edit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/note_name"
+                        android:hint="@string/project_name"
                         android:inputType="text"
                 />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                    android:id="@+id/in_list_edit_note_content_text_input_layout"
+                    android:id="@+id/project_edit_content_text_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
             >
                 <android.support.design.widget.TextInputEditText
-                        android:id="@+id/in_list_edit_note_content_edit_text"
+                        android:id="@+id/project_edit_content_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/note_content"
+                        android:hint="@string/project_content"
                         android:inputType="textMultiLine"
                 />
             </android.support.design.widget.TextInputLayout>
-            <TextView
-                    android:id="@+id/in_list_edit_creation_date_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-            />
-            <TextView
-                    android:id="@+id/in_list_edit_update_date_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-            />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

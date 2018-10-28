@@ -70,11 +70,9 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
                 )
 
                 val intent = Intent(this, activities[tab_layout.selectedTabPosition])
-                if (intent.resolveActivity(packageManager) != null) {
-                    startActivity(intent)
-                }
+                startIntent(intent)
             }
-            R.id.button_filter -> {
+            R.id.main_activity_filter_menu_item -> {
                 val position = tab_layout.selectedTabPosition
                 if (position == 0) {
                     Toast.makeText(
@@ -302,15 +300,29 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
                 }
                 showDialog(dialogBuilder)
             }
-            R.id.button_sort -> {
-                Toast.makeText(
-                    this,
-                    "Cортировка заметок...",
-                    Toast.LENGTH_SHORT
-                ).show()
+            R.id.main_activity_projects_menu_item -> {
+                val intent = Intent(this, ProjectsActivity::class.java)
+                startIntent(intent)
             }
+            R.id.main_activity_contexts_menu_item -> {
+                val intent = Intent(this, ContextsActivity::class.java)
+                startIntent(intent)
+            }
+//            R.id.button_sort -> {
+//                Toast.makeText(
+//                    this,
+//                    "Cортировка заметок...",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
         }
         return super.onContextItemSelected(item)
+    }
+
+    private fun startIntent(intent: Intent) {
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        }
     }
 
     private fun showDialog(dialogBuilder: AlertDialog.Builder) {

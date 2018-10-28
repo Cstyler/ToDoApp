@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +43,7 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.list_fragment, container, false)
-        recyclerView = view.findViewById<RecyclerView>(R.id.in_list_rec_view).apply {
+        recyclerView = view.findViewById<RecyclerView>(R.id.rec_view).apply {
             layoutManager = LinearLayoutManager(activity)
             setHasFixedSize(true)
             adapter = getListAdapter(activity!!, pageNum)
