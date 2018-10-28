@@ -113,12 +113,7 @@ class InListEditActivity : AppCompatActivity() {
                 dialogBuilder.setAdapter(arrayAdapter) { _, which ->
                     when (which) {
                         0 -> {
-                            val listName = tabTitlesList[which]
-                            Toast.makeText(
-                                this,
-                                "Заметка перенесена в список: $listName",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            showMoveToast(tabTitlesList, which)
                             DatabaseLayer.deleteInNoteById(noteId)
                             val nextActionNote = NextActionsListNote(
                                 note.name,
@@ -138,9 +133,7 @@ class InListEditActivity : AppCompatActivity() {
                             ).apply {
                                 putExtra(NOTE_ID_KEY, newNoteId)
                             }
-                            if (intent.resolveActivity(packageManager) != null) {
-                                startActivity(this, intent, null)
-                            }
+                            startChildActivity(intent)
                         }
                         1 -> {
                             TODO()
@@ -159,5 +152,20 @@ class InListEditActivity : AppCompatActivity() {
             }
         }
         return super.onContextItemSelected(item)
+    }
+
+    private fun showMoveToast(tabTitlesList: List<String>, which: Int) {
+        val listName = tabTitlesList[which]
+        Toast.makeText(
+            this,
+            "Заметка перенесена в список: $listName",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun startChildActivity(intent: Intent) {
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(this, intent, null)
+        }
     }
 }
