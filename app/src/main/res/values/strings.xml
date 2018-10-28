@@ -26,4 +26,6 @@
     <string name="cancel_dialog">Отменить</string>
     <string name="delete_note_dialog">Заметка удалена</string>
     <string name="no_context_spinner_item">Нет контекста</string>
+    <string name="filter_dialog_title">Фильтрация заметок</string>
+    <string name="no_filter_in_note">Нет фильтраций для входящих заметок</string>
 </resources>

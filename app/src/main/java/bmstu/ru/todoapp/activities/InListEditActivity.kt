@@ -106,8 +106,6 @@ class InListEditActivity : AppCompatActivity() {
                     getString(R.string.cancel_dialog)
                 ) { dialog, _ -> dialog.dismiss() }
 
-
-
                 dialogBuilder.setAdapter(arrayAdapter) { _, which ->
                     when (which) {
                         0 -> {

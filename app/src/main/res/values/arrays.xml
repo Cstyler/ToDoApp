@@ -7,4 +7,28 @@
         <item>Когда-нибудь</item>
         <item>Календарь</item>
     </array>
+    <array name="next_action_filter_types">
+        <item>Без крайнего срока</item>
+        <item>С крайним сроком</item>
+        <item>По проекту</item>
+        <item>Без проекта</item>
+        <item>По контексту</item>
+        <item>Все заметки(без фильтрации)</item>
+    </array>
+    <array name="waiting_for_filter_types">
+        <item>По проекту</item>
+        <item>Без проекта</item>
+        <item>По контексту</item>
+        <item>Все заметки(без фильтрации)</item>
+    </array>
+    <array name="someday_filter_types">
+        <item>По контексту</item>
+        <item>Все заметки(без фильтрации)</item>
+    </array>
+    <array name="calendar_filter_types">
+        <item>По проекту</item>
+        <item>Без проекта</item>
+        <item>По контексту</item>
+        <item>Все заметки(без фильтрации)</item>
+    </array>
 </resources>

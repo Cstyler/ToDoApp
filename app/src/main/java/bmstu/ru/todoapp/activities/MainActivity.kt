@@ -3,10 +3,14 @@ package bmstu.ru.todoapp.activities
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.TabLayout
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ArrayAdapter
+import android.widget.TextView
+import android.widget.Toast
 import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.adapters.TabsFragmentPagerAdapter
@@ -20,6 +24,7 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
 
         private const val TAG = "MainActivity"
         private var selectedTabPosition: Int = 0
+        private const val DIALOG_TEXT_SIZE = 20f
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,40 +73,143 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
                     startActivity(intent)
                 }
             }
-            R.id.settings -> {
-                val adapter = view_pager.adapter as TabsFragmentPagerAdapter
+            R.id.button_filter -> {
                 val position = tab_layout.selectedTabPosition
+                if (position == 0) {
+                    Toast.makeText(
+                        this,
+                        getString(R.string.no_filter_in_note),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return super.onOptionsItemSelected(item)
+                }
+                val adapter = view_pager.adapter as TabsFragmentPagerAdapter
                 val page = adapter.fragments[position]
                 val recyclerView = page!!.recyclerView
+                val dialogBuilder = AlertDialog.Builder(this)
+                dialogBuilder.setTitle(getString(R.string.filter_dialog_title))
+                setDialogBuilderCancel(dialogBuilder)
                 when (position) {
-                    0 -> {
-                        val recViewAdapter = recyclerView.adapter as InListAdapter
-                        recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
-                        recViewAdapter.notifyDataSetChanged()
-                    }
                     1 -> {
-                        val recViewAdapter = recyclerView.adapter as NextActionsListAdapter
-                        recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
-                        recViewAdapter.notifyDataSetChanged()
+                        val arrayAdapter = getArrayAdapter(R.array.next_action_filter_types)
+                        dialogBuilder.setAdapter(arrayAdapter) { _, which ->
+                            val recViewAdapter =
+                                recyclerView.adapter as NextActionsListAdapter
+                            when (which) {
+                                0 -> {
+                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                }
+                                1 -> {
+                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                }
+                                2 -> {
+                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                }
+                                3 -> {
+                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                }
+                                4 -> {
+                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                }
+                                5 -> {
+                                    recViewAdapter.noteNames = DatabaseLayer.getNextActionsNames()
+                                }
+                            }
+                            recViewAdapter.notifyDataSetChanged()
+                        }
                     }
                     2 -> {
-                        val recViewAdapter = recyclerView.adapter as WaitingForListAdapter
-                        recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
-                        recViewAdapter.notifyDataSetChanged()
+                        val arrayAdapter = getArrayAdapter(R.array.waiting_for_filter_types)
+
+                        dialogBuilder.setAdapter(arrayAdapter) { _, which ->
+                            val recViewAdapter =
+                                recyclerView.adapter as WaitingForListAdapter
+                            when (which) {
+                                0 -> {
+                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                }
+                                1 -> {
+                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                }
+                                2 -> {
+                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                }
+                                3 -> {
+                                    recViewAdapter.noteNames = DatabaseLayer.getWaitingForNoteNames()
+                                }
+                            }
+                            recViewAdapter.notifyDataSetChanged()
+                        }
                     }
                     3 -> {
-                        val recViewAdapter = recyclerView.adapter as SomedayListAdapter
-                        recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
-                        recViewAdapter.notifyDataSetChanged()
+                        val arrayAdapter = getArrayAdapter(R.array.someday_filter_types)
+                        dialogBuilder.setAdapter(arrayAdapter) { _, which ->
+                            val recViewAdapter =
+                                recyclerView.adapter as SomedayListAdapter
+                            when (which) {
+                                0 -> {
+                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                }
+                                1 -> {
+                                    recViewAdapter.noteNames = DatabaseLayer.getSomedayNoteNames()
+                                }
+                            }
+                            recViewAdapter.notifyDataSetChanged()
+                        }
                     }
                     4 -> {
-                        val recViewAdapter = recyclerView.adapter as CalendarListAdapter
-                        recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
-                        recViewAdapter.notifyDataSetChanged()
+                        val arrayAdapter = getArrayAdapter(R.array.calendar_filter_types)
+                        dialogBuilder.setAdapter(arrayAdapter) { _, which ->
+                            val recViewAdapter =
+                                recyclerView.adapter as CalendarListAdapter
+                            when (which) {
+                                0 -> {
+                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                }
+                                1 -> {
+                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                }
+                                2 -> {
+                                    recViewAdapter.noteNames = DatabaseLayer.getInNoteNames()
+                                }
+                                3 -> {
+                                    recViewAdapter.noteNames = DatabaseLayer.getCalendarNoteNames()
+                                }
+                            }
+                            recViewAdapter.notifyDataSetChanged()
+                        }
                     }
                 }
+                val dialog = dialogBuilder.show()
+                val textView = dialog.findViewById<TextView>(android.R.id.message)
+                textView?.textSize = DIALOG_TEXT_SIZE
+            }
+            R.id.button_sort -> {
+                Toast.makeText(
+                    this,
+                    "Cортировка заметок...",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
         return super.onContextItemSelected(item)
+    }
+
+    private fun setDialogBuilderCancel(dialogBuilder: AlertDialog.Builder) {
+        dialogBuilder.setNegativeButton(getString(R.string.cancel_dialog)) { dialog, _ ->
+            dialog.dismiss()
+        }
+    }
+
+    private fun getArrayAdapter(resId: Int): ArrayAdapter<String> {
+        val filterTypes = resources
+            .getStringArray(resId)
+
+        val arrayAdapter = ArrayAdapter<String>(
+            this,
+            android.R.layout.select_dialog_singlechoice,
+            filterTypes
+        )
+        return arrayAdapter
     }
 }
