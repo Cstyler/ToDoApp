@@ -50,6 +50,7 @@ object DatabaseLayer {
         return noteNames
     }
 
+
     fun getInListNoteById(id: Int): InListNote {
         val cal = Calendar.getInstance()
         val time = cal.time
@@ -81,7 +82,7 @@ object DatabaseLayer {
         val time = cal.time
         val remindeTime = MyDate(2018, 9, 25, 12, 10)
         val remindTime = null
-//        val waitingTime = MyDate(2018, 11, 14, 13, 0)
+//        val doTime = MyDate(2018, 11, 14, 13, 0)
         val waitingTime = null
 //        val contextId = 1
         val contextId = null
@@ -95,6 +96,41 @@ object DatabaseLayer {
         )
     }
 
+    fun getSomedayListNoteById(id: Int): SomedayListNote {
+        val cal = Calendar.getInstance()
+        val time = cal.time
+        val contextId = null
+        return SomedayListNote(
+            "NAname$id", "NAcontent$id",
+            time, time,
+            contextId
+        )
+    }
+
+    fun getCalendarListNoteById(id: Int): CalendarListNote {
+        val cal = Calendar.getInstance()
+        val time = cal.time
+        val remindeTime = MyDate(2018, 9, 25, 12, 10)
+        val remindTime = null
+//        val doTime = MyDate(2018, 11, 14, 13, 0)
+        val doTime = null
+//        val contextId = 1
+        val contextId = null
+        val projectId = 1
+//        val projectId = null
+        return CalendarListNote(
+            "NAname$id", "NAcontent$id",
+            time, time,
+            doTime, remindeTime,
+            contextId, projectId
+        )
+    }
+
+
+    fun updateInListNote(id: Int, note: InListNote) {
+        Log.i(TAG, "Update note: id: $id, $note")
+    }
+
     fun updateNextActionsListEdit(id: Int, note: NextActionsListNote) {
         Log.i(TAG, "Update note: id: $id,\n $note")
     }
@@ -103,8 +139,12 @@ object DatabaseLayer {
         Log.i(TAG, "Update note: id: $id,\n $note")
     }
 
-    fun updateInListNote(id: Int, note: InListNote) {
-        Log.i(TAG, "Update note: id: $id, $note")
+    fun updateSomedayListEdit(id: Int, note: SomedayListNote) {
+        Log.i(TAG, "Update note: id: $id,\n $note")
+    }
+
+    fun updateCalendarListEdit(id: Int, note: CalendarListNote) {
+        Log.i(TAG, "Update note: id: $id,\n $note")
     }
 
     fun putInListNote(note: InListNote) {
@@ -119,6 +159,36 @@ object DatabaseLayer {
     fun putWaitingForNote(note: WaitingForListNote): Int {
         Log.i(TAG, "Create note: \n$note")
         return 0
+    }
+
+    fun putCalendarNote(note: CalendarListNote): Int {
+        Log.i(TAG, "Create note: \n$note")
+        return 0
+    }
+
+    fun putSomedayNote(note: SomedayListNote): Int {
+        Log.i(TAG, "Create note: \n$note")
+        return 0
+    }
+
+    fun deleteInNoteById(id: Int) {
+
+    }
+
+    fun deleteNextActionsNoteById(id: Int) {
+
+    }
+
+    fun deleteWaitingForNoteById(id: Int) {
+
+    }
+
+    fun deleteSomedayNoteById(id: Int) {
+
+    }
+
+    fun deleteCalendarNoteById(id: Int) {
+
     }
 
     fun getProjectNames(): List<ProjectName> {
@@ -141,25 +211,5 @@ object DatabaseLayer {
 
     fun getContextNameById(id: Int): String {
         return "Context $id"
-    }
-
-    fun deleteInNoteById(id: Int) {
-
-    }
-
-    fun deleteNextActionsNoteById(id: Int) {
-
-    }
-
-    fun deleteWaitingForNoteById(id: Int) {
-
-    }
-
-    fun deleteSomedayNoteById(id: Int) {
-
-    }
-
-    fun deleteCalendarNoteById(id: Int) {
-
     }
 }
