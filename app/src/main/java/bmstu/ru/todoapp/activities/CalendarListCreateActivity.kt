@@ -16,7 +16,7 @@ import android.widget.Toast
 import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.entities.*
-import kotlinx.android.synthetic.main.waiting_for_list_edit_form.*
+import kotlinx.android.synthetic.main.calendar_list_edit_form.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -32,46 +32,46 @@ class CalendarListCreateActivity : AppCompatActivity() {
     private var remindDay: Int? = null
     private var remindHour: Int? = null
     private var remindMinute: Int? = null
-    private var waitingYear: Int? = null
-    private var waitingMonth: Int? = null
-    private var waitingDay: Int? = null
-    private var waitingHour: Int? = null
-    private var waitingMinute: Int? = null
+    private var doYear: Int? = null
+    private var doMonth: Int? = null
+    private var doDay: Int? = null
+    private var doHour: Int? = null
+    private var doMinute: Int? = null
     private lateinit var projectNames: List<ProjectName>
     private lateinit var contextNames: List<ContextName>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.waiting_for_list_edit_form)
+        setContentView(R.layout.calendar_list_edit_form)
 
         setProjectSpinner()
         setContextSpinner()
 
-        waiting_for_list_edit_image_button_remind_date.setOnClickListener {
+        calendar_list_edit_image_button_remind_date.setOnClickListener {
             val listener = DatePickerDialog.OnDateSetListener { v, y, m, d ->
                 onRemindDateSet(v, y, m, d)
             }
             dateOnClick(listener)
         }
 
-        waiting_for_list_edit_image_button_remind_time.setOnClickListener {
+        calendar_list_edit_image_button_remind_time.setOnClickListener {
             val listener = TimePickerDialog.OnTimeSetListener { v, h, m ->
                 onRemindTimeSet(v, h, m)
             }
             timeOnClick(listener)
         }
 
-        waiting_for_list_edit_image_button_waiting_date.setOnClickListener {
+        calendar_list_edit_image_button_do_date.setOnClickListener {
             val listener = DatePickerDialog.OnDateSetListener { v, y, m, d ->
-                onWaitingDateSet(v, y, m, d)
+                onDoDateSet(v, y, m, d)
             }
             dateOnClick(listener)
         }
 
-        waiting_for_list_edit_image_button_waiting_time.setOnClickListener {
+        calendar_list_edit_image_button_do_time.setOnClickListener {
             val listener = TimePickerDialog.OnTimeSetListener { v, h, m ->
-                onWaitingTimeSet(v, h, m)
+                onDoTimeSet(v, h, m)
             }
             timeOnClick(listener)
         }
@@ -80,12 +80,12 @@ class CalendarListCreateActivity : AppCompatActivity() {
 
     private fun setProjectSpinner() {
         projectNames = DatabaseLayer.getProjectNames()
-        waiting_for_list_edit_project_spinner.setItems(listOf("Нет проекта") + projectNames.map { it.name })
+        calendar_list_edit_project_spinner.setItems(listOf("Нет проекта") + projectNames.map { it.name })
     }
 
     private fun setContextSpinner() {
         contextNames = DatabaseLayer.getContextNames()
-        waiting_for_list_edit_context_spinner.setItems(listOf("Нет контекста") + contextNames.map { it.name })
+        calendar_list_edit_context_spinner.setItems(listOf("Нет контекста") + contextNames.map { it.name })
     }
 
 
@@ -120,7 +120,7 @@ class CalendarListCreateActivity : AppCompatActivity() {
         val calendar = Calendar.getInstance()
         calendar.set(year, month, dayOfMonth, remindHour!!, remindMinute!!)
         updateTextViewDate(
-            waiting_for_list_edit_remind_time_text_view,
+            calendar_list_edit_remind_time_text_view,
             calendar.time,
             R.string.remind_time_format
         )
@@ -133,37 +133,37 @@ class CalendarListCreateActivity : AppCompatActivity() {
         val calendar = Calendar.getInstance()
         calendar.set(remindYear!!, remindMonth!!, remindDay!!, hourOfDay, minute)
         updateTextViewDate(
-            waiting_for_list_edit_remind_time_text_view,
+            calendar_list_edit_remind_time_text_view,
             calendar.time,
             R.string.remind_time_format
         )
     }
 
-    private fun onWaitingDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        waitingYear = year
-        waitingMonth = month
-        waitingDay = dayOfMonth
-        waitingHour = waitingHour ?: 0
-        waitingMinute = waitingMinute ?: 0
+    private fun onDoDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        doYear = year
+        doMonth = month
+        doDay = dayOfMonth
+        doHour = doHour ?: 0
+        doMinute = doMinute ?: 0
         val calendar = Calendar.getInstance()
-        calendar.set(year, month, dayOfMonth, waitingHour!!, waitingMinute!!)
+        calendar.set(year, month, dayOfMonth, doHour!!, doMinute!!)
         updateTextViewDate(
-            waiting_for_list_edit_waiting_time_text_view,
+            calendar_list_edit_do_time_text_view,
             calendar.time,
-            R.string.waiting_time_format
+            R.string.do_time_format
         )
     }
 
-    private fun onWaitingTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-        if (!validateWaitingDate()) return
-        waitingHour = hourOfDay
-        waitingMinute = minute
+    private fun onDoTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+        if (!validateDoDate()) return
+        doHour = hourOfDay
+        doMinute = minute
         val calendar = Calendar.getInstance()
-        calendar.set(waitingYear!!, waitingMonth!!, waitingDay!!, hourOfDay, minute)
+        calendar.set(doYear!!, doMonth!!, doDay!!, hourOfDay, minute)
         updateTextViewDate(
-            waiting_for_list_edit_waiting_time_text_view,
+            calendar_list_edit_do_time_text_view,
             calendar.time,
-            R.string.waiting_time_format
+            R.string.do_time_format
         )
     }
 
@@ -180,8 +180,8 @@ class CalendarListCreateActivity : AppCompatActivity() {
         return true
     }
 
-    private fun validateWaitingDate(): Boolean {
-        if (waitingYear == null || waitingMonth == null || waitingDay == null) {
+    private fun validateDoDate(): Boolean {
+        if (doYear == null || doMonth == null || doDay == null) {
             return false
         }
         return true
@@ -195,7 +195,7 @@ class CalendarListCreateActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.form_edit_ok_button -> {
-                val noteName = waiting_for_list_edit_note_name_edit_text.text.toString()
+                val noteName = calendar_list_edit_note_name_edit_text.text.toString()
                 if (noteName == "") {
                     Toast.makeText(
                         this,
@@ -204,7 +204,7 @@ class CalendarListCreateActivity : AppCompatActivity() {
                     ).show()
                     return super.onContextItemSelected(item)
                 }
-                val noteContent = waiting_for_list_edit_note_content_edit_text.text.toString()
+                val noteContent = calendar_list_edit_note_content_edit_text.text.toString()
                 val time = Calendar.getInstance().time
                 val remindTime = if (validateRemindDate()) MyDate(
                     remindYear!!,
@@ -213,38 +213,38 @@ class CalendarListCreateActivity : AppCompatActivity() {
                     remindHour!!,
                     remindMinute!!
                 ) else null
-                val waitingTime = if (validateWaitingDate()) MyDate(
-                    waitingYear!!,
-                    waitingMonth!!,
-                    waitingDay!!,
-                    waitingHour!!,
-                    waitingMinute!!
+                val doTime = if (validateDoDate()) MyDate(
+                    doYear!!,
+                    doMonth!!,
+                    doDay!!,
+                    doHour!!,
+                    doMinute!!
                 ) else null
-                val projectSelectedIndex = waiting_for_list_edit_project_spinner.selectedIndex
+                val projectSelectedIndex = calendar_list_edit_project_spinner.selectedIndex
                 val projectId: Int? = if (projectSelectedIndex != 0) {
                     val projectName = projectNames[projectSelectedIndex - 1]
                     projectName.id
                 } else {
                     null
                 }
-                val contextSelectedIndex = waiting_for_list_edit_context_spinner.selectedIndex
+                val contextSelectedIndex = calendar_list_edit_context_spinner.selectedIndex
                 val contextId: Int? = if (contextSelectedIndex != 0) {
                     val contextName = contextNames[contextSelectedIndex - 1]
                     contextName.id
                 } else {
                     null
                 }
-                val note = WaitingForListNote(
+                val note = CalendarListNote(
                     noteName,
                     noteContent,
                     time,
                     time,
-                    waitingTime,
+                    doTime,
                     remindTime,
                     contextId,
                     projectId
                 )
-                DatabaseLayer.putWaitingForNote(note)
+                DatabaseLayer.putCalendarNote(note)
                 finish()
             }
         }
