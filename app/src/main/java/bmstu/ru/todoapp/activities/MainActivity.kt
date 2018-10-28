@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        deleteDatabase("AppDatabase.db")
+        deleteDatabase("AppDatabase.db") // TODO remove this line
         DatabaseLayer.initDatabase(this)
         setContentView(R.layout.activity_main)
 
@@ -47,13 +47,6 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         val page = getTabsFragmentPagerAdapter().fragments[getCurrentTabPos()]
         val adapter = page?.recyclerView?.adapter as? BaseListAdapter
         adapter?.updateData()
-    }
-
-    private fun getRecyclerView(): RecyclerView {
-        return getRecyclerView(
-            getTabsFragmentPagerAdapter(),
-            getCurrentTabPos()
-        )
     }
 
     override fun onTabReselected(tab: TabLayout.Tab?) {

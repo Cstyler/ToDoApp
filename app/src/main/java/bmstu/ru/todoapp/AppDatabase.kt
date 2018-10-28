@@ -12,7 +12,7 @@ import bmstu.ru.todoapp.dbentities.InListNoteDb
 import bmstu.ru.todoapp.dbentities.ProjectDb
 
 
-@Database(entities = [InListNoteDb::class, ContextDb::class, ProjectDb::class], version = 3)
+@Database(entities = [InListNoteDb::class, ContextDb::class, ProjectDb::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun inListDao(): InListDao
