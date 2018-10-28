@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/someday_list_edit_coordinator_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:focusableInTouchMode="true"
+>
+    <ScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+    >
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+        >
+            <android.support.design.widget.TextInputLayout
+                    android:id="@+id/someday_list_edit_note_name_text_input_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+            >
+
+                <android.support.design.widget.TextInputEditText
+                        android:id="@+id/someday_list_edit_note_name_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/note_name"
+                        android:inputType="text"
+                />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                    android:id="@+id/someday_list_edit_note_content_text_input_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+            >
+                <android.support.design.widget.TextInputEditText
+                        android:id="@+id/someday_list_edit_note_content_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/note_content"
+                        android:inputType="textMultiLine"
+                />
+            </android.support.design.widget.TextInputLayout>
+            <TextView
+                    android:id="@+id/someday_list_edit_context_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/context_text"
+            />
+            <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/someday_list_edit_context_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+            />
+            <TextView
+                    android:id="@+id/someday_list_edit_creation_date_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+            />
+            <TextView
+                    android:id="@+id/someday_list_edit_update_date_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+            />
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

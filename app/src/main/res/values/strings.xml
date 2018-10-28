@@ -23,4 +23,5 @@
     <string name="move_note_text">Выберите, куда перенести заметку</string>
     <string name="cancel_dialog">Отменить</string>
     <string name="delete_note_dialog">Заметка удалена</string>
+    <string name="no_context_spinner_item">Нет контекста</string>
 </resources>

@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.in_list_edit_form.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+@SuppressLint("SimpleDateFormat")
 class InListEditActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "InListEditActivity"
@@ -32,7 +32,6 @@ class InListEditActivity : AppCompatActivity() {
     private lateinit var note: InListNote
     private var noteId: Int = 0
 
-    @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.in_list_edit_form)
