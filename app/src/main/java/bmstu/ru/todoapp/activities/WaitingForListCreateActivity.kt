@@ -248,12 +248,14 @@ class WaitingForListCreateActivity : AppCompatActivity() {
                     projectId
                 )
                 val id = DatabaseLayer.putWaitingForNote(note)
-                NotificationFunctions.setNotification(remindYear!!,
-                    remindMonth!!,
-                    remindDay!!,
-                    remindHour!!,
-                    remindMinute!!,
-                    noteName, id, this)
+                if (validateRemindDate()) {
+                    NotificationFunctions.setNotification(remindYear!!,
+                        remindMonth!!,
+                        remindDay!!,
+                        remindHour!!,
+                        remindMinute!!,
+                        noteName, id, this)
+                }
                 finish()
             }
         }
