@@ -16,6 +16,21 @@ interface NextActionsListDao {
     @Query("SELECT * FROM NextActionsNoteDb WHERE id = :id")
     fun getById(id: Int): NextActionsNoteDb
 
+    @Query("SELECT * FROM NextActionsNoteDb WHERE contextId = :id")
+    fun getByContext(id: Int): List<NextActionsNoteDb>
+
+    @Query("SELECT * FROM NextActionsNoteDb WHERE projectId = :id")
+    fun getByProject(id: Int): List<NextActionsNoteDb>
+
+    @Query("SELECT * FROM NextActionsNoteDb WHERE projectId is null")
+    fun getWithNoProject(): List<NextActionsNoteDb>
+
+    @Query("SELECT * FROM NextActionsNoteDb WHERE deadline is not null")
+    fun getWithDeadline(): List<NextActionsNoteDb>
+
+    @Query("SELECT * FROM NextActionsNoteDb WHERE deadline is null")
+    fun getWithNoDeadline(): List<NextActionsNoteDb>
+
     @Insert
     fun insert(word: NextActionsNoteDb): Long
 

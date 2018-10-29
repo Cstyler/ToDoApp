@@ -32,38 +32,38 @@ object DatabaseLayer {
     }
 
     fun getNextActionsNamesFilteredByContext(contextId: Int): Array<NoteName> {
-        val noteNames = Array(3) {
-            NoteName(it, "NextAction$it. Context $contextId")
-        }
-        return noteNames
+        val dao = db.nextActionsListDao()
+        return dao.getByContext(contextId).map {
+            NoteName(it.id, it.name)
+        }.toTypedArray()
     }
 
     fun getNextActionsNamesFilteredByProject(projectId: Int): Array<NoteName> {
-        val noteNames = Array(3) {
-            NoteName(it, "NextAction$it. Proj $projectId")
-        }
-        return noteNames
+        val dao = db.nextActionsListDao()
+        return dao.getByProject(projectId).map {
+            NoteName(it.id, it.name)
+        }.toTypedArray()
     }
 
     fun getNextActionsNamesWithNoProject(): Array<NoteName> {
-        val noteNames = Array(3) {
-            NoteName(it, "NextAction$it. NoProj")
-        }
-        return noteNames
+        val dao = db.nextActionsListDao()
+        return dao.getWithNoProject().map {
+            NoteName(it.id, it.name)
+        }.toTypedArray()
     }
 
     fun getNextActionsNamesWithNoDeadline(): Array<NoteName> {
-        val noteNames = Array(3) {
-            NoteName(it, "NextAction$it. NoDeadline")
-        }
-        return noteNames
+        val dao = db.nextActionsListDao()
+        return dao.getWithNoDeadline().map {
+            NoteName(it.id, it.name)
+        }.toTypedArray()
     }
 
     fun getNextActionsNamesWithDeadline(): Array<NoteName> {
-        val noteNames = Array(3) {
-            NoteName(it, "NextAction$it. WithDeadline")
-        }
-        return noteNames
+        val dao = db.nextActionsListDao()
+        return dao.getWithDeadline().map {
+            NoteName(it.id, it.name)
+        }.toTypedArray()
     }
 
     fun getWaitingForNoteNames(): Array<NoteName> {
