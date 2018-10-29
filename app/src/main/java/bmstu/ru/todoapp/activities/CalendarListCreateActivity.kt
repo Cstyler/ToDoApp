@@ -247,7 +247,13 @@ class CalendarListCreateActivity : AppCompatActivity() {
                     contextId,
                     projectId
                 )
-                DatabaseLayer.putCalendarNote(note)
+                val id = DatabaseLayer.putCalendarNote(note)
+                NotificationFunctions.setNotification(remindYear!!,
+                    remindMonth!!,
+                    remindDay!!,
+                    remindHour!!,
+                    remindMinute!!,
+                    noteName, id, this)
                 finish()
             }
         }
