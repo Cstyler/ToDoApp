@@ -256,12 +256,14 @@ class NextActionsListCreateActivity : AppCompatActivity() {
                 )
                 val id = DatabaseLayer.putNextActionNote(note)
                 if (validateRemindDate()) {
-                    NotificationFunctions.setNotification(remindYear!!,
+                    NotificationFunctions.setNotification(
+                        remindYear!!,
                         remindMonth!!,
                         remindDay!!,
                         remindHour!!,
                         remindMinute!!,
-                        noteName, id, this)
+                        noteName, id, this
+                    )
                 }
                 finish()
             }
