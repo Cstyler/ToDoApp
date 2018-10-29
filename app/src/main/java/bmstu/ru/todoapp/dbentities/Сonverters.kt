@@ -25,7 +25,7 @@ class Converters {
             val year = cal.get(Calendar.YEAR)
             val month = cal.get(Calendar.MONTH)
             val date = cal.get(Calendar.DATE)
-            val hour = cal.get(Calendar.HOUR)
+            val hour = cal.get(Calendar.HOUR_OF_DAY)
             val minute = cal.get(Calendar.MINUTE)
             CustomDate(year, month, date, hour, minute)
         }
