@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "eb9bad9b0daac2202934deeaac2ec545",
+    "identityHash": "30ba067f4c6e394c89032a1ef7314be8",
     "entities": [
       {
         "tableName": "InListNoteDb",
@@ -114,7 +114,7 @@
       },
       {
         "tableName": "NextActionsNoteDb",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `content` TEXT, `creationDate` INTEGER NOT NULL, `updateDate` INTEGER NOT NULL, `priority` INTEGER NOT NULL, `deadline` INTEGER, `remindTime` INTEGER, `contextId` INTEGER, `projectId` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `content` TEXT, `creationDate` INTEGER NOT NULL, `updateDate` INTEGER NOT NULL, `priority` INTEGER NOT NULL, `deadline` TEXT, `remindTime` TEXT, `contextId` INTEGER, `projectId` INTEGER)",
         "fields": [
           {
             "fieldPath": "id",
@@ -155,13 +155,13 @@
           {
             "fieldPath": "deadline",
             "columnName": "deadline",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "remindTime",
             "columnName": "remindTime",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": false
           },
           {
@@ -189,7 +189,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"eb9bad9b0daac2202934deeaac2ec545\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"30ba067f4c6e394c89032a1ef7314be8\")"
     ]
   }
 }

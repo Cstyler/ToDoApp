@@ -20,12 +20,29 @@ class Converters {
     fun fromTimestampToCustomDate(value: Long?): CustomDate? {
         return value?.let {
             val d = Date(it)
-            CustomDate(d.year, d.month, d.day, d.hours, d.minutes)
+            val cal = Calendar.getInstance()
+            cal.time = d
+            val year = cal.get(Calendar.YEAR)
+            val month = cal.get(Calendar.MONTH)
+            val date = cal.get(Calendar.DATE)
+            val hour = cal.get(Calendar.HOUR)
+            val minute = cal.get(Calendar.MINUTE)
+            CustomDate(year, month, date, hour, minute)
         }
     }
 
     @TypeConverter
     fun customDateToTimestamp(date: CustomDate?): Long? {
-        return Calendar.getInstance().time.time
+        val cal = Calendar.getInstance()
+        return date?.let {
+            cal.set(
+                it.year,
+                it.month,
+                it.day,
+                it.hour,
+                it.minute
+            )
+            cal.time.time
+        }
     }
 }

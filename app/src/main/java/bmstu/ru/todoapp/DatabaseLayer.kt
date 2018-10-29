@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import bmstu.ru.todoapp.dbentities.ContextDb
 import bmstu.ru.todoapp.dbentities.InListNoteDb
+import bmstu.ru.todoapp.dbentities.NextActionsNoteDb
 import bmstu.ru.todoapp.dbentities.ProjectDb
 import bmstu.ru.todoapp.entities.*
 import java.util.*
@@ -19,9 +20,6 @@ object DatabaseLayer {
             .allowMainThreadQueries()
             .fallbackToDestructiveMigration()
             .build()
-        val dao = db.inListDao()
-        val listOfInListNotes = dao.getAllFromDb()
-        Log.i(TAG, "Len: ${listOfInListNotes.size}")
     }
 
     fun getInNoteNames(): Array<NoteName> {
@@ -32,10 +30,10 @@ object DatabaseLayer {
     }
 
     fun getNextActionsNames(): Array<NoteName> {
-        val noteNames = Array(3) {
-            NoteName(it, "NextAction$it")
-        }
-        return noteNames
+        val dao = db.nextActionsDao()
+        return dao.getAllFromDb().map {
+            NoteName(it.id, it.name)
+        }.toTypedArray()
     }
 
     fun getNextActionsNamesFilteredByContext(contextId: Int): Array<NoteName> {
@@ -150,23 +148,12 @@ object DatabaseLayer {
     }
 
     fun getNextActionsListNoteById(id: Int): NextActionsListNote {
-        val cal = Calendar.getInstance()
-        val time = cal.time
-        val remindeTime = CustomDate(2018, 9, 25, 12, 10)
-//        val remindTime = null
-        val deadlineTime = CustomDate(2018, 11, 14, 13, 0)
-//        val deadlineTime = null
-        val contextId = 1
-//        val contextId = null
-        val projectId = 1
-//        val projectId = null
-        return NextActionsListNote(
-            "NAname$id", "NAcontent$id",
-            time, time,
-            2,
-            deadlineTime, remindeTime,
-            contextId, projectId
-        )
+        val dao = db.nextActionsDao()
+        val note = dao.getById(id)
+        return NextActionsListNote(note.name,
+            note.content, note.creationDate, note.updateDate,
+            note.priority, note.deadline, note.remindTime,
+            note.contextId, note.projectId)
     }
 
     fun getWaitingForListNoteById(id: Int): WaitingForListNote {
@@ -225,7 +212,9 @@ object DatabaseLayer {
     }
 
     fun updateNextActionsListEdit(id: Int, note: NextActionsListNote) {
-        Log.i(TAG, "Update note: id: $id,\n $note")
+        val dao = db.nextActionsDao()
+        dao.update(id, note.name, note.content, note.creationDate, note.updateDate,
+            note.priority, note.deadline, note.remindTime, note.projectId, note.contextId)
     }
 
     fun updateWaitingForListEdit(id: Int, note: WaitingForListNote) {
@@ -254,8 +243,21 @@ object DatabaseLayer {
     }
 
     fun putNextActionNote(note: NextActionsListNote): Int {
-        Log.i(TAG, "Create note: \n$note")
-        return 0
+        val dao = db.nextActionsDao()
+        val id = dao.insert(
+            NextActionsNoteDb(
+                name = note.name,
+                content = note.content,
+                creationDate = note.creationDate,
+                updateDate = note.updateDate,
+                priority = note.priority,
+                deadline = note.deadline,
+                remindTime = note.remindTime,
+                contextId = note.contextId,
+                projectId = note.projectId
+            )
+        )
+        return id.toInt()
     }
 
     fun putWaitingForNote(note: WaitingForListNote): Int {
@@ -280,7 +282,8 @@ object DatabaseLayer {
     }
 
     fun deleteNextActionsNoteById(id: Int) {
-
+        val dao = db.nextActionsDao()
+        dao.deleteById(id)
     }
 
     fun deleteWaitingForNoteById(id: Int) {

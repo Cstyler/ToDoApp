@@ -17,6 +17,8 @@ import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.adapters.TabsFragmentPagerAdapter
 import bmstu.ru.todoapp.adapters.listadapters.*
 import kotlinx.android.synthetic.main.activity_main.*
+import java.time.LocalDate
+import java.time.ZoneId
 
 
 class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
@@ -29,7 +31,7 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        deleteDatabase("AppDatabase.db") // TODO remove this line
+//        deleteDatabase("AppDatabase.db") // TODO remove this line
         DatabaseLayer.initDatabase(this)
         setContentView(R.layout.activity_main)
 
