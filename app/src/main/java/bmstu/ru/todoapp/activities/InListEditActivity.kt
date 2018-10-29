@@ -126,6 +126,7 @@ class InListEditActivity : AppCompatActivity() {
                             ).apply {
                                 putExtra(NOTE_ID_KEY, newNoteId)
                             }
+                            finish()
                             startChildActivity(intent)
                         }
                         1 -> {
@@ -145,11 +146,12 @@ class InListEditActivity : AppCompatActivity() {
                             ).apply {
                                 putExtra(NOTE_ID_KEY, newNoteId)
                             }
+                            finish()
                             startChildActivity(intent)
                         }
                         2 -> {
                             showMoveToast(tabTitlesList, which)
-                            DatabaseLayer.deleteSomedayNoteById(noteId)
+                            DatabaseLayer.deleteInNoteById(noteId)
                             val somedayListNote = SomedayListNote(
                                 note.name,
                                 note.content,
@@ -164,11 +166,12 @@ class InListEditActivity : AppCompatActivity() {
                             ).apply {
                                 putExtra(NOTE_ID_KEY, newNoteId)
                             }
+                            finish()
                             startChildActivity(intent)
                         }
                         3 -> {
                             showMoveToast(tabTitlesList, which)
-                            DatabaseLayer.deleteCalendarNoteById(noteId)
+                            DatabaseLayer.deleteInNoteById(noteId)
                             val calendarListNote = CalendarListNote(
                                 note.name,
                                 note.content,
@@ -183,6 +186,7 @@ class InListEditActivity : AppCompatActivity() {
                             ).apply {
                                 putExtra(NOTE_ID_KEY, newNoteId)
                             }
+                            finish()
                             startChildActivity(intent)
                         }
                     }

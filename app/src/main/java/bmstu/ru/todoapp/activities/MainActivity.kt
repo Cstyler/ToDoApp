@@ -1,7 +1,12 @@
 package bmstu.ru.todoapp.activities
 
+import android.app.AlarmManager
+import android.app.Notification
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.SystemClock
 import android.support.design.widget.TabLayout
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -13,10 +18,12 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
 import bmstu.ru.todoapp.DatabaseLayer
+import bmstu.ru.todoapp.NotificationPublisher
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.adapters.TabsFragmentPagerAdapter
 import bmstu.ru.todoapp.adapters.listadapters.*
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
@@ -29,7 +36,7 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        deleteDatabase("AppDatabase.db") // TODO remove this line
+        deleteDatabase("AppDatabase.db") // TODO remove this line
         DatabaseLayer.initDatabase(this)
         setContentView(R.layout.activity_main)
 
@@ -47,6 +54,13 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         val page = getTabsFragmentPagerAdapter().fragments[getCurrentTabPos()]
         val adapter = page?.recyclerView?.adapter as? BaseListAdapter
         adapter?.updateData()
+
+        val noteNames = DatabaseLayer.getNextActionsNames()
+        noteNames.map {
+            DatabaseLayer.getNextActionsListNoteById(it.id).remindTime
+        }.forEach {
+
+        }
     }
 
     override fun onTabReselected(tab: TabLayout.Tab?) {
@@ -317,13 +331,6 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
                 val intent = Intent(this, ContextsActivity::class.java)
                 startIntent(intent)
             }
-//            R.id.button_sort -> {
-//                Toast.makeText(
-//                    this,
-//                    "Cортировка заметок...",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//            }
         }
         return super.onContextItemSelected(item)
     }
@@ -334,10 +341,7 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         return view_pager.adapter as TabsFragmentPagerAdapter
     }
 
-    private fun getRecyclerView(
-        adapter: TabsFragmentPagerAdapter,
-        position: Int
-    ): RecyclerView {
+    private fun getRecyclerView(adapter: TabsFragmentPagerAdapter, position: Int): RecyclerView {
         val page = adapter.fragments[position]
         return page!!.recyclerView
     }
@@ -369,5 +373,23 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
             android.R.layout.select_dialog_singlechoice,
             filterTypes
         )
+    }
+
+    private fun scheduleNotification(notification: Notification, date: Date) {
+        val notificationIntent = Intent(this, NotificationPublisher::class.java)
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1)
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification)
+        val pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val futureInMillis = date.time
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent)
+    }
+
+    private fun getNotification(content: String): Notification {
+        val builder = Notification.Builder(this)
+        builder.setContentTitle("Scheduled Notification")
+        builder.setContentText(content)
+        return builder.build()
     }
 }

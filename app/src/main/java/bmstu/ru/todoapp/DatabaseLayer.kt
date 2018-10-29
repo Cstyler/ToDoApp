@@ -301,7 +301,6 @@ object DatabaseLayer {
         return id.toInt()
     }
 
-
     fun deleteInNoteById(id: Int) {
         val dao = db.inListDao()
         dao.deleteById(id)
