@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        deleteDatabase("AppDatabase.db") // TODO remove this line
         DatabaseLayer.initDatabase(this)
         setContentView(R.layout.activity_main)
 
