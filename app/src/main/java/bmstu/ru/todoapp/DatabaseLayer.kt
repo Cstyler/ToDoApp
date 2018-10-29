@@ -74,24 +74,24 @@ object DatabaseLayer {
     }
 
     fun getWaitingForNamesFilteredByContext(contextId: Int): Array<NoteName> {
-        val noteNames = Array(3) {
-            NoteName(it, "WaitingFor$it. Context $contextId")
-        }
-        return noteNames
+        val dao = db.waitingForListDao()
+        return dao.getByContext(contextId).map {
+            NoteName(it.id, it.name)
+        }.toTypedArray()
     }
 
     fun getWaitingForNamesFilteredByProject(projectId: Int): Array<NoteName> {
-        val noteNames = Array(3) {
-            NoteName(it, "WaitingFor$it. Proj $projectId")
-        }
-        return noteNames
+        val dao = db.waitingForListDao()
+        return dao.getByProject(projectId).map {
+            NoteName(it.id, it.name)
+        }.toTypedArray()
     }
 
     fun getWaitingForNamesWithNoProject(): Array<NoteName> {
-        val noteNames = Array(3) {
-            NoteName(it, "WaitingFor$it. NoProj")
-        }
-        return noteNames
+        val dao = db.waitingForListDao()
+        return dao.getWithNoProject().map {
+            NoteName(it.id, it.name)
+        }.toTypedArray()
     }
 
     fun getSomedayNoteNames(): Array<NoteName> {
@@ -102,10 +102,10 @@ object DatabaseLayer {
     }
 
     fun getSomedayNamesFilteredByContext(contextId: Int): Array<NoteName> {
-        val noteNames = Array(3) {
-            NoteName(it, "Someday$it. Context $contextId")
-        }
-        return noteNames
+        val dao = db.somedayListDao()
+        return dao.getByContext(contextId).map {
+            NoteName(it.id, it.name)
+        }.toTypedArray()
     }
 
     fun getCalendarNoteNames(): Array<NoteName> {
@@ -116,24 +116,24 @@ object DatabaseLayer {
     }
 
     fun getCalendarNamesFilteredByContext(contextId: Int): Array<NoteName> {
-        val noteNames = Array(3) {
-            NoteName(it, "Calendar$it. Context $contextId")
-        }
-        return noteNames
+        val dao = db.calendarListDao()
+        return dao.getByContext(contextId).map {
+            NoteName(it.id, it.name)
+        }.toTypedArray()
     }
 
     fun getCalendarNamesFilteredByProject(projectId: Int): Array<NoteName> {
-        val noteNames = Array(3) {
-            NoteName(it, "Calendar$it. Proj $projectId")
-        }
-        return noteNames
+        val dao = db.calendarListDao()
+        return dao.getByProject(projectId).map {
+            NoteName(it.id, it.name)
+        }.toTypedArray()
     }
 
     fun getCalendarNamesWithNoProject(): Array<NoteName> {
-        val noteNames = Array(3) {
-            NoteName(it, "Calendar$it. NoProj")
-        }
-        return noteNames
+        val dao = db.calendarListDao()
+        return dao.getWithNoProject().map {
+            NoteName(it.id, it.name)
+        }.toTypedArray()
     }
 
     fun getInListNoteById(id: Int): InListNote {

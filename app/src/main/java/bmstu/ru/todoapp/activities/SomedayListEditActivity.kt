@@ -105,7 +105,7 @@ class SomedayListEditActivity : AppCompatActivity() {
             }
             R.id.form_edit_delete_button -> {
                 Toast.makeText(this, getString(R.string.delete_note_dialog), Toast.LENGTH_SHORT).show()
-                DatabaseLayer.deleteInNoteById(noteId)
+                DatabaseLayer.deleteSomedayNoteById(noteId)
                 finish()
             }
         }

@@ -13,9 +13,6 @@ interface NextActionsListDao {
     @Query("SELECT * FROM NextActionsNoteDb")
     fun getAllFromDb(): List<NextActionsNoteDb>
 
-    @Query("SELECT * FROM NextActionsNoteDb WHERE id = :id")
-    fun getById(id: Int): NextActionsNoteDb
-
     @Query("SELECT * FROM NextActionsNoteDb WHERE contextId = :id")
     fun getByContext(id: Int): List<NextActionsNoteDb>
 
@@ -30,6 +27,9 @@ interface NextActionsListDao {
 
     @Query("SELECT * FROM NextActionsNoteDb WHERE deadline is null")
     fun getWithNoDeadline(): List<NextActionsNoteDb>
+
+    @Query("SELECT * FROM NextActionsNoteDb WHERE id = :id")
+    fun getById(id: Int): NextActionsNoteDb
 
     @Insert
     fun insert(word: NextActionsNoteDb): Long

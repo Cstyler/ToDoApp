@@ -13,6 +13,15 @@ interface WaitingForListDao {
     @Query("SELECT * FROM WaitingForNoteDb")
     fun getAllFromDb(): List<WaitingForNoteDb>
 
+    @Query("SELECT * FROM WaitingForNoteDb WHERE contextId = :id")
+    fun getByContext(id: Int): List<WaitingForNoteDb>
+
+    @Query("SELECT * FROM WaitingForNoteDb WHERE projectId = :id")
+    fun getByProject(id: Int): List<WaitingForNoteDb>
+
+    @Query("SELECT * FROM WaitingForNoteDb WHERE projectId is null")
+    fun getWithNoProject(): List<WaitingForNoteDb>
+
     @Query("SELECT * FROM WaitingForNoteDb WHERE id = :id")
     fun getById(id: Int): WaitingForNoteDb
 

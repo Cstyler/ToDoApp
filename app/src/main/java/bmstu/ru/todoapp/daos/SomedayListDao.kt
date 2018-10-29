@@ -16,6 +16,9 @@ interface SomedayListDao {
     @Query("SELECT * FROM SomedayNoteDb WHERE id = :id")
     fun getById(id: Int): SomedayNoteDb
 
+    @Query("SELECT * FROM SomedayNoteDb WHERE contextId = :id")
+    fun getByContext(id: Int): List<SomedayNoteDb>
+
     @Insert
     fun insert(word: SomedayNoteDb): Long
 

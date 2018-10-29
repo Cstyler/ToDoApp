@@ -13,6 +13,15 @@ interface CalendarListDao {
     @Query("SELECT * FROM CalendarNoteDb")
     fun getAllFromDb(): List<CalendarNoteDb>
 
+    @Query("SELECT * FROM CalendarNoteDb WHERE contextId = :id")
+    fun getByContext(id: Int): List<CalendarNoteDb>
+
+    @Query("SELECT * FROM CalendarNoteDb WHERE projectId = :id")
+    fun getByProject(id: Int): List<CalendarNoteDb>
+
+    @Query("SELECT * FROM CalendarNoteDb WHERE projectId is null")
+    fun getWithNoProject(): List<CalendarNoteDb>
+
     @Query("SELECT * FROM CalendarNoteDb WHERE id = :id")
     fun getById(id: Int): CalendarNoteDb
 
