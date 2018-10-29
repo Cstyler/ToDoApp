@@ -4,6 +4,7 @@ import android.arch.persistence.room.Room
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import bmstu.ru.todoapp.dbentities.ContextDb
+import bmstu.ru.todoapp.dbentities.InListNoteDb
 import bmstu.ru.todoapp.dbentities.ProjectDb
 import bmstu.ru.todoapp.entities.*
 import java.util.*
@@ -24,10 +25,10 @@ object DatabaseLayer {
     }
 
     fun getInNoteNames(): Array<NoteName> {
-        val noteNames = Array(20) {
-            NoteName(it, "In$it")
-        }
-        return noteNames
+        val dao = db.inListDao()
+        return dao.getAllFromDb().map {
+            NoteName(it.id, it.name)
+        }.toTypedArray()
     }
 
     fun getNextActionsNames(): Array<NoteName> {
@@ -114,7 +115,6 @@ object DatabaseLayer {
         return noteNames
     }
 
-
     fun getCalendarNoteNames(): Array<NoteName> {
         val noteNames = Array(3) {
             NoteName(it, "Calendar$it")
@@ -144,9 +144,9 @@ object DatabaseLayer {
     }
 
     fun getInListNoteById(id: Int): InListNote {
-        val cal = Calendar.getInstance()
-        val time = cal.time
-        return InListNote("INname$id", "INcontent$id", time, time)
+        val dao = db.inListDao()
+        val note = dao.getById(id)
+        return InListNote(note.name, note.content, note.creationDate, note.updateDate)
     }
 
     fun getNextActionsListNoteById(id: Int): NextActionsListNote {
@@ -218,8 +218,10 @@ object DatabaseLayer {
         )
     }
 
+
     fun updateInListNote(id: Int, note: InListNote) {
-        Log.i(TAG, "Update note: id: $id, $note")
+        val dao = db.inListDao()
+        dao.update(id, note.name, note.content, note.creationDate, note.updateDate)
     }
 
     fun updateNextActionsListEdit(id: Int, note: NextActionsListNote) {
@@ -238,8 +240,17 @@ object DatabaseLayer {
         Log.i(TAG, "Update note: id: $id,\n $note")
     }
 
+
     fun putInListNote(note: InListNote) {
-        Log.i(TAG, "Create note: id: $note")
+        val dao = db.inListDao()
+        dao.insert(
+            InListNoteDb(
+                name = note.name,
+                content = note.content,
+                creationDate = note.creationDate,
+                updateDate = note.updateDate
+            )
+        )
     }
 
     fun putNextActionNote(note: NextActionsListNote): Int {
@@ -262,8 +273,10 @@ object DatabaseLayer {
         return 0
     }
 
-    fun deleteInNoteById(id: Int) {
 
+    fun deleteInNoteById(id: Int) {
+        val dao = db.inListDao()
+        dao.deleteById(id)
     }
 
     fun deleteNextActionsNoteById(id: Int) {

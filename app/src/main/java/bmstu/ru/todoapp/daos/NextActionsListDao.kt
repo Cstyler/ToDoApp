@@ -8,7 +8,7 @@ import java.util.*
 
 
 @Dao
-interface InListDao {
+interface NextActionsListDao {
     @Query("SELECT * FROM InListNoteDb")
     fun getAllFromDb(): List<InListNoteDb>
 

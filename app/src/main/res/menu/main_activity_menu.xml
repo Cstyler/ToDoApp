@@ -24,10 +24,4 @@
             android:title="@string/button_filter"
             app:showAsAction="never"
     />
-    <!--<item-->
-    <!--android:id="@+id/button_sort"-->
-    <!--android:orderInCategory="4"-->
-    <!--android:title="@string/button_sort"-->
-    <!--app:showAsAction="never"-->
-    <!--/>-->
 </menu>
