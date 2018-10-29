@@ -17,7 +17,6 @@ import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.adapters.TabsFragmentPagerAdapter
 import bmstu.ru.todoapp.adapters.listadapters.*
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 
 
 class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
@@ -318,25 +317,6 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
             R.id.main_activity_contexts_menu_item -> {
                 val intent = Intent(this, ContextsActivity::class.java)
                 startIntent(intent)
-            }
-            R.id.main_activity_notify_menu_item -> {
-                val year = 2018
-                val month = 10
-                val day = 1
-                val hour = 11
-                val minute = 15
-                val notificationId = 1
-                val notificationContent = "Содержание"
-                NotificationFunctions.setNotification(
-                    year,
-                    month,
-                    day,
-                    hour,
-                    minute,
-                    notificationContent,
-                    notificationId,
-                    this
-                )
             }
         }
         return super.onContextItemSelected(item)

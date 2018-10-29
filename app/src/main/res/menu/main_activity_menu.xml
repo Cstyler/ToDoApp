@@ -24,10 +24,4 @@
             android:title="@string/button_filter"
             app:showAsAction="never"
     />
-    <item
-            android:id="@+id/main_activity_notify_menu_item"
-            android:orderInCategory="3"
-            android:title="уведомления"
-            app:showAsAction="never"
-    />
 </menu>

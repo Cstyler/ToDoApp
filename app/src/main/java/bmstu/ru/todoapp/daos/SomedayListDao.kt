@@ -4,7 +4,6 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import bmstu.ru.todoapp.dbentities.SomedayNoteDb
-import bmstu.ru.todoapp.entities.CustomDate
 import java.util.*
 
 
