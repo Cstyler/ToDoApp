@@ -1,13 +1,24 @@
 package bmstu.ru.todoapp.dbentities
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.Ignore
-import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.*
 import bmstu.ru.todoapp.entities.CustomDate
 import java.util.*
 
-@Entity
+@Entity(
+    foreignKeys = [
+        ForeignKey(
+            entity = ProjectDb::class,
+            parentColumns = ["id"],
+            childColumns = ["projectId"],
+            onDelete = ForeignKey.SET_NULL
+        ),
+        ForeignKey(
+            entity = ContextDb::class,
+            parentColumns = ["id"],
+            childColumns = ["contextId"],
+            onDelete = ForeignKey.SET_NULL
+        )]
+)
 data class NextActionsNoteDb(
     @PrimaryKey(autoGenerate = true)
     var id: Int,

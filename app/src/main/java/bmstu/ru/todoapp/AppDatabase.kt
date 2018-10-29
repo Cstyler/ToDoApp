@@ -17,7 +17,7 @@ import bmstu.ru.todoapp.dbentities.*
         ProjectDb::class,
         NextActionsNoteDb::class
     ],
-    version = 5
+    version = 6
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
