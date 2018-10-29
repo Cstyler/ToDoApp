@@ -1,11 +1,8 @@
 package bmstu.ru.todoapp.activities
 
-import android.app.*
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.TabLayout
-import android.support.v4.app.NotificationCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
@@ -16,16 +13,11 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
 import bmstu.ru.todoapp.DatabaseLayer
-import bmstu.ru.todoapp.NotificationPublisher
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.adapters.TabsFragmentPagerAdapter
 import bmstu.ru.todoapp.adapters.listadapters.*
 import kotlinx.android.synthetic.main.activity_main.*
-import android.app.NotificationManager
-import android.app.NotificationChannel
-import android.os.Build
-
-
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
@@ -34,7 +26,6 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         private const val TAG = "MainActivity"
         private var selectedTabPosition: Int = 0
         private const val DIALOG_TEXT_SIZE = 20f
-        private const val CHANNEL_ID = "channel-id"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -329,8 +320,23 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
                 startIntent(intent)
             }
             R.id.main_activity_notify_menu_item -> {
-                createNotificationChannel()
-                scheduleNotification(getNotification("Содержание"), 500)
+                val year = 2018
+                val month = 10
+                val day = 1
+                val hour = 11
+                val minute = 15
+                val notificationId = 1
+                val notificationContent = "Содержание"
+                NotificationFunctions.setNotification(
+                    year,
+                    month,
+                    day,
+                    hour,
+                    minute,
+                    notificationContent,
+                    notificationId,
+                    this
+                )
             }
         }
         return super.onContextItemSelected(item)
@@ -372,38 +378,5 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
             android.R.layout.select_dialog_singlechoice,
             filterTypes
         )
-    }
-
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = getString(R.string.notification_channel_name)
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(CHANNEL_ID, name, importance)
-            val notificationManager = getSystemService(NotificationManager::class.java)
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
-
-    private fun scheduleNotification(notification: Notification, time: Long) {
-        val notificationIntent = Intent(this, NotificationPublisher::class.java)
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1)
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification)
-        val pendingIntent = PendingIntent.getBroadcast(
-            this,
-            0,
-            notificationIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent)
-    }
-
-    private fun getNotification(content: String): Notification {
-        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-        builder.setSmallIcon(R.drawable.ic_alarm)
-        builder.setContentTitle("Напоминание о заметке")
-        builder.setContentText(content)
-        builder.priority = NotificationCompat.PRIORITY_DEFAULT
-        return builder.build()
     }
 }
