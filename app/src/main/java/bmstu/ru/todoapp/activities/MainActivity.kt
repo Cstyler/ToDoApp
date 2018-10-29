@@ -1,13 +1,11 @@
 package bmstu.ru.todoapp.activities
 
-import android.app.AlarmManager
-import android.app.Notification
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.SystemClock
 import android.support.design.widget.TabLayout
+import android.support.v4.app.NotificationCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
@@ -23,6 +21,11 @@ import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.adapters.TabsFragmentPagerAdapter
 import bmstu.ru.todoapp.adapters.listadapters.*
 import kotlinx.android.synthetic.main.activity_main.*
+import android.app.NotificationManager
+import android.app.NotificationChannel
+import android.os.Build
+
+
 
 
 class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
@@ -31,6 +34,7 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         private const val TAG = "MainActivity"
         private var selectedTabPosition: Int = 0
         private const val DIALOG_TEXT_SIZE = 20f
+        private const val CHANNEL_ID = "channel-id"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +58,7 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
     }
 
     private fun syncWithDatabase() {
-        val page = getTabsFragmentPagerAdapter().fragments[getCurrentTabPos()]
+        val page = getTabsFragmentPagerAdapter().fragments[selectedTabPosition]
         val adapter = page?.recyclerView?.adapter as? BaseListAdapter
         adapter?.updateData()
     }
@@ -67,7 +71,6 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
 
     override fun onTabSelected(tab: TabLayout.Tab?) {
         selectedTabPosition = tab?.position ?: 0
-        Log.i(TAG, selectedTabPosition.toString())
         syncWithDatabase()
     }
 
@@ -79,10 +82,6 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.main_activity_add_menu_item -> {
-                Log.i(
-                    TAG, "add note pressed." +
-                            " selectedTabPosition ${getCurrentTabPos()}"
-                )
                 val activities = arrayOf(
                     InListCreateActivity::class.java,
                     NextActionsListCreateActivity::class.java,
@@ -91,11 +90,11 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
                     CalendarListCreateActivity::class.java
                 )
 
-                val intent = Intent(this, activities[getCurrentTabPos()])
+                val intent = Intent(this, activities[selectedTabPosition])
                 startIntent(intent)
             }
             R.id.main_activity_filter_menu_item -> {
-                val position = getCurrentTabPos()
+                val position = selectedTabPosition
                 if (position == 0) {
                     Toast.makeText(
                         this,
@@ -329,11 +328,13 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
                 val intent = Intent(this, ContextsActivity::class.java)
                 startIntent(intent)
             }
+            R.id.main_activity_notify_menu_item -> {
+                createNotificationChannel()
+                scheduleNotification(getNotification("Содержание"), 500)
+            }
         }
         return super.onContextItemSelected(item)
     }
-
-    private fun getCurrentTabPos() = tab_layout.selectedTabPosition
 
     private fun getTabsFragmentPagerAdapter(): TabsFragmentPagerAdapter {
         return view_pager.adapter as TabsFragmentPagerAdapter
@@ -373,6 +374,16 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         )
     }
 
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.notification_channel_name)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance)
+            val notificationManager = getSystemService(NotificationManager::class.java)
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
     private fun scheduleNotification(notification: Notification, time: Long) {
         val notificationIntent = Intent(this, NotificationPublisher::class.java)
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1)
@@ -383,16 +394,16 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
             notificationIntent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
-
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, time, pendingIntent)
+        alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent)
     }
 
     private fun getNotification(content: String): Notification {
-        val builder = Notification.Builder(this)
-        builder.setContentTitle("Scheduled Notification")
-        builder.setContentText(content)
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
         builder.setSmallIcon(R.drawable.ic_alarm)
+        builder.setContentTitle("Напоминание о заметке")
+        builder.setContentText(content)
+        builder.priority = NotificationCompat.PRIORITY_DEFAULT
         return builder.build()
     }
 }

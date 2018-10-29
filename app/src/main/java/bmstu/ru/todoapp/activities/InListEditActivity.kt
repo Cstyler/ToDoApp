@@ -40,7 +40,6 @@ class InListEditActivity : AppCompatActivity() {
 
     private fun syncLayoutWithDatabase() {
         noteId = intent.getIntExtra(BaseListAdapter.NOTE_ID_KEY, noteId)
-        Log.i(TAG, "Note id: $noteId")
         note = DatabaseLayer.getInListNoteById(noteId)
         in_list_edit_note_name_edit_text.setText(note.name)
         in_list_edit_note_content_edit_text.setText(note.content)

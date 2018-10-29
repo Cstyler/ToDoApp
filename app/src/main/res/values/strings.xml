@@ -44,4 +44,5 @@
     <string name="create_context_menu_item">Создать контекст</string>
     <string name="delete_context_toast">Контекст удалён</string>
     <string name="empty_context_name_toast">Нельзя сохранить контекст с пустым именем</string>
+    <string name="notification_channel_name">Напоминание о заметке</string>
 </resources>
