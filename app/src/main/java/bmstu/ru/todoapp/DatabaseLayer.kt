@@ -27,7 +27,7 @@ object DatabaseLayer {
     }
 
     fun getNextActionsNames(): Array<NoteName> {
-        val dao = db.nextActionsDao()
+        val dao = db.nextActionsListDao()
         return dao.getAllFromDb().map {
             NoteName(it.id, it.name)
         }.toTypedArray()
@@ -69,7 +69,7 @@ object DatabaseLayer {
     }
 
     fun getWaitingForNoteNames(): Array<NoteName> {
-        val dao = db.waitingForDao()
+        val dao = db.waitingForListDao()
         return dao.getAllFromDb().map {
             NoteName(it.id, it.name)
         }.toTypedArray()
@@ -145,7 +145,7 @@ object DatabaseLayer {
     }
 
     fun getNextActionsListNoteById(id: Int): NextActionsListNote {
-        val dao = db.nextActionsDao()
+        val dao = db.nextActionsListDao()
         val note = dao.getById(id)
         return NextActionsListNote(
             note.name,
@@ -156,7 +156,7 @@ object DatabaseLayer {
     }
 
     fun getWaitingForListNoteById(id: Int): WaitingForListNote {
-        val dao = db.waitingForDao()
+        val dao = db.waitingForListDao()
         val note = dao.getById(id)
         return WaitingForListNote(
             note.name,
@@ -203,7 +203,7 @@ object DatabaseLayer {
     }
 
     fun updateNextActionsListEdit(id: Int, note: NextActionsListNote) {
-        val dao = db.nextActionsDao()
+        val dao = db.nextActionsListDao()
         dao.update(
             id, note.name, note.content, note.creationDate, note.updateDate,
             note.priority, note.deadline, note.remindTime, note.projectId, note.contextId
@@ -211,7 +211,7 @@ object DatabaseLayer {
     }
 
     fun updateWaitingForListEdit(id: Int, note: WaitingForListNote) {
-        val dao = db.waitingForDao()
+        val dao = db.waitingForListDao()
         dao.update(
             id, note.name, note.content, note.creationDate, note.updateDate,
             note.waitingTime, note.remindTime, note.projectId, note.contextId
@@ -240,7 +240,7 @@ object DatabaseLayer {
     }
 
     fun putNextActionNote(note: NextActionsListNote): Int {
-        val dao = db.nextActionsDao()
+        val dao = db.nextActionsListDao()
         val id = dao.insert(
             NextActionsNoteDb(
                 name = note.name,
@@ -258,7 +258,7 @@ object DatabaseLayer {
     }
 
     fun putWaitingForNote(note: WaitingForListNote): Int {
-        val dao = db.waitingForDao()
+        val dao = db.waitingForListDao()
         val id = dao.insert(
             WaitingForNoteDb(
                 name = note.name,
@@ -291,12 +291,12 @@ object DatabaseLayer {
     }
 
     fun deleteNextActionsNoteById(id: Int) {
-        val dao = db.nextActionsDao()
+        val dao = db.nextActionsListDao()
         dao.deleteById(id)
     }
 
     fun deleteWaitingForNoteById(id: Int) {
-        val dao = db.waitingForDao()
+        val dao = db.waitingForListDao()
         dao.deleteById(id)
     }
 

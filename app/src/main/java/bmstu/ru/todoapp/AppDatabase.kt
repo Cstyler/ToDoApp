@@ -13,15 +13,19 @@ import bmstu.ru.todoapp.dbentities.*
         ContextDb::class,
         ProjectDb::class,
         NextActionsNoteDb::class,
-        WaitingForNoteDb::class
+        WaitingForNoteDb::class,
+        SomedayNoteDb::class,
+        CalendarNoteDb::class
     ],
     version = 7
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun inListDao(): InListDao
-    abstract fun nextActionsDao(): NextActionsListDao
-    abstract fun waitingForDao(): WaitingForListDao
+    abstract fun nextActionsListDao(): NextActionsListDao
+    abstract fun waitingForListDao(): WaitingForListDao
+    abstract fun somedayListDao(): SomedayListDao
+    abstract fun calendarListDao(): CalendarListDao
     abstract fun contextDao(): ContextDao
     abstract fun projectDao(): ProjectDao
 
