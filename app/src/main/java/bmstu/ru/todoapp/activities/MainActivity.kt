@@ -17,8 +17,6 @@ import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.adapters.TabsFragmentPagerAdapter
 import bmstu.ru.todoapp.adapters.listadapters.*
 import kotlinx.android.synthetic.main.activity_main.*
-import java.time.LocalDate
-import java.time.ZoneId
 
 
 class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {

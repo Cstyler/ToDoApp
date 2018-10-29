@@ -3,10 +3,7 @@ package bmstu.ru.todoapp
 import android.arch.persistence.room.Room
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import bmstu.ru.todoapp.dbentities.ContextDb
-import bmstu.ru.todoapp.dbentities.InListNoteDb
-import bmstu.ru.todoapp.dbentities.NextActionsNoteDb
-import bmstu.ru.todoapp.dbentities.ProjectDb
+import bmstu.ru.todoapp.dbentities.*
 import bmstu.ru.todoapp.entities.*
 import java.util.*
 
@@ -72,10 +69,10 @@ object DatabaseLayer {
     }
 
     fun getWaitingForNoteNames(): Array<NoteName> {
-        val noteNames = Array(3) {
-            NoteName(it, "WaitingFor$it")
-        }
-        return noteNames
+        val dao = db.waitingForDao()
+        return dao.getAllFromDb().map {
+            NoteName(it.id, it.name)
+        }.toTypedArray()
     }
 
     fun getWaitingForNamesFilteredByContext(contextId: Int): Array<NoteName> {
@@ -150,28 +147,22 @@ object DatabaseLayer {
     fun getNextActionsListNoteById(id: Int): NextActionsListNote {
         val dao = db.nextActionsDao()
         val note = dao.getById(id)
-        return NextActionsListNote(note.name,
+        return NextActionsListNote(
+            note.name,
             note.content, note.creationDate, note.updateDate,
             note.priority, note.deadline, note.remindTime,
-            note.contextId, note.projectId)
+            note.contextId, note.projectId
+        )
     }
 
     fun getWaitingForListNoteById(id: Int): WaitingForListNote {
-        val cal = Calendar.getInstance()
-        val time = cal.time
-        val remindeTime = CustomDate(2018, 9, 25, 12, 10)
-        val remindTime = null
-//        val doTime = CustomDate(2018, 11, 14, 13, 0)
-        val waitingTime = null
-//        val contextId = 1
-        val contextId = null
-        val projectId = 1
-//        val projectId = null
+        val dao = db.waitingForDao()
+        val note = dao.getById(id)
         return WaitingForListNote(
-            "NAname$id", "NAcontent$id",
-            time, time,
-            waitingTime, remindeTime,
-            contextId, projectId
+            note.name,
+            note.content, note.creationDate, note.updateDate,
+            note.waitingTime, note.remindTime,
+            note.contextId, note.projectId
         )
     }
 
@@ -213,12 +204,18 @@ object DatabaseLayer {
 
     fun updateNextActionsListEdit(id: Int, note: NextActionsListNote) {
         val dao = db.nextActionsDao()
-        dao.update(id, note.name, note.content, note.creationDate, note.updateDate,
-            note.priority, note.deadline, note.remindTime, note.projectId, note.contextId)
+        dao.update(
+            id, note.name, note.content, note.creationDate, note.updateDate,
+            note.priority, note.deadline, note.remindTime, note.projectId, note.contextId
+        )
     }
 
     fun updateWaitingForListEdit(id: Int, note: WaitingForListNote) {
-        Log.i(TAG, "Update note: id: $id,\n $note")
+        val dao = db.waitingForDao()
+        dao.update(
+            id, note.name, note.content, note.creationDate, note.updateDate,
+            note.waitingTime, note.remindTime, note.projectId, note.contextId
+        )
     }
 
     fun updateSomedayListEdit(id: Int, note: SomedayListNote) {
@@ -261,8 +258,20 @@ object DatabaseLayer {
     }
 
     fun putWaitingForNote(note: WaitingForListNote): Int {
-        Log.i(TAG, "Create note: \n$note")
-        return 0
+        val dao = db.waitingForDao()
+        val id = dao.insert(
+            WaitingForNoteDb(
+                name = note.name,
+                content = note.content,
+                creationDate = note.creationDate,
+                updateDate = note.updateDate,
+                waitingTime = note.waitingTime,
+                remindTime = note.remindTime,
+                contextId = note.contextId,
+                projectId = note.projectId
+            )
+        )
+        return id.toInt()
     }
 
     fun putCalendarNote(note: CalendarListNote): Int {
@@ -287,7 +296,8 @@ object DatabaseLayer {
     }
 
     fun deleteWaitingForNoteById(id: Int) {
-
+        val dao = db.waitingForDao()
+        dao.deleteById(id)
     }
 
     fun deleteSomedayNoteById(id: Int) {

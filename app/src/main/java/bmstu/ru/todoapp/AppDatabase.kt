@@ -3,10 +3,7 @@ package bmstu.ru.todoapp
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
-import bmstu.ru.todoapp.daos.ContextDao
-import bmstu.ru.todoapp.daos.InListDao
-import bmstu.ru.todoapp.daos.NextActionsListDao
-import bmstu.ru.todoapp.daos.ProjectDao
+import bmstu.ru.todoapp.daos.*
 import bmstu.ru.todoapp.dbentities.*
 
 
@@ -15,14 +12,17 @@ import bmstu.ru.todoapp.dbentities.*
         InListNoteDb::class,
         ContextDb::class,
         ProjectDb::class,
-        NextActionsNoteDb::class
+        NextActionsNoteDb::class,
+        WaitingForNoteDb::class
     ],
-    version = 6
+    version = 7
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun inListDao(): InListDao
     abstract fun nextActionsDao(): NextActionsListDao
+    abstract fun waitingForDao(): WaitingForListDao
     abstract fun contextDao(): ContextDao
     abstract fun projectDao(): ProjectDao
+
 }
