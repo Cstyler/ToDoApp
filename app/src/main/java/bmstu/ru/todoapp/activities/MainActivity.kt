@@ -23,7 +23,6 @@ import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.adapters.TabsFragmentPagerAdapter
 import bmstu.ru.todoapp.adapters.listadapters.*
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 
 
 class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
@@ -44,23 +43,21 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         val adapter = TabsFragmentPagerAdapter(supportFragmentManager, tabTitles)
         view_pager.adapter = adapter
         tab_layout.setupWithViewPager(view_pager)
+        tab_layout.addOnTabSelectedListener(this)
         tab_layout.getTabAt(selectedTabPosition)?.select()
-
         Log.i(TAG, "OnCreate")
     }
 
     override fun onResume() {
         super.onResume()
+        syncWithDatabase()
+        Log.i(TAG, "OnResume")
+    }
+
+    private fun syncWithDatabase() {
         val page = getTabsFragmentPagerAdapter().fragments[getCurrentTabPos()]
         val adapter = page?.recyclerView?.adapter as? BaseListAdapter
         adapter?.updateData()
-
-        val noteNames = DatabaseLayer.getNextActionsNames()
-        noteNames.map {
-            DatabaseLayer.getNextActionsListNoteById(it.id).remindTime
-        }.forEach {
-
-        }
     }
 
     override fun onTabReselected(tab: TabLayout.Tab?) {
@@ -71,6 +68,8 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
 
     override fun onTabSelected(tab: TabLayout.Tab?) {
         selectedTabPosition = tab?.position ?: 0
+        Log.i(TAG, selectedTabPosition.toString())
+        syncWithDatabase()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -375,21 +374,26 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
         )
     }
 
-    private fun scheduleNotification(notification: Notification, date: Date) {
+    private fun scheduleNotification(notification: Notification, time: Long) {
         val notificationIntent = Intent(this, NotificationPublisher::class.java)
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1)
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification)
-        val pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getBroadcast(
+            this,
+            0,
+            notificationIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
-        val futureInMillis = date.time
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent)
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, time, pendingIntent)
     }
 
     private fun getNotification(content: String): Notification {
         val builder = Notification.Builder(this)
         builder.setContentTitle("Scheduled Notification")
         builder.setContentText(content)
+        builder.setSmallIcon(R.drawable.ic_alarm)
         return builder.build()
     }
 }
