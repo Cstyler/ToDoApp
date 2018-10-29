@@ -16,7 +16,7 @@ import android.widget.Toast
 import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.entities.ContextName
-import bmstu.ru.todoapp.entities.MyDate
+import bmstu.ru.todoapp.entities.CustomDate
 import bmstu.ru.todoapp.entities.ProjectName
 import bmstu.ru.todoapp.entities.WaitingForListNote
 import kotlinx.android.synthetic.main.waiting_for_list_edit_form.*
@@ -209,14 +209,14 @@ class WaitingForListCreateActivity : AppCompatActivity() {
                 }
                 val noteContent = waiting_for_list_edit_note_content_edit_text.text.toString()
                 val time = Calendar.getInstance().time
-                val remindTime = if (validateRemindDate()) MyDate(
+                val remindTime = if (validateRemindDate()) CustomDate(
                     remindYear!!,
                     remindMonth!!,
                     remindDay!!,
                     remindHour!!,
                     remindMinute!!
                 ) else null
-                val waitingTime = if (validateWaitingDate()) MyDate(
+                val waitingTime = if (validateWaitingDate()) CustomDate(
                     waitingYear!!,
                     waitingMonth!!,
                     waitingDay!!,

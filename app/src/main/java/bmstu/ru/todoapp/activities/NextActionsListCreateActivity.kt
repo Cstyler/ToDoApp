@@ -16,7 +16,7 @@ import android.widget.Toast
 import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.entities.ContextName
-import bmstu.ru.todoapp.entities.MyDate
+import bmstu.ru.todoapp.entities.CustomDate
 import bmstu.ru.todoapp.entities.NextActionsListNote
 import bmstu.ru.todoapp.entities.ProjectName
 import kotlinx.android.synthetic.main.next_actions_list_edit_form.*
@@ -214,14 +214,14 @@ class NextActionsListCreateActivity : AppCompatActivity() {
                 }
                 val noteContent = next_actions_list_edit_note_content_edit_text.text.toString()
                 val time = Calendar.getInstance().time
-                val remindTime = if (validateRemindDate()) MyDate(
+                val remindTime = if (validateRemindDate()) CustomDate(
                     remindYear!!,
                     remindMonth!!,
                     remindDay!!,
                     remindHour!!,
                     remindMinute!!
                 ) else null
-                val deadline = if (validateDeadlineDate()) MyDate(
+                val deadline = if (validateDeadlineDate()) CustomDate(
                     deadlineYear!!,
                     deadlineMonth!!,
                     deadlineDay!!,

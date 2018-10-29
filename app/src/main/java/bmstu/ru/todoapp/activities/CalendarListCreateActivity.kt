@@ -17,7 +17,7 @@ import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.entities.CalendarListNote
 import bmstu.ru.todoapp.entities.ContextName
-import bmstu.ru.todoapp.entities.MyDate
+import bmstu.ru.todoapp.entities.CustomDate
 import bmstu.ru.todoapp.entities.ProjectName
 import kotlinx.android.synthetic.main.calendar_list_edit_form.*
 import java.text.SimpleDateFormat
@@ -209,14 +209,14 @@ class CalendarListCreateActivity : AppCompatActivity() {
                 }
                 val noteContent = calendar_list_edit_note_content_edit_text.text.toString()
                 val time = Calendar.getInstance().time
-                val remindTime = if (validateRemindDate()) MyDate(
+                val remindTime = if (validateRemindDate()) CustomDate(
                     remindYear!!,
                     remindMonth!!,
                     remindDay!!,
                     remindHour!!,
                     remindMinute!!
                 ) else null
-                val doTime = if (validateDoDate()) MyDate(
+                val doTime = if (validateDoDate()) CustomDate(
                     doYear!!,
                     doMonth!!,
                     doDay!!,

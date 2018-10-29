@@ -152,9 +152,9 @@ object DatabaseLayer {
     fun getNextActionsListNoteById(id: Int): NextActionsListNote {
         val cal = Calendar.getInstance()
         val time = cal.time
-        val remindeTime = MyDate(2018, 9, 25, 12, 10)
+        val remindeTime = CustomDate(2018, 9, 25, 12, 10)
 //        val remindTime = null
-        val deadlineTime = MyDate(2018, 11, 14, 13, 0)
+        val deadlineTime = CustomDate(2018, 11, 14, 13, 0)
 //        val deadlineTime = null
         val contextId = 1
 //        val contextId = null
@@ -172,9 +172,9 @@ object DatabaseLayer {
     fun getWaitingForListNoteById(id: Int): WaitingForListNote {
         val cal = Calendar.getInstance()
         val time = cal.time
-        val remindeTime = MyDate(2018, 9, 25, 12, 10)
+        val remindeTime = CustomDate(2018, 9, 25, 12, 10)
         val remindTime = null
-//        val doTime = MyDate(2018, 11, 14, 13, 0)
+//        val doTime = CustomDate(2018, 11, 14, 13, 0)
         val waitingTime = null
 //        val contextId = 1
         val contextId = null
@@ -202,9 +202,9 @@ object DatabaseLayer {
     fun getCalendarListNoteById(id: Int): CalendarListNote {
         val cal = Calendar.getInstance()
         val time = cal.time
-        val remindeTime = MyDate(2018, 9, 25, 12, 10)
+        val remindeTime = CustomDate(2018, 9, 25, 12, 10)
         val remindTime = null
-//        val doTime = MyDate(2018, 11, 14, 13, 0)
+//        val doTime = CustomDate(2018, 11, 14, 13, 0)
         val doTime = null
 //        val contextId = 1
         val contextId = null

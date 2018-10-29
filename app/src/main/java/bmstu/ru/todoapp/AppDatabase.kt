@@ -6,13 +6,18 @@ import android.arch.persistence.room.TypeConverters
 import bmstu.ru.todoapp.daos.ContextDao
 import bmstu.ru.todoapp.daos.InListDao
 import bmstu.ru.todoapp.daos.ProjectDao
-import bmstu.ru.todoapp.dbentities.ContextDb
-import bmstu.ru.todoapp.dbentities.Converters
-import bmstu.ru.todoapp.dbentities.InListNoteDb
-import bmstu.ru.todoapp.dbentities.ProjectDb
+import bmstu.ru.todoapp.dbentities.*
 
 
-@Database(entities = [InListNoteDb::class, ContextDb::class, ProjectDb::class], version = 1)
+@Database(
+    entities = [
+        InListNoteDb::class,
+        ContextDb::class,
+        ProjectDb::class,
+        NextActionsNoteDb::class
+    ],
+    version = 1
+)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun inListDao(): InListDao

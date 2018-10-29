@@ -1,6 +1,6 @@
 package bmstu.ru.todoapp.entities
 
-data class MyDate(
+data class CustomDate(
     var year: Int,
     var month: Int,
     var day: Int,

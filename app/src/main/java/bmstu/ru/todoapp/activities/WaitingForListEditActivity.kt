@@ -17,7 +17,7 @@ import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.adapters.listadapters.BaseListAdapter
 import bmstu.ru.todoapp.entities.ContextName
-import bmstu.ru.todoapp.entities.MyDate
+import bmstu.ru.todoapp.entities.CustomDate
 import bmstu.ru.todoapp.entities.ProjectName
 import bmstu.ru.todoapp.entities.WaitingForListNote
 import kotlinx.android.synthetic.main.waiting_for_list_edit_form.*
@@ -294,7 +294,7 @@ class WaitingForListEditActivity : AppCompatActivity() {
                     (((note.remindTime != null) && remindDateParamsChanged(note.remindTime!!))
                             || (note.remindTime == null))
                 ) {
-                    note.remindTime = MyDate(
+                    note.remindTime = CustomDate(
                         remindYear!!,
                         remindMonth!!,
                         remindDay!!,
@@ -307,7 +307,7 @@ class WaitingForListEditActivity : AppCompatActivity() {
                     (((note.waitingTime != null) && waitingTimeParamsChanged(note.waitingTime!!))
                             || (note.waitingTime == null))
                 ) {
-                    note.waitingTime = MyDate(
+                    note.waitingTime = CustomDate(
                         waitingYear!!,
                         waitingMonth!!,
                         waitingDay!!,
@@ -332,7 +332,7 @@ class WaitingForListEditActivity : AppCompatActivity() {
         return super.onContextItemSelected(item)
     }
 
-    private fun remindDateParamsChanged(date: MyDate): Boolean {
+    private fun remindDateParamsChanged(date: CustomDate): Boolean {
         return (remindYear != date.year) ||
                 (remindMonth != date.month) ||
                 (remindDay != date.day) ||
@@ -340,7 +340,7 @@ class WaitingForListEditActivity : AppCompatActivity() {
                 (remindMinute != date.minute)
     }
 
-    private fun waitingTimeParamsChanged(date: MyDate): Boolean {
+    private fun waitingTimeParamsChanged(date: CustomDate): Boolean {
         return (waitingYear != date.year) ||
                 (waitingMonth != date.month) ||
                 (waitingDay != date.day) ||

@@ -7,8 +7,8 @@ data class WaitingForListNote(
     var content: String? = null,
     var creationDate: Date,
     var updateDate: Date,
-    var waitingTime: MyDate?,
-    var remindTime: MyDate?,
+    var waitingTime: CustomDate?,
+    var remindTime: CustomDate?,
     var contextId: Int?,
     var projectId: Int?
 )

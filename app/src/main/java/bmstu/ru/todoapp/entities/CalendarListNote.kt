@@ -7,8 +7,8 @@ data class CalendarListNote(
     var content: String? = null,
     var creationDate: Date,
     var updateDate: Date,
-    var doTime: MyDate?,
-    var remindTime: MyDate?,
+    var doTime: CustomDate?,
+    var remindTime: CustomDate?,
     var contextId: Int?,
     var projectId: Int?
 )

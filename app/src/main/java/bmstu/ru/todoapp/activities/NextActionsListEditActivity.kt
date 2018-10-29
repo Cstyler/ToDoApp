@@ -17,7 +17,7 @@ import bmstu.ru.todoapp.DatabaseLayer
 import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.adapters.listadapters.BaseListAdapter
 import bmstu.ru.todoapp.entities.ContextName
-import bmstu.ru.todoapp.entities.MyDate
+import bmstu.ru.todoapp.entities.CustomDate
 import bmstu.ru.todoapp.entities.NextActionsListNote
 import bmstu.ru.todoapp.entities.ProjectName
 import kotlinx.android.synthetic.main.next_actions_list_edit_form.*
@@ -302,7 +302,7 @@ class NextActionsListEditActivity : AppCompatActivity() {
                     (((note.remindTime != null) && remindDateParamsChanged(note.remindTime!!))
                             || (note.remindTime == null))
                 ) {
-                    note.remindTime = MyDate(
+                    note.remindTime = CustomDate(
                         remindYear!!,
                         remindMonth!!,
                         remindDay!!,
@@ -315,7 +315,7 @@ class NextActionsListEditActivity : AppCompatActivity() {
                     (((note.deadline != null) && deadlineDateParamsChanged(note.deadline!!))
                             || (note.deadline == null))
                 ) {
-                    note.deadline = MyDate(
+                    note.deadline = CustomDate(
                         deadlineYear!!,
                         deadlineMonth!!,
                         deadlineDay!!,
@@ -340,7 +340,7 @@ class NextActionsListEditActivity : AppCompatActivity() {
         return super.onContextItemSelected(item)
     }
 
-    private fun remindDateParamsChanged(date: MyDate): Boolean {
+    private fun remindDateParamsChanged(date: CustomDate): Boolean {
         return (remindYear != date.year) ||
                 (remindMonth != date.month) ||
                 (remindDay != date.day) ||
@@ -348,7 +348,7 @@ class NextActionsListEditActivity : AppCompatActivity() {
                 (remindMinute != date.minute)
     }
 
-    private fun deadlineDateParamsChanged(date: MyDate): Boolean {
+    private fun deadlineDateParamsChanged(date: CustomDate): Boolean {
         return (deadlineYear != date.year) ||
                 (deadlineMonth != date.month) ||
                 (deadlineDay != date.day) ||

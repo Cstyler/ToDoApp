@@ -18,7 +18,7 @@ import bmstu.ru.todoapp.R
 import bmstu.ru.todoapp.adapters.listadapters.BaseListAdapter
 import bmstu.ru.todoapp.entities.CalendarListNote
 import bmstu.ru.todoapp.entities.ContextName
-import bmstu.ru.todoapp.entities.MyDate
+import bmstu.ru.todoapp.entities.CustomDate
 import bmstu.ru.todoapp.entities.ProjectName
 import kotlinx.android.synthetic.main.calendar_list_edit_form.*
 import java.text.SimpleDateFormat
@@ -294,7 +294,7 @@ class CalendarListEditActivity : AppCompatActivity() {
                     (((note.remindTime != null) && remindDateParamsChanged(note.remindTime!!))
                             || (note.remindTime == null))
                 ) {
-                    note.remindTime = MyDate(
+                    note.remindTime = CustomDate(
                         remindYear!!,
                         remindMonth!!,
                         remindDay!!,
@@ -307,7 +307,7 @@ class CalendarListEditActivity : AppCompatActivity() {
                     (((note.doTime != null) && doTimeParamsChanged(note.doTime!!))
                             || (note.doTime == null))
                 ) {
-                    note.doTime = MyDate(
+                    note.doTime = CustomDate(
                         doYear!!,
                         doMonth!!,
                         doDay!!,
@@ -332,7 +332,7 @@ class CalendarListEditActivity : AppCompatActivity() {
         return super.onContextItemSelected(item)
     }
 
-    private fun remindDateParamsChanged(date: MyDate): Boolean {
+    private fun remindDateParamsChanged(date: CustomDate): Boolean {
         return (remindYear != date.year) ||
                 (remindMonth != date.month) ||
                 (remindDay != date.day) ||
@@ -340,7 +340,7 @@ class CalendarListEditActivity : AppCompatActivity() {
                 (remindMinute != date.minute)
     }
 
-    private fun doTimeParamsChanged(date: MyDate): Boolean {
+    private fun doTimeParamsChanged(date: CustomDate): Boolean {
         return (doYear != date.year) ||
                 (doMonth != date.month) ||
                 (doDay != date.day) ||
