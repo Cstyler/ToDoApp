@@ -2,10 +2,8 @@ package bmstu.ru.todoapp
 
 import android.arch.persistence.room.Room
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import bmstu.ru.todoapp.dbentities.*
 import bmstu.ru.todoapp.entities.*
-import java.util.*
 
 object DatabaseLayer {
     private const val TAG = "DatabaseLayer"
@@ -97,10 +95,10 @@ object DatabaseLayer {
     }
 
     fun getSomedayNoteNames(): Array<NoteName> {
-        val noteNames = Array(3) {
-            NoteName(it, "Someday$it")
-        }
-        return noteNames
+        val dao = db.somedayListDao()
+        return dao.getAllFromDb().map {
+            NoteName(it.id, it.name)
+        }.toTypedArray()
     }
 
     fun getSomedayNamesFilteredByContext(contextId: Int): Array<NoteName> {
@@ -111,10 +109,10 @@ object DatabaseLayer {
     }
 
     fun getCalendarNoteNames(): Array<NoteName> {
-        val noteNames = Array(3) {
-            NoteName(it, "Calendar$it")
-        }
-        return noteNames
+        val dao = db.calendarListDao()
+        return dao.getAllFromDb().map {
+            NoteName(it.id, it.name)
+        }.toTypedArray()
     }
 
     fun getCalendarNamesFilteredByContext(contextId: Int): Array<NoteName> {
@@ -167,32 +165,22 @@ object DatabaseLayer {
     }
 
     fun getSomedayListNoteById(id: Int): SomedayListNote {
-        val cal = Calendar.getInstance()
-        val time = cal.time
-        val contextId = null
+        val dao = db.somedayListDao()
+        val note = dao.getById(id)
         return SomedayListNote(
-            "NAname$id", "NAcontent$id",
-            time, time,
-            contextId
+            note.name, note.content,
+            note.creationDate, note.updateDate, note.contextId
         )
     }
 
     fun getCalendarListNoteById(id: Int): CalendarListNote {
-        val cal = Calendar.getInstance()
-        val time = cal.time
-        val remindeTime = CustomDate(2018, 9, 25, 12, 10)
-        val remindTime = null
-//        val doTime = CustomDate(2018, 11, 14, 13, 0)
-        val doTime = null
-//        val contextId = 1
-        val contextId = null
-        val projectId = 1
-//        val projectId = null
+        val dao = db.calendarListDao()
+        val note = dao.getById(id)
         return CalendarListNote(
-            "NAname$id", "NAcontent$id",
-            time, time,
-            doTime, remindeTime,
-            contextId, projectId
+            note.name,
+            note.content, note.creationDate, note.updateDate,
+            note.doTime, note.remindTime,
+            note.contextId, note.projectId
         )
     }
 
@@ -219,11 +207,19 @@ object DatabaseLayer {
     }
 
     fun updateSomedayListEdit(id: Int, note: SomedayListNote) {
-        Log.i(TAG, "Update note: id: $id,\n $note")
+        val dao = db.somedayListDao()
+        dao.update(
+            id, note.name, note.content,
+            note.creationDate, note.updateDate, note.contextId
+        )
     }
 
     fun updateCalendarListEdit(id: Int, note: CalendarListNote) {
-        Log.i(TAG, "Update note: id: $id,\n $note")
+        val dao = db.calendarListDao()
+        dao.update(
+            id, note.name, note.content, note.creationDate, note.updateDate,
+            note.doTime, note.remindTime, note.projectId, note.contextId
+        )
     }
 
 
@@ -274,14 +270,35 @@ object DatabaseLayer {
         return id.toInt()
     }
 
-    fun putCalendarNote(note: CalendarListNote): Int {
-        Log.i(TAG, "Create note: \n$note")
-        return 0
+    fun putSomedayNote(note: SomedayListNote): Int {
+        val dao = db.somedayListDao()
+        val id = dao.insert(
+            SomedayNoteDb(
+                name = note.name,
+                content = note.content,
+                creationDate = note.creationDate,
+                updateDate = note.updateDate,
+                contextId = note.contextId
+            )
+        )
+        return id.toInt()
     }
 
-    fun putSomedayNote(note: SomedayListNote): Int {
-        Log.i(TAG, "Create note: \n$note")
-        return 0
+    fun putCalendarNote(note: CalendarListNote): Int {
+        val dao = db.calendarListDao()
+        val id = dao.insert(
+            CalendarNoteDb(
+                name = note.name,
+                content = note.content,
+                creationDate = note.creationDate,
+                updateDate = note.updateDate,
+                doTime = note.doTime,
+                remindTime = note.remindTime,
+                contextId = note.contextId,
+                projectId = note.projectId
+            )
+        )
+        return id.toInt()
     }
 
 
@@ -301,12 +318,13 @@ object DatabaseLayer {
     }
 
     fun deleteSomedayNoteById(id: Int) {
-
+        val dao = db.somedayListDao()
+        dao.deleteById(id)
     }
 
-
     fun deleteCalendarNoteById(id: Int) {
-
+        val dao = db.calendarListDao()
+        dao.deleteById(id)
     }
 
     fun getProjectNames(): List<ProjectName> {

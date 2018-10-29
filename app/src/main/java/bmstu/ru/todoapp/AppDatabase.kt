@@ -17,7 +17,7 @@ import bmstu.ru.todoapp.dbentities.*
         SomedayNoteDb::class,
         CalendarNoteDb::class
     ],
-    version = 7
+    version = 8
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
